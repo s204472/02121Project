@@ -54,12 +54,16 @@ public class GameModel {
 		}
 		return s;
 	}
-    
 	
 	
-	
-	
-
-
+	public int getNeighbours(int x, int y) {
+    	int neighbourBombs = 0;
+    	for(int i = -1; i < 2; i++) {
+    		for(int j = -1; j < 2; j++) {
+    			neighbourBombs += (mines[x + i][y + j] ? 1 : 0);
+    		}
+    	}
+    	return neighbourBombs;
+	}
 
 }
