@@ -7,8 +7,8 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 
-<GridPane fx:controller="sample.Controller" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1">
-	<Button> 
+<GridPane fx:id="gridPane" fx:controller="sample.GameView" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1">
+	<Button fx:id="button"/> 
    </GridPane>
    	
-   		
+   		// onAction="buttonClickAction""
