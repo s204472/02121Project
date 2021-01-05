@@ -33,6 +33,7 @@ public class Main extends Application {
 
 		Label label2 = new Label("This is the bottom");
 		
+		
 		btn1 = new Button("Click me");
 		
 		GridPane centerPane = new GridPane();
