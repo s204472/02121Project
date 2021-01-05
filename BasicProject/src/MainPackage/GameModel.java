@@ -1,8 +1,5 @@
 package MainPackage;
 
-
-
-
 public class GameModel {
 	private int n;
 	private int m;
