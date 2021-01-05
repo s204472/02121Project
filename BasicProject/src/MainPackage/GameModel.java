@@ -1,34 +1,21 @@
 package MainPackage;
 
 public class GameModel {
-	private int n;
-	private int m;
-	private int mineCount;
     private boolean[][] mines;
     private GameObjects[][] currentBoard;
     private GameObjects[][] finalBoard;
     
-    
-    public GameModel(int n, int m, int mineCount) {
-    	this.n = n;
-    	this.m = m;
-    	this.mineCount = mineCount;
-    	
-    	currentBoard = new GameObjects[n][m];
-    	finalBoard = new GameObjects[n][m];
-    	
-    	mines = fillMines(mineCount);
-    	
-    	
+    public int getNeighbours(int x, int y) {
+    	int neighbourBombs = 0;
+    	for(int i = 0; i < mines.length; i++) {
+    		for(int j = 0; j < mines[i].length; j++) {
+    			neighbourBombs += (mines[i][j] ? 1 : 0);
+    		}
+    	}
     }
+    
 	
-	private GameObjects[][] fillMines(int mineCount) {
-		
-		
-		return mines;
-	}
-    
-    
+	
 	
 	
 	
