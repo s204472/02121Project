@@ -1,8 +1,8 @@
 import java.util.Random;
 
 public class GameModel {
-	private int n;
-	private int m;
+	private int xSize;
+	private int ySize;
 	private int mineCount;
     private boolean[][] mines;
     private GameObjects[][] currentBoard;
@@ -10,8 +10,8 @@ public class GameModel {
      
     
     public GameModel(int n, int m, int mineCount) {
-    	this.n = n;
-    	this.m = m;
+    	this.xSize = n;
+    	this.ySize = m;
     	this.mineCount = mineCount;
     	
     	this.currentBoard = new GameObjects[n][m];
@@ -26,8 +26,8 @@ public class GameModel {
 		Random rand = new Random();
 		int mineIndex = 0;
 		while (mineIndex < mineCount) {
-			int x = rand.nextInt(n);
-			int y = rand.nextInt(m);
+			int x = rand.nextInt(xSize);
+			int y = rand.nextInt(ySize);
 			if (!mines[x][y]) {
 				mines[x][y] = true;
 				mineIndex++;
@@ -38,7 +38,7 @@ public class GameModel {
 	}
     
 	private GameObjects[][] fillFinalBoard(){
-		GameObjects[][] tempBoard = new GameObjects[n][m];
+		GameObjects[][] tempBoard = new GameObjects[xSize][ySize];
 		for (int i = 0; i < mines.length; i++) {
 			for (int j = 0; j < mines[i].length; j++) {
 				if (mines[i][j]) {
@@ -81,7 +81,7 @@ public class GameModel {
     		for(int j = -1; j < 2; j++) {
     			int cx = x + i;
     			int cy = y + j;
-				if(cx >= 0 && cx < n && cy >= 0 && cy < m && !(i == 0 && j == 0)) {
+				if(cx >= 0 && cx < xSize && cy >= 0 && cy < ySize && !(i == 0 && j == 0)) {
     				neighbourBombs += (mines[x + i][y + j] ? 1 : 0);
     			}
     		}
@@ -100,11 +100,11 @@ public class GameModel {
 		currentBoard[x][y] = finalBoard[x][y];
 	}
 	
-	public int getN() {
-		return n;
+	public int getXSize() {
+		return xSize;
 	}
 	
-	public int getM() {
-		return m;
+	public int getYSize() {
+		return ySize;
 	}
 }

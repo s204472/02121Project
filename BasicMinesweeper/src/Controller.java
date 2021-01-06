@@ -18,8 +18,8 @@ public class Controller implements Initializable {
 	public Button[][] buttons;
 	
 	private GameModel gameModel;
-	private int n;
-	private int m;
+	private int xSize;
+	private int ySize;
 	
 	public Controller(GameModel gameModel) {
 		this.gameModel = gameModel;
@@ -27,24 +27,26 @@ public class Controller implements Initializable {
 	
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-    	this.n = gameModel.getN();
-    	this.m = gameModel.getM();
+    	this.xSize = gameModel.getXSize();
+    	this.ySize = gameModel.getYSize();
     	
     	gameGrid.add(new Button(), 1, 1);
-    	buttons = new Button[30][30];
-    	createButtons();
+    	buttons = new Button[xSize][ySize];
     	
+    	createButtons();
     }
     
     public void createButtons() {
     	GameObjects[][] board = gameModel.getCurrentBoard();
 
-		for(int i = 0; i < n; i++) {
-			for(int j = 0; j < m; j++) {
+		for(int i = 0; i < xSize; i++) {
+			for(int j = 0; j < ySize; j++) {
 				buttons[i][j] = new Button();
-				buttons[i][j].setPrefHeight(50);
-				buttons[i][j].setPrefWidth(50);
+				
+				// Setting button layout
+				buttons[i][j].setPrefSize(40,40);
 				gameGrid.add(buttons[i][j], i, j);
+				
 				int x = i;
 				int y = j;
 				buttons[i][j].setOnAction(event -> handleClick(x, y));

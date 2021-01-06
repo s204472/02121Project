@@ -3,8 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.GridPane?>
 
-<GridPane fx:id="gameGrid" hgap="0.0" minHeight="500.0" minWidth="500.0" vgap="0.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
-   <padding>
-      <Insets bottom="0.0" left="0.0" right="0.0" top="0.0" />
-   </padding>
+<GridPane fx:id="gameGrid" hgap="0.0" minHeight="200.0" minWidth="200.0" vgap="0.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller"
+	stylesheets="@styles.css">
+
 </GridPane>
