@@ -1,10 +1,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml" fx:controller="GameView">
+<GridPane fx:id="gameGrid" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml" fx:controller="GameView">
     
-    <Label text="I love bacon"/>
-    <Button text="Submit"/>
-    
-</Gridpane>
+</GridPane>
 
