@@ -66,24 +66,3 @@ public class Controller implements Initializable {
 
 
 
-
-
-
-
-/*
-
-	
-	public void showScene() {
-		
-	}
-	
-	public void buttonClickAction() {
-		int y = GridPane.getRowIndex(buttons);
-		int x = GridPane.getColumnIndex(buttons);		
-	}
-	
-	public void seteventhandler(eventhandler) {
-		button.setOnAction((eventhandler));
-}
-	*/
-
