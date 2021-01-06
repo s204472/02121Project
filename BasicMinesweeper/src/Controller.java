@@ -50,7 +50,8 @@ public class Controller implements Initializable {
     
     
     public void handleClick(int x, int y) {
-    	gameModel.updateField(x, y);
+    	gameModel.clickField(x, y);
+    	
     }
 
 }
