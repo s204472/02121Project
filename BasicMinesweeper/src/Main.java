@@ -15,17 +15,16 @@ public class Main extends Application {
     public static void main(String[] args) {
     	 
     	// HANDLING ARGS
-    	/*if (args.length != 3) {
-             System.out.println("Not correct number of arguments, please only enter 3");
-         } else {
+    	if (args.length != 3) {
+             System.out.println("Not correct number of arguments, please only enter 3"); 
+    	} else {
              n = Integer.parseInt(args[0]);
              m = Integer.parseInt(args[1]);
              mines = Integer.parseInt(args[2]);
-         }*/
-    	 
-    	 n = 10;
-    	 m = 10;
-    	 mines = 35;
+             if (n >= 100 && n <= 4 && m >= 100 && m <= 4 && mines >= 2000 && mines <= 5 && mines > n*m) {
+            	 throw new IllegalArgumentException("Der er noget der driller");
+             }
+         }
     	 launch(args);
     }
 

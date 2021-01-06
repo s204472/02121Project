@@ -14,9 +14,9 @@ public class GameModel {
     	this.m = m;
     	this.mineCount = mineCount;
     	
-    	this.currentBoard = new GameObjects[m][n];
-    	this.finalBoard = new GameObjects[m][n];
-    	this.mines = new boolean[m][n];
+    	this.currentBoard = new GameObjects[n][m];
+    	this.finalBoard = new GameObjects[n][m];
+    	this.mines = new boolean[n][m];
     	
     	this.mines = genMines(mineCount);
     	this.finalBoard = fillFinalBoard();
@@ -26,8 +26,8 @@ public class GameModel {
 		Random rand = new Random();
 		int mineIndex = 0;
 		while (mineIndex < mineCount) {
-			int x = rand.nextInt(m);
-			int y = rand.nextInt(n);
+			int x = rand.nextInt(n);
+			int y = rand.nextInt(m);
 			if (!mines[x][y]) {
 				mines[x][y] = true;
 				mineIndex++;
@@ -38,7 +38,7 @@ public class GameModel {
 	}
     
 	private GameObjects[][] fillFinalBoard(){
-		GameObjects[][] tempBoard = new GameObjects[m][n];
+		GameObjects[][] tempBoard = new GameObjects[n][m];
 		for (int i = 0; i < mines.length; i++) {
 			for (int j = 0; j < mines[i].length; j++) {
 				if (mines[i][j]) {
@@ -95,7 +95,7 @@ public class GameModel {
 	
 	public void clickField(int x, int y) {
 		if (mines[x][y]) {
-		// \\GAMEOVER	
+			System.exit(0);
 		}
 		currentBoard[x][y] = finalBoard[x][y];
 	}
