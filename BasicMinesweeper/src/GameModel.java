@@ -20,8 +20,6 @@ public class GameModel {
     	
     	this.mines = genMines(mineCount);
     	this.finalBoard = fillFinalBoard();
-    	
-    	
     }
 	
 	private boolean[][] genMines(int mineCount) {
