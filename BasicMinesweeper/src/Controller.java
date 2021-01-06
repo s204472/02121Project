@@ -41,6 +41,8 @@ public class Controller implements Initializable {
 		for(int i = 0; i < n; i++) {
 			for(int j = 0; j < m; j++) {
 				buttons[i][j] = new Button();
+				buttons[i][j].setPrefHeight(50);
+				buttons[i][j].setPrefWidth(50);
 				gameGrid.add(buttons[i][j], i, j);
 				int x = i;
 				int y = j;
