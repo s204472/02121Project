@@ -1,7 +1,5 @@
 import java.util.Random;
 
-
-
 public class GameModel {
 	private int n;
 	private int m;

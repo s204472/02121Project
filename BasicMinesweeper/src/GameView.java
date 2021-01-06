@@ -1,4 +1,24 @@
-	import javafx.application.Application;
+import javafx.fxml.Initializable;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class GameView implements Initializable {
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("View is now loaded!");
+    }
+
+}
+
+
+
+
+
+
+
+/*
+import javafx.application.Application;
 	import javafx.event.ActionEvent;
 	import javafx.event.EventHandler;
 	import javafx.scene.Scene;
@@ -29,8 +49,8 @@ public class GameView {
 		int x = GridPane.getColumnIndex(buttons);		
 	}
 	
-	/*public void seteventhandler(eventhandler) {
+	public void seteventhandler(eventhandler) {
 		button.setOnAction((eventhandler));
 }
 	*/
-}
+
