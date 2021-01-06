@@ -89,4 +89,7 @@ public class GameModel {
     	}
     	return neighbourBombs;
 	}
+	public void updateField(int x, int y) {
+		System.out.println(x + " " +  y);
+	}
 }
