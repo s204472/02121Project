@@ -51,6 +51,7 @@ public class GameModel {
 		return tempBoard;
 	}
 	
+	
 	public String printBoard() {
 		String s = "";
 		for (int i = 0; i < mines.length; i++) {

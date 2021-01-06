@@ -1,3 +1,4 @@
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -11,15 +12,17 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;	
 
 public class Controller implements Initializable {
-	private GridPane gameGrid;
-	private Button[][] buttons;
+	@FXML
+	public GridPane gameGrid;
+	@FXML
+	public Button[][] buttons;
+	
 	private GameModel gameModel;
 	private int n;
 	private int m;
 	
 	public Controller(GameModel gameModel) {
 		this.gameModel = gameModel;
-		
 	}
 	
     @Override
@@ -27,7 +30,6 @@ public class Controller implements Initializable {
     	this.n = gameModel.getN();
     	this.m = gameModel.getM();
     	
-    	gameGrid = new GridPane();
     	gameGrid.add(new Button(), 1, 1);
     	buttons = new Button[30][30];
     	createButtons();
