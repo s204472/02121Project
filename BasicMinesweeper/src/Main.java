@@ -23,8 +23,8 @@ public class Main extends Application {
              mines = Integer.parseInt(args[2]);
          }*/
     	 
-    	 n = 20;
-    	 m = 20;
+    	 n = 10;
+    	 m = 10;
     	 mines = 35;
     	 launch(args);
     }
@@ -46,7 +46,9 @@ public class Main extends Application {
     	
         GridPane root = (GridPane) loader.load();
         primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, n*50, m*50));
+        Scene scene = new Scene(root, n*50, m*50);
+        primaryStage.setScene(scene);
+        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         primaryStage.show();
         
         

@@ -33,6 +33,7 @@ public class Controller implements Initializable {
     	gameGrid.add(new Button(), 1, 1);
     	buttons = new Button[30][30];
     	createButtons();
+    	
     }
     
     public void createButtons() {
