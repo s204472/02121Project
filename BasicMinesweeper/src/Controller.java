@@ -11,20 +11,32 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;	
 
 public class Controller implements Initializable {
-	public GridPane gameGrid;
-	public Button[][] buttons;
+	private GridPane gameGrid;
+	private Button[][] buttons;
 	private GameModel gameModel;
+	private int n;
+	private int m;
+	
+	public Controller(GameModel gameModel) {
+		this.gameModel = gameModel;
+		
+	}
 	
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-    	buttons = new Button[10][10];
-    	gameModel = new GameModel(10,10,5);
-    	createButtons(10,10);
+    	this.n = gameModel.getN();
+    	this.m = gameModel.getM();
+    	
+    	gameGrid = new GridPane();
+    	gameGrid.add(new Button(), 1, 1);
+    	buttons = new Button[30][30];
+    	createButtons();
     }
     
-    public void createButtons(int nsize, int msize) {
-		for(int i = 0; i < nsize; i++) {
-			for(int j = 0; j < msize; j++) {
+    public void createButtons() {
+    	System.out.print(n);
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < m; j++) {
 				buttons[i][j] = new Button();
 				gameGrid.add(buttons[i][j], i, j);
 				int x = i;
