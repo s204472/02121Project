@@ -63,6 +63,7 @@ public class GameModel {
 		}
 		return s;
 	}
+	
 	public String printFinalBoard() {
 		String s = "";
 		for (int i = 0; i < finalBoard.length; i++) {
@@ -88,5 +89,4 @@ public class GameModel {
     	}
     	return neighbourBombs;
 	}
-
 }
