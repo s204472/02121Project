@@ -28,7 +28,7 @@ public class Main extends Application {
     	 
     	 n = 10;
     	 m = 10;
-    	 mines = 35;
+    	 mines = 25;
     	 launch(args);
     }
 
