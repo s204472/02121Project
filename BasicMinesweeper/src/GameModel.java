@@ -14,9 +14,9 @@ public class GameModel {
     	this.m = m;
     	this.mineCount = mineCount;
     	
-    	this.currentBoard = new GameObjects[n][m];
-    	this.finalBoard = new GameObjects[n][m];
-    	this.mines = new boolean[n][m];
+    	this.currentBoard = new GameObjects[m][n];
+    	this.finalBoard = new GameObjects[m][n];
+    	this.mines = new boolean[m][n];
     	
     	this.mines = genMines(mineCount);
     	this.finalBoard = fillFinalBoard();
@@ -26,8 +26,8 @@ public class GameModel {
 		Random rand = new Random();
 		int mineIndex = 0;
 		while (mineIndex < mineCount) {
-			int x = rand.nextInt(n);
-			int y = rand.nextInt(m);
+			int x = rand.nextInt(m);
+			int y = rand.nextInt(n);
 			if (!mines[x][y]) {
 				mines[x][y] = true;
 				mineIndex++;
@@ -38,7 +38,7 @@ public class GameModel {
 	}
     
 	private GameObjects[][] fillFinalBoard(){
-		GameObjects[][] tempBoard = new GameObjects[n][m];
+		GameObjects[][] tempBoard = new GameObjects[m][n];
 		for (int i = 0; i < mines.length; i++) {
 			for (int j = 0; j < mines[i].length; j++) {
 				if (mines[i][j]) {

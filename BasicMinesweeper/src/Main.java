@@ -15,13 +15,17 @@ public class Main extends Application {
     public static void main(String[] args) {
     	 
     	// HANDLING ARGS
-    	if (args.length != 3) {
+    	/*if (args.length != 3) {
              System.out.println("Not correct number of arguments, please only enter 3");
-        } else {
+         } else {
              n = Integer.parseInt(args[0]);
              m = Integer.parseInt(args[1]);
              mines = Integer.parseInt(args[2]);
-         }
+         }*/
+    	 
+    	 n = 10;
+    	 m = 10;
+    	 mines = 35;
     	 launch(args);
     }
 
