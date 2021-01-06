@@ -89,9 +89,15 @@ public class GameModel {
     	return neighbourBombs;
 	}
 	
+	public GameObjects[][] getCurrentBoard(){
+		return currentBoard;
+	}
 	
-	public void updateField(int x, int y) {
-		System.out.println(x + " " +  y);
+	public void clickField(int x, int y) {
+		if (mines[x][y]) {
+		// \\GAMEOVER	
+		}
+		currentBoard[x][y] = finalBoard[x][y];
 	}
 	
 	public int getN() {
