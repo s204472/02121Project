@@ -36,7 +36,8 @@ public class Controller implements Initializable {
     }
     
     public void createButtons() {
-    	System.out.print(n);
+    	GameObjects[][] board = gameModel.getCurrentBoard();
+
 		for(int i = 0; i < n; i++) {
 			for(int j = 0; j < m; j++) {
 				buttons[i][j] = new Button();
@@ -44,13 +45,20 @@ public class Controller implements Initializable {
 				int x = i;
 				int y = j;
 				buttons[i][j].setOnAction(event -> handleClick(x, y));
+				buttons[i][j].setText(board[i][j] == null ? "" : board[i][j].toString());
 			}
 		}
 	}
+    public void updateButton(int x, int y) {
+    	GameObjects[][] board = gameModel.getCurrentBoard();
+    	buttons[x][y].setText(board[x][y].toString());
+    	
+    }
     
     
     public void handleClick(int x, int y) {
     	gameModel.clickField(x, y);
+    	updateButton(x, y);
     	
     }
 
