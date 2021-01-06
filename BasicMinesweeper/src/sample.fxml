@@ -4,15 +4,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<<<<<<< HEAD
 <GridPane fx:id="gridPane" fx:controller="sample.GameView" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1">
 	<Button fx:id="button"/> 
    </GridPane>
    	
    		// onAction="buttonClickAction""
-=======
-<GridPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
-   
-</GridPane>
->>>>>>> 0d8ef6640c9685b9ec791f4236beaf09f1bab1e2
+
