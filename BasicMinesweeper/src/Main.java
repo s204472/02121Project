@@ -25,6 +25,10 @@ public class Main extends Application {
             	 throw new IllegalArgumentException("Der er noget der driller");
              }
          }
+    	 
+    	 n = 20;
+    	 m = 20;
+    	 mines = 35;
     	 launch(args);
     }
 
@@ -45,7 +49,7 @@ public class Main extends Application {
     	
         GridPane root = (GridPane) loader.load();
         primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setScene(new Scene(root, n*50, m*50));
         primaryStage.show();
         
         
