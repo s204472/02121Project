@@ -1,3 +1,6 @@
+import java.util.IllegalFormatException;
+import java.util.InputMismatchException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,12 +23,12 @@ public class Main extends Application {
 				xSize = Integer.parseInt(args[0]);
 				ySize = Integer.parseInt(args[1]);
 				mines = Integer.parseInt(args[2]);
-				if (xSize >= 100 && xSize <= 4 && ySize >= 100 && ySize <= 4 && mines >= 2000 && mines <= 5 && mines > xSize*ySize) {
+				if (xSize >= 100 || xSize <= 4 || ySize >= 100 || ySize <= 4 || mines >= 2000 || mines <= 5 || mines > (xSize*ySize)) {
 					throw new IllegalArgumentException("Illegal size arguments given");
 				}
 			}
 			launch(args); //lauches the method start
-		} catch(Exception e) {
+		} catch(NumberFormatException e) {
 			throw new IllegalArgumentException("Please enter 3 integers.");
 		}
     }

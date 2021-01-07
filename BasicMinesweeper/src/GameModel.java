@@ -95,6 +95,7 @@ public class GameModel {
 	
 	public boolean checkWin() {
 		if ((xSize * ySize) - mineCount == clickCount) {
+			gameover = true;
 			return true;
 		} else {
 			return false;
