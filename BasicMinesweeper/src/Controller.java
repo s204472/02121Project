@@ -56,15 +56,31 @@ public class Controller implements Initializable {
     public void updateButton(int x, int y) {
     	GameObjects[][] board = gameModel.getCurrentBoard();
     	buttons[x][y].setText(board[x][y].toString());
-    	
     }
     
     //handling user click-input
     public void handleClick(int x, int y) {
     	gameModel.clickField(x, y);
-    	updateButton(x, y);	
+    	updateButton(x, y);
+    	if (gameModel.checkWin()) {
+    		showAll();
+    		buttons[x][y].setStyle("-fx-background-color: #75ff42;");
+    	}
+    	if (gameModel.checkGameover(x, y)) {
+    		showAll();
+    		buttons[x][y].setStyle("-fx-background-color: #ff4242;");
+    	}
+    	
     }
-
+    
+    public void showAll() {
+    	GameObjects[][] finalBoard = gameModel.showAll();
+    	for (int i = 0; i < xSize; i++) {
+    		for (int j = 0; j < ySize; j++) {
+    			buttons[i][j].setText(finalBoard[i][j].toString());
+    		}
+    	}
+    }
 }
 
 

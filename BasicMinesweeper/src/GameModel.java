@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class GameModel {
 	private int xSize;
@@ -7,6 +8,7 @@ public class GameModel {
     private boolean[][] mines;
     private GameObjects[][] currentBoard;
     private GameObjects[][] finalBoard;
+    private int clickCount;
      
     //Constructing a GameModel object, with two boards of the given size and mines. 
     public GameModel(int n, int m, int mineCount) {
@@ -20,6 +22,8 @@ public class GameModel {
     	
     	this.mines = genMines(mineCount);
     	this.finalBoard = fillFinalBoard();
+    	
+    	this.clickCount = 0;
     }
     
 	//Generating the given number of mines in random positions. 
@@ -73,10 +77,8 @@ public class GameModel {
 	}
 	//Reaction to the user clicking a specific field and updating the current-board to a new state.  
 	public void clickField(int x, int y) {
-		if (mines[x][y]) {
-			System.exit(0);
-		}
 		currentBoard[x][y] = finalBoard[x][y];
+		clickCount++;
 	}
 	
 	public int getXSize() {
@@ -86,4 +88,27 @@ public class GameModel {
 	public int getYSize() {
 		return ySize;
 	}
+	
+	public GameObjects[][] showAll() {
+		return finalBoard;
+	}
+	
+	public boolean checkWin() {
+		if ((xSize * ySize) - mineCount == clickCount) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean checkGameover(int x, int y) {
+		if (mines[x][y]) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	
+	
 }
