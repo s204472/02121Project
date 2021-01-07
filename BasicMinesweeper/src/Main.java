@@ -22,7 +22,7 @@ public class Main extends Application {
              ySize = Integer.parseInt(args[1]);
              mines = Integer.parseInt(args[2]);
              if (xSize >= 100 && xSize <= 4 && ySize >= 100 && ySize <= 4 && mines >= 2000 && mines <= 5 && mines > xSize*ySize) {
-            	 throw new IllegalArgumentException("Der er noget der driller");
+            	 throw new IllegalArgumentException("Illegal size arguments given");
              }
          }
     	 launch(args);
