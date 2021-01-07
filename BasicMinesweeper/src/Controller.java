@@ -17,8 +17,7 @@ public class Controller implements Initializable {
 	private GameModel gameModel;
 	private int xSize;
 	private int ySize;
-	private boolean vertical;
-	private int windowSize;
+	private int screenHeight;
 	
 	//construct the Controller objekt, with a given GameModel
 	public Controller(GameModel gameModel) {
@@ -29,17 +28,17 @@ public class Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     	this.xSize = gameModel.getXSize();
     	this.ySize = gameModel.getYSize();
-    	this.vertical = xSize > ySize ? false : true;
     	
     	buttons = new Button[xSize][ySize];
-    
+    	
+    	
+        screenHeight = (int) (Screen.getPrimary().getBounds().getHeight() - 200);
+        
+    	
     	createButtons();
-    
-    	windowSize = (int) (Screen.getPrimary().getBounds().getHeight()) - 200;
-    	gameGrid.setPrefSize(windowSize, windowSize);
-    	System.out.print(windowSize/xSize);
+    	
+    	gameGrid.setPrefSize((screenHeight/ySize+1)*xSize, (screenHeight/ySize+1)*ySize);
     }
-    
    //creates all the Buttons and makes clickable.
     public void createButtons() {
     	
@@ -48,18 +47,10 @@ public class Controller implements Initializable {
 				buttons[i][j] = new Button();
 				
 				// Setting button layout to fit screen
-				if (vertical) {
-					buttons[i][j].setHeight(windowSize / xSize)
-				} else {
-					buttons[i][j].setMinSize(windowSize / xSize, windowSize / xSize);
-					buttons[i][j].setMaxSize(windowSize / xSize + 1, windowSize / xSize + 1);
-				}
-				
-				// String fontSize = "-fx-font-size:" + 10 + "px;";
-				// buttons[i][j].setStyle("-fx-font-size: 10px;");
-				
+				buttons[i][j].setPrefSize(screenHeight/ySize+1,(screenHeight/ySize)+1);
+				buttons[i][j].setStyle(String.format("-fx-font-size: %dpx;", (int)(0.5*screenHeight/ySize)));
+
 				gameGrid.add(buttons[i][j], i, j);
-				
 				
 				int x = i;
 				int y = j;
