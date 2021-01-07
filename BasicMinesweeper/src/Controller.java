@@ -69,6 +69,7 @@ public class Controller implements Initializable {
     
     //handling user click-input
     public void handleClick(int x, int y) {
+    	if(!gameModel.getGameOver()) {
     	gameModel.clickField(x, y);
     	updateButton(x, y);
     	if (gameModel.checkWin()) {
@@ -80,6 +81,7 @@ public class Controller implements Initializable {
     		buttons[x][y].setStyle(String.format("-fx-background-color: #ff4242;-fx-font-size: %dpx;", fontSize));
     	}
     	
+    }
     }
     
     public void showAll() {
