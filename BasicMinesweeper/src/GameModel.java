@@ -1,5 +1,4 @@
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class GameModel {
 	private int xSize;
