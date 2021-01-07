@@ -3,6 +3,5 @@ Button {
 	-fx-border-color: #b3b3b3;
 	-fx-font-weight: bold;
 	-fx-font-family:Montserrat;
-	-fx-margin:0px;
-	-fx-padding:0;
+	-fx-font-size:10px;
 }
