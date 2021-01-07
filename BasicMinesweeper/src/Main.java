@@ -25,10 +25,6 @@ public class Main extends Application {
             	 throw new IllegalArgumentException("Der er noget der driller");
              }
          }
-    	 
-    	 xSize = 20;
-    	 ySize = 20;
-    	 mines = 25;
     	 launch(args);
     }
 

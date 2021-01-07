@@ -52,29 +52,6 @@ public class GameModel {
 	}
 	
 	
-	public String printBoard() {
-		String s = "";
-		for (int i = 0; i < mines.length; i++) {
-			for (int j = 0; j < mines[i].length; j++) {
-				s += mines[i][j] ? "X\t" : "O\t";
-			}
-			s += "\n";
-		}
-		return s;
-	}
-	
-	public String printFinalBoard() {
-		String s = "";
-		for (int i = 0; i < finalBoard.length; i++) {
-			for (int j = 0; j < finalBoard[i].length; j++) {
-				s += finalBoard[i][j] + "\t";
-			}
-			s += "\n\n";
-		}
-		return s;
-	}
-	
-	
 	public int getNeighbours(int x, int y) {
     	int neighbourBombs = 0;
     	for(int i = -1; i < 2; i++) {
