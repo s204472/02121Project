@@ -74,7 +74,7 @@ public class Controller implements Initializable {
     	updateButton(x, y);
     	if (gameModel.checkWin()) {
     		showAll();
-    		buttons[x][y].setStyle(String.format("-fx-background-color: #75ff42;", fontSize));
+    		buttons[x][y].setStyle(String.format("-fx-background-color: #75ff42;-fx-font-size: %dpx;", fontSize));
     	}
     	if (gameModel.checkGameover(x, y)) {
     		showAll();
