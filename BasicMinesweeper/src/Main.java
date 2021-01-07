@@ -14,7 +14,7 @@ public class Main extends Application {
 	
     public static void main(String[] args) {
     	 
-    	// HANDLING ARGS
+    	// Handling arguments from the command line.
     	if (args.length != 3) {
              System.out.println("Not correct number of arguments, please only enter 3"); 
     	} else {
@@ -25,7 +25,7 @@ public class Main extends Application {
             	 throw new IllegalArgumentException("Illegal size arguments given");
              }
          }
-    	 launch(args);
+    	 launch(args); //lauches the method start
     }
 
     public void start(Stage primaryStage) throws Exception{
@@ -44,7 +44,7 @@ public class Main extends Application {
     	
     	
         GridPane root = (GridPane) loader.load();
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Basic-Minesweeper");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();

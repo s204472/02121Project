@@ -8,20 +8,21 @@ public class GameModel {
     private GameObjects[][] currentBoard;
     private GameObjects[][] finalBoard;
      
-    
+    //Constructing a GameModel object, with two boards of the given size and mines. 
     public GameModel(int n, int m, int mineCount) {
     	this.xSize = n;
     	this.ySize = m;
     	this.mineCount = mineCount;
     	
-    	this.currentBoard = new GameObjects[n][m];
-    	this.finalBoard = new GameObjects[n][m];
+    	this.currentBoard = new GameObjects[n][m]; //representing the board displayed to the player
+    	this.finalBoard = new GameObjects[n][m]; // representing the solution
     	this.mines = new boolean[n][m];
     	
     	this.mines = genMines(mineCount);
     	this.finalBoard = fillFinalBoard();
     }
-	
+    
+	//Generating the given number of mines in random positions. 
 	private boolean[][] genMines(int mineCount) {
 		Random rand = new Random();
 		int mineIndex = 0;
@@ -36,7 +37,8 @@ public class GameModel {
 		
 		return mines;
 	}
-    
+	
+    //Fills the final board with mines and numbers representing the number of neighbouring mines. 
 	private GameObjects[][] fillFinalBoard(){
 		GameObjects[][] tempBoard = new GameObjects[xSize][ySize];
 		for (int i = 0; i < mines.length; i++) {
@@ -51,7 +53,7 @@ public class GameModel {
 		return tempBoard;
 	}
 	
-	
+	//Returns the number of neighbouring mines to a given field.
 	public int getNeighbours(int x, int y) {
     	int neighbourBombs = 0;
     	for(int i = -1; i < 2; i++) {
@@ -69,7 +71,7 @@ public class GameModel {
 	public GameObjects[][] getCurrentBoard(){
 		return currentBoard;
 	}
-	
+	//Reaction to the user clicking a specific field and updating the current-board to a new state.  
 	public void clickField(int x, int y) {
 		if (mines[x][y]) {
 			System.exit(0);
