@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.stage.Screen;
 
 public class Main extends Application {
 	private static int xSize;
@@ -44,7 +45,8 @@ public class Main extends Application {
     	
     	
         GridPane root = (GridPane) loader.load();
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Hello World"); 
+        
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
