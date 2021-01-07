@@ -2,10 +2,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -14,8 +10,10 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Screen;
 import javafx.stage.Stage;	
 
+	
+//Initializable makes the class able to interact with FXML file.
 public class Controller implements Initializable {
-	@FXML
+	@FXML //loading GridPane from the FXML file
 	public GridPane gameGrid;
 	@FXML
 	public Button[][] buttons;
@@ -25,11 +23,12 @@ public class Controller implements Initializable {
 	private int ySize;
 	private int screenHeight;
 	
+	//construct the Controller objekt, with a given GameModel
 	public Controller(GameModel gameModel) {
 		this.gameModel = gameModel;
 	}
 	
-    @Override
+    @Override 
     public void initialize(URL location, ResourceBundle resources) {
     	this.xSize = gameModel.getXSize();
     	this.ySize = gameModel.getYSize();
@@ -44,8 +43,9 @@ public class Controller implements Initializable {
     	
     	gameGrid.setPrefSize((screenHeight/ySize+1)*xSize, (screenHeight/ySize+1)*ySize);
     }
-    
+   //creates all the Buttons and makes clickable.
     public void createButtons() {
+    	
 		for(int i = 0; i < xSize; i++) {
 			for(int j = 0; j < ySize; j++) {
 				buttons[i][j] = new Button();
@@ -58,24 +58,39 @@ public class Controller implements Initializable {
 				
 				int x = i;
 				int y = j;
-				buttons[i][j].setOnAction(event -> handleClick(x, y));
+				buttons[i][j].setOnAction(event -> handleClick(x, y)); //makes each button able to handle a click. 
 			}
 		}
-
-    }
+	}
+    //changing the appearance of a button 
     public void updateButton(int x, int y) {
     	GameObjects[][] board = gameModel.getCurrentBoard();
     	buttons[x][y].setText(board[x][y].toString());
-    	
     }
     
-    
+    //handling user click-input
     public void handleClick(int x, int y) {
     	gameModel.clickField(x, y);
     	updateButton(x, y);
+    	if (gameModel.checkWin()) {
+    		showAll();
+    		buttons[x][y].setStyle("-fx-background-color: #75ff42;");
+    	}
+    	if (gameModel.checkGameover(x, y)) {
+    		showAll();
+    		buttons[x][y].setStyle("-fx-background-color: #ff4242;");
+    	}
     	
     }
-
+    
+    public void showAll() {
+    	GameObjects[][] finalBoard = gameModel.showAll();
+    	for (int i = 0; i < xSize; i++) {
+    		for (int j = 0; j < ySize; j++) {
+    			buttons[i][j].setText(finalBoard[i][j].toString());
+    		}
+    	}
+    }
 }
 
 
