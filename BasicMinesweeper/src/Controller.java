@@ -2,14 +2,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.stage.Screen;
 import javafx.stage.Stage;	
+
+	
 //Initializable makes the class able to interact with FXML file.
 public class Controller implements Initializable {
 	@FXML //loading GridPane from the FXML file
@@ -20,6 +21,8 @@ public class Controller implements Initializable {
 	private GameModel gameModel;
 	private int xSize;
 	private int ySize;
+	private int screenHeight;
+	
 	//construct the Controller objekt, with a given GameModel
 	public Controller(GameModel gameModel) {
 		this.gameModel = gameModel;
@@ -30,10 +33,15 @@ public class Controller implements Initializable {
     	this.xSize = gameModel.getXSize();
     	this.ySize = gameModel.getYSize();
     	
-    	gameGrid.add(new Button(), 1, 1);
     	buttons = new Button[xSize][ySize];
     	
+    	
+        screenHeight = (int) (Screen.getPrimary().getBounds().getHeight() - 200);
+        
+    	
     	createButtons();
+    	
+    	gameGrid.setPrefSize((screenHeight/ySize+1)*xSize, (screenHeight/ySize+1)*ySize);
     }
    //creates all the Buttons and makes clickable.
     public void createButtons() {
@@ -42,8 +50,10 @@ public class Controller implements Initializable {
 			for(int j = 0; j < ySize; j++) {
 				buttons[i][j] = new Button();
 				
-				// Setting button layout
-				buttons[i][j].setPrefSize(40,40);
+				// Setting button layout to fit screen
+				buttons[i][j].setPrefSize(screenHeight/ySize+1,(screenHeight/ySize)+1);
+				buttons[i][j].setStyle(String.format("-fx-font-size: %dpx;", (int)(0.8*screenHeight/ySize)));
+
 				gameGrid.add(buttons[i][j], i, j);
 				
 				int x = i;
