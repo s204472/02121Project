@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 import javafx.stage.Screen;
 
 	
@@ -18,6 +19,7 @@ public class Controller implements Initializable {
 	private int xSize;
 	private int ySize;
 	private int screenHeight;
+	private int fontSize;
 	
 	//construct the Controller objekt, with a given GameModel
 	public Controller(GameModel gameModel) {
@@ -48,7 +50,8 @@ public class Controller implements Initializable {
 				
 				// Setting button layout to fit screen
 				buttons[i][j].setPrefSize(screenHeight/ySize+1,(screenHeight/ySize)+1);
-				buttons[i][j].setStyle(String.format("-fx-font-size: %dpx;", (int)(0.5*screenHeight/ySize)));
+				fontSize = (int)(0.5*screenHeight/ySize);
+				buttons[i][j].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 
 				gameGrid.add(buttons[i][j], i, j);
 				
@@ -66,17 +69,19 @@ public class Controller implements Initializable {
     
     //handling user click-input
     public void handleClick(int x, int y) {
+    	if(!gameModel.getGameOver()) {
     	gameModel.clickField(x, y);
     	updateButton(x, y);
     	if (gameModel.checkWin()) {
     		showAll();
-    		buttons[x][y].setStyle("-fx-background-color: #75ff42;");
+    		buttons[x][y].setStyle(String.format("-fx-background-color: #75ff42;", fontSize));
     	}
     	if (gameModel.checkGameover(x, y)) {
     		showAll();
-    		buttons[x][y].setStyle("-fx-background-color: #ff4242;");
+    		buttons[x][y].setStyle(String.format("-fx-background-color: #ff4242;-fx-font-size: %dpx;", fontSize));
     	}
     	
+    }
     }
     
     public void showAll() {

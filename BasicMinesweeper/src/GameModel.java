@@ -1,6 +1,7 @@
 import java.util.Random;
 
 public class GameModel {
+	public boolean gameover =false;
 	private int xSize;
 	private int ySize;
 	private int mineCount;
@@ -102,10 +103,14 @@ public class GameModel {
 	
 	public boolean checkGameover(int x, int y) {
 		if (mines[x][y]) {
+			gameover = true;
 			return true;
 		} else {
 			return false;
 		}
+	}
+	public boolean getGameOver() {
+		return gameover;
 	}
 
 	
