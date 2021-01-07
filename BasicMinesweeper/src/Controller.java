@@ -4,11 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Screen;
-import javafx.stage.Stage;	
 
 	
 //Initializable makes the class able to interact with FXML file.
@@ -52,7 +48,7 @@ public class Controller implements Initializable {
 				
 				// Setting button layout to fit screen
 				buttons[i][j].setPrefSize(screenHeight/ySize+1,(screenHeight/ySize)+1);
-				buttons[i][j].setStyle(String.format("-fx-font-size: %dpx;", (int)(0.8*screenHeight/ySize)));
+				buttons[i][j].setStyle(String.format("-fx-font-size: %dpx;", (int)(0.5*screenHeight/ySize)));
 
 				gameGrid.add(buttons[i][j], i, j);
 				
