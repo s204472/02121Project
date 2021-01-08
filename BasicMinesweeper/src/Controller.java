@@ -31,15 +31,15 @@ public class Controller implements Initializable {
     	this.xSize = gameModel.getXSize();
     	this.ySize = gameModel.getYSize();
     	
-    	buttons = new Button[xSize][ySize];
+    	this.buttons = new Button[xSize][ySize];
     	
-    	
-        screenHeight = (int) (Screen.getPrimary().getBounds().getHeight() - 200);
-        
+        this.screenHeight = (int) (Screen.getPrimary().getBounds().getHeight() - 200);
+        double fontMultiplier = xSize > 50 || ySize > 50 ? 0.7 : 0.3; 
+        this.fontSize = (int)(fontMultiplier * screenHeight / ySize);
     	
     	createButtons();
     	
-    	gameGrid.setPrefSize((screenHeight/ySize+1)*xSize, (screenHeight/ySize+1)*ySize);
+    	gameGrid.setPrefSize((screenHeight / ySize + 1) * xSize, (screenHeight / ySize + 1) * ySize);
     }
    //creates all the Buttons and makes clickable.
     public void createButtons() {
@@ -49,8 +49,8 @@ public class Controller implements Initializable {
 				buttons[i][j] = new Button();
 				
 				// Setting button layout to fit screen
-				buttons[i][j].setPrefSize(screenHeight/ySize+1,(screenHeight/ySize)+1);
-				fontSize = (int)(0.5*screenHeight/ySize);
+				buttons[i][j].setPrefSize(screenHeight / ySize+1, (screenHeight / ySize) + 1);
+				
 				buttons[i][j].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 
 				gameGrid.add(buttons[i][j], i, j);
@@ -74,11 +74,13 @@ public class Controller implements Initializable {
     	updateButton(x, y);
     	if (gameModel.checkWin()) {
     		showAll();
-    		buttons[x][y].setStyle(String.format("-fx-background-color: #75ff42;-fx-font-size: %dpx;", fontSize));
+    		buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
+    		buttons[x][y].getStyleClass().add("button-won");
     	}
     	if (gameModel.checkGameover(x, y)) {
     		showAll();
-    		buttons[x][y].setStyle(String.format("-fx-background-color: #ff4242;-fx-font-size: %dpx;", fontSize));
+    		buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
+    		buttons[x][y].getStyleClass().add("button-lost");
     	}
     	
     }

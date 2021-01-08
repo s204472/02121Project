@@ -6,3 +6,10 @@ Button {
 	-fx-margin:0px;
 	-fx-padding:0;
 }
+
+.button-won {
+	-fx-background-color: #75ff42;
+}
+.button-lost {
+	-fx-background-color: #ff4242;
+}
