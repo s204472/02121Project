@@ -2,7 +2,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
@@ -22,6 +26,8 @@ public class Controller implements Initializable {
 	public TextField inputY;
 	@FXML 
 	public TextField inputMines;
+	@FXML 
+	public Label timer;
 	
 	private GameModel gameModel;
 	private int xSize;
@@ -58,9 +64,9 @@ public class Controller implements Initializable {
 				buttons[i][j].setOnMouseClicked(event -> 
 				{
 					if(event.getButton() == MouseButton.PRIMARY) {
-						handleClick(x, y);
-					} else if (event.getButton() == MouseButton.SECONDARY) {
 						handleLeftClick(x, y);
+					} else if (event.getButton() == MouseButton.SECONDARY) {
+						handleRightClick(x, y);
 					}
 				}); 
 			}
@@ -81,7 +87,7 @@ public class Controller implements Initializable {
     }
     
     //handling user click-input
-	public void handleClick(int x, int y) {
+	public void handleLeftClick(int x, int y) {
 		if (!gameModel.getGameOver()) {
 			gameModel.clickField(x, y);
 			updateButton(x, y);
@@ -98,7 +104,7 @@ public class Controller implements Initializable {
 
 		}
 	}
-	public void handleLeftClick(int x, int y) {
+	public void handleRightClick(int x, int y) {
 		GameObjects[][] board = gameModel.getCurrentBoard();
 		if (!gameModel.getGameOver()) {
 			if(gameModel.checkFlag(x, y)) {
@@ -147,8 +153,19 @@ public class Controller implements Initializable {
         this.fontSize = (int)(fontMultiplier * screenHeight / ySize);
     	
     	createButtons();
-    	
+    	updateTimer();
     }
+    
+    public void updateTimer() {
+    	Timer clock = new Timer();
+        clock.schedule(new TimerTask() {
+        	@Override
+        	public void run() {
+        	
+        	}
+        }, 0, 1000);
+    }
+    
     
     
 }

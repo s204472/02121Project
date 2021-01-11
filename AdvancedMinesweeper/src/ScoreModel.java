@@ -3,7 +3,7 @@ import java.util.Date;
 
 public class ScoreModel {
 	private Date timeStart;
-	private int Score;
+	private int score;
 	
 	public ScoreModel (int mapSizeTotal, int mines) {
 		

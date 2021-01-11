@@ -31,6 +31,7 @@
    				<TextField fx:id="inputMines" styleClass="inputField"/>
    			</VBox>
    			<Button fx:id="startButton" text="Start" onAction="#startGame"/>
+   			<Label fx:id="timer" text="s"/>
 		</HBox>
 	</top>
 	<center>
