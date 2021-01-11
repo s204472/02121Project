@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -27,27 +28,28 @@ public class Main extends Application {
 					throw new IllegalArgumentException("Illegal size arguments given");
 				}
 			}
-			launch(args); //lauches the method start
 		} catch(NumberFormatException e) {
 			throw new IllegalArgumentException("Please enter 3 integers.");
 		}
+    		
+		launch(args); //lauches the method start
+		
     }
 
 	public void start(Stage primaryStage) throws Exception {
-
-		GameModel gameModel = new GameModel(xSize, ySize, mines);
+		
 
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getResource("view.fxml"));
 		loader.setControllerFactory(new Callback<Class<?>, Object>() {
 			@Override
 			public Object call(Class<?> aClass) {
-				return new Controller(gameModel);
+				return new Controller();
 			}
 		});
 
 		GridPane root = (GridPane) loader.load();
-		primaryStage.setTitle("Basic-Minesweeper");
+		primaryStage.setTitle("Minesweeper");
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
 		primaryStage.show();
