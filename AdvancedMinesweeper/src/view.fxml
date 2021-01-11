@@ -2,42 +2,10 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.Button?>
 
 
-<BorderPane fx:id="layout" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller"
+<GridPane fx:id="gameGrid" hgap="0.0" vgap="0.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller"
 	stylesheets="@styles.css">
-	<top>
-		<HBox>
-			<VBox>
-				<Label styleClass="inputLabel" text="SizeX"/>
-   				<TextField fx:id="inputX" styleClass="inputField"/>
-   			</VBox>
-   			<VBox>
-				<Label styleClass="inputLabel" text="SizeY"/>
-   				<TextField fx:id="inputY" styleClass="inputField"/>
-   			</VBox>
-   			<VBox>
-				<Label styleClass="inputLabel" text="Mines"/>
-   				<TextField fx:id="inputMines" styleClass="inputField"/>
-   			</VBox>
-   			<Button fx:id="startButton" text="Start" onAction="#startGame"/>
-		</HBox>
-	</top>
-	<center>
-		<GridPane fx:id="gameGrid">
 
 	
-		</GridPane>
-	</center>
-	
-</BorderPane>
+</GridPane>
