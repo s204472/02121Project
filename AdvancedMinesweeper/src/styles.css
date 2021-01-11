@@ -1,0 +1,15 @@
+Button {
+	-fx-background-color: #e0e0e0;
+	-fx-border-color: #b3b3b3;
+	-fx-font-weight: bold;
+	-fx-font-family:Montserrat;
+	-fx-margin:0px;
+	-fx-padding:0;
+}
+
+.button-won {
+	-fx-background-color: #75ff42;
+}
+.button-lost {
+	-fx-background-color: #ff4242;
+}
