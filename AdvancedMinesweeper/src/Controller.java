@@ -3,7 +3,11 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
+<<<<<<< HEAD
 import javafx.scene.input.MouseButton;
+=======
+import javafx.scene.control.TextField;
+>>>>>>> e06909357796364aee444cde45e6b85745cf9b4a
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
@@ -15,43 +19,39 @@ public class Controller implements Initializable {
 	public GridPane gameGrid;
 	@FXML
 	public Button[][] buttons;
+	@FXML 
+	public TextField inputX;
+	@FXML 
+	public TextField inputY;
+	@FXML 
+	public TextField inputMines;
 	
 	private GameModel gameModel;
 	private int xSize;
 	private int ySize;
+	private int mines;
 	private int screenHeight;
 	private int fontSize;
 	
 	//construct the Controller objekt, with a given GameModel
-	public Controller(GameModel gameModel) {
-		this.gameModel = gameModel;
+	public Controller() {
+		
 	}
 	
     @Override 
-    public void initialize(URL location, ResourceBundle resources) {
-    	this.xSize = gameModel.getXSize();
-    	this.ySize = gameModel.getYSize();
-    	
-    	this.buttons = new Button[xSize][ySize];
-    	
-        this.screenHeight = (int) (Screen.getPrimary().getBounds().getHeight() - 200);
-        double fontMultiplier = xSize > 50 || ySize > 50 ? 0.7 : 0.3; 
-        this.fontSize = (int)(fontMultiplier * screenHeight / ySize);
-    	
-    	createButtons();
-    	
-    	gameGrid.setPrefSize((screenHeight / ySize + 1) * xSize, (screenHeight / ySize + 1) * ySize);
+    public void initialize(URL location, ResourceBundle resources) {    	
+    	screenHeight = (int) (Screen.getPrimary().getBounds().getHeight() - 200);
+    	gameGrid.setPrefSize(screenHeight, screenHeight - 100);
     }
    //creates all the Buttons and makes clickable.
     public void createButtons() {
-    	
 		for(int i = 0; i < xSize; i++) {
 			for(int j = 0; j < ySize; j++) {
 				buttons[i][j] = new Button();
 				
 				// Setting button layout to fit screen
 				buttons[i][j].setPrefSize(screenHeight / ySize+1, (screenHeight / ySize) + 1);
-				
+				buttons[i][j].getStyleClass().add("gameButtons");
 				buttons[i][j].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 
 				gameGrid.add(buttons[i][j], i, j);
@@ -116,6 +116,35 @@ public class Controller implements Initializable {
     			buttons[i][j].setText(finalBoard[i][j].toString());
     		}
     	}
+    }
+    
+    public void cleanBoard() {
+    	for (int i = 0; i < xSize; i++) {
+    		for (int j = 0; j < ySize; j++) {
+    			gameGrid.getChildren().remove(buttons[i][j]);
+    		}
+    	}
+    	
+    	
+    }
+    
+    public void startGame() {
+    	cleanBoard();
+    	
+    	xSize = Integer.parseInt(inputX.getText());
+    	ySize = Integer.parseInt(inputY.getText());
+    	mines = Integer.parseInt(inputMines.getText());
+    	
+    	gameModel = new GameModel(xSize, ySize, mines);
+    	
+    	buttons = new Button[xSize][ySize];
+    	
+    	
+    	double fontMultiplier = xSize > 50 || ySize > 50 ? 0.7 : 0.3; 
+        this.fontSize = (int)(fontMultiplier * screenHeight / ySize);
+    	
+    	createButtons();
+    	
     }
     
     
