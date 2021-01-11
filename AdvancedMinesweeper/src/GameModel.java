@@ -9,6 +9,7 @@ public class GameModel {
     private GameObjects[][] currentBoard;
     private GameObjects[][] finalBoard;
     private int clickCount;
+    
      
     //Constructing a GameModel object, with two boards of the given size and mines. 
     public GameModel(int n, int m, int mineCount) {
@@ -123,6 +124,22 @@ public class GameModel {
 		return gameover;
 	}
 	
+	public void setFlag(int x, int y) {
+		currentBoard[x][y] = new Flag();
+	}
+
+	public void removeFlag(int x, int y) {
+		((Flag) currentBoard[x][y]).toggleVisible();;
+	}
+
+	public boolean checkFlag (int x, int y) {
+		if (currentBoard[x][y] instanceof Flag) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	
 
 	
