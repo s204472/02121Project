@@ -3,11 +3,8 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
-<<<<<<< HEAD
 import javafx.scene.input.MouseButton;
-=======
 import javafx.scene.control.TextField;
->>>>>>> e06909357796364aee444cde45e6b85745cf9b4a
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
