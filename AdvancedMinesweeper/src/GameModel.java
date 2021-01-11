@@ -3,7 +3,7 @@ import java.util.Date;
 
 
 public class GameModel {
-	public boolean gameover =false;
+	public boolean gameover;
 	private int xSize;
 	private int ySize;
 	private int mineCount;
@@ -27,6 +27,7 @@ public class GameModel {
     	this.mines = genMines(mineCount);
     	this.finalBoard = fillFinalBoard();
     	
+    	this.gameover = false;
     	this.clickCount = 0;
     	
     	this.scoreModel = new ScoreModel(n*m,mineCount);

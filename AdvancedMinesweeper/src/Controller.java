@@ -176,6 +176,9 @@ public class Controller implements Initializable {
         clock.schedule(new TimerTask() {
         	@Override
         	public void run() {
+        		if (gameModel.checkWin() || gameModel.getGameOver()) {
+        			clock.cancel();
+        		}
         		updateTimer();
         	}
         }, 0, 1000);
