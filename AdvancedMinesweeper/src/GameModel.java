@@ -88,6 +88,15 @@ public class GameModel {
 	public int getYSize() {
 		return ySize;
 	}
+	public void setXSize(int xSize) {
+		this.xSize = xSize;
+	}
+	public void setYSize(int ySize) {
+		this.ySize = ySize;
+	}
+	public void setMines(int mines) {
+		this.mineCount = mines;
+	}
 	
 	public GameObjects[][] showAll() {
 		return finalBoard;

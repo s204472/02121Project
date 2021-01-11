@@ -1,4 +1,4 @@
-Button {
+.gameButtons {
 	-fx-background-color: #e0e0e0;
 	-fx-border-color: #b3b3b3;
 	-fx-font-weight: bold;
@@ -12,4 +12,20 @@ Button {
 }
 .button-lost {
 	-fx-background-color: #ff4242;
+}
+.inputField {
+    -fx-background-color: #a9a9a9, #fff;
+    -fx-pref-width:100px;
+}
+
+.inputField:focused {
+    -fx-background-color: #a9a9a9, #fefefe;	
+}
+.inputLabel {
+	-fx-font-family:Montserrat;
+	-fx-margin:0px;
+	-fx-padding:5px 0px;
+}
+#startButton {
+	
 }
