@@ -139,7 +139,7 @@ public class GameModel {
 	}
 
 	public void removeFlag(int x, int y) {
-		((Flag) currentBoard[x][y]).toggleVisible();;
+		currentBoard[x][y] = null;
 	}
 
 	public boolean checkFlag (int x, int y) {

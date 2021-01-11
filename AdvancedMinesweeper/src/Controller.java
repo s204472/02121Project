@@ -69,7 +69,15 @@ public class Controller implements Initializable {
     //changing the appearance of a button 
     public void updateButton(int x, int y) {
     	GameObjects[][] board = gameModel.getCurrentBoard();
-    	buttons[x][y].setText(board[x][y].toString());
+    	if (board[x][y] instanceof Flag) {
+    		buttons[x][y].setText("P");
+    	} else if (board[x][y] instanceof Mine) {
+    		buttons[x][y].setText("X");
+    	} else if (board[x][y] instanceof Number) {
+    		buttons[x][y].setText(board[x][y].toString());
+    	} else {
+    		buttons[x][y].setText("");
+    	}
     }
     
     //handling user click-input
