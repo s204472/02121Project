@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import java.net.URL;
@@ -88,6 +89,11 @@ public class Controller implements Initializable {
     
     //handling user click-input
 	public void handleLeftClick(int x, int y) {
+		if (gameModel.getClickCount() == 0) {
+			gameModel.getScoreModel().startTimer();
+	    	startTimer();
+		}
+		
 		if (!gameModel.getGameOver()) {
 			gameModel.clickField(x, y);
 			updateButton(x, y);
@@ -142,6 +148,7 @@ public class Controller implements Initializable {
     public void startGame() {
     	cleanBoard();
     	
+    			
     	xSize = Integer.parseInt(inputX.getText());
     	ySize = Integer.parseInt(inputY.getText());
     	mines = Integer.parseInt(inputMines.getText());
@@ -155,15 +162,21 @@ public class Controller implements Initializable {
         this.fontSize = (int)(fontMultiplier * screenHeight / ySize);
     	
     	createButtons();
-    	updateTimer();
+    	
+    	
+    	
+    }
+    public void updateTimer() {
+    	Platform.runLater(() -> timer.setText(gameModel.getScoreModel().getTimeElapsed()));
+    	
     }
     
-    public void updateTimer() {
+    public void startTimer() {
     	Timer clock = new Timer();
         clock.schedule(new TimerTask() {
         	@Override
         	public void run() {
-        	
+        		updateTimer();
         	}
         }, 0, 1000);
     }

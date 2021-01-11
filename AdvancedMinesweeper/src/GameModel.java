@@ -83,7 +83,6 @@ public class GameModel {
 	}
 	//Reaction to the user clicking a specific field and updating the current-board to a new state.  
 	public void clickField(int x, int y) {
-		// Starts the game timer on users first click.
 		if (clickCount == 0) {
 	    	scoreModel.startTimer();
 		}
@@ -98,6 +97,9 @@ public class GameModel {
 	
 	public int getYSize() {
 		return ySize;
+	}
+	public int getClickCount() {
+		return clickCount;
 	}
 	public void setXSize(int xSize) {
 		this.xSize = xSize;
