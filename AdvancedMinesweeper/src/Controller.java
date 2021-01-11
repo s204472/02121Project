@@ -81,11 +81,13 @@ public class Controller implements Initializable {
 				showAll();
 				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 				buttons[x][y].getStyleClass().add("button-won");
+				System.out.print(gameModel.getScoreModel().getTimeElapsed());
 			}
 			if (gameModel.checkGameover(x, y)) {
 				showAll();
 				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 				buttons[x][y].getStyleClass().add("button-lost");
+				System.out.print(gameModel.getScoreModel().getTimeElapsed());
 			}
 
 		}
