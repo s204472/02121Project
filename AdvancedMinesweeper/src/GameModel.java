@@ -1,3 +1,4 @@
+import java.util.Date;
 import java.util.Random;
 
 public class GameModel {
@@ -9,6 +10,7 @@ public class GameModel {
     private GameObjects[][] currentBoard;
     private GameObjects[][] finalBoard;
     private int clickCount;
+    private ScoreModel scoreModel;
     public boolean Flag = false;
      
     //Constructing a GameModel object, with two boards of the given size and mines. 
@@ -25,6 +27,9 @@ public class GameModel {
     	this.finalBoard = fillFinalBoard();
     	
     	this.clickCount = 0;
+    	
+    	this.scoreModel = new ScoreModel(n*m,mineCount);
+    	
     }
     
 	//Generating the given number of mines in random positions. 
@@ -78,6 +83,11 @@ public class GameModel {
 	}
 	//Reaction to the user clicking a specific field and updating the current-board to a new state.  
 	public void clickField(int x, int y) {
+		// Starts the game timer on users first click.
+		if (clickCount == 0) {
+	    	scoreModel.startTimer();
+		}
+		
 		currentBoard[x][y] = finalBoard[x][y];
 		clickCount++;
 	}
@@ -124,6 +134,9 @@ public class GameModel {
 		return gameover;
 	}
 	
+	public ScoreModel getScoreModel() {
+		return scoreModel;
+	}
 	public void setFlag(int x, int y) {
 		currentBoard[x][y] = new Flag();
 	}

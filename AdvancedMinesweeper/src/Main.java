@@ -32,8 +32,6 @@ public class Main extends Application {
 			}
 		});
 
-
-		
 		BorderPane root = (BorderPane) loader.load();
 		primaryStage.setTitle("Minesweeper");
 		Scene scene = new Scene(root);
