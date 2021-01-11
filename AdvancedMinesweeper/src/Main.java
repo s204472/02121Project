@@ -15,13 +15,12 @@ public class Main extends Application {
 	private static int mines;
 
 	public static void main(String[] args) {
-    		
 		launch(args); //lauches the method start
-		
     }
 
 	public void start(Stage primaryStage) throws Exception {
-		
+
+		GameModel gameModel = new GameModel(xSize, ySize, mines);
 
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getResource("view.fxml"));
@@ -33,7 +32,7 @@ public class Main extends Application {
 		});
 
 		BorderPane root = (BorderPane) loader.load();
-		primaryStage.setTitle("Advanced-Minesweeper");
+		primaryStage.setTitle("Minesweeper");
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
 		primaryStage.show();
