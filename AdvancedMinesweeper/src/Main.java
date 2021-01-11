@@ -23,7 +23,11 @@ public class Main extends Application {
 				xSize = Integer.parseInt(args[0]);
 				ySize = Integer.parseInt(args[1]);
 				mines = Integer.parseInt(args[2]);
+<<<<<<< HEAD
 				if (xSize > 100 || xSize < 4 || ySize > 100 || ySize < 4 || mines > 2000 || mines < 4 || mines >= (xSize*ySize)) {
+=======
+				if (xSize > 100 || xSize < 4 || ySize > 100 || ySize < 4 || mines > 2000 || mines < 5 || mines >= (xSize*ySize)) {
+>>>>>>> parent of 308f202... Flag added
 					throw new IllegalArgumentException("Illegal size arguments given");
 				}
 			}
@@ -47,7 +51,11 @@ public class Main extends Application {
 		});
 
 		GridPane root = (GridPane) loader.load();
+<<<<<<< HEAD
 		primaryStage.setTitle("Basic-Minesweeper");
+=======
+		primaryStage.setTitle("Minesweeper");
+>>>>>>> parent of 308f202... Flag added
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
 		primaryStage.show();

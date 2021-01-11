@@ -3,11 +3,13 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
-<<<<<<< HEAD
 import javafx.scene.input.MouseButton;
+<<<<<<< HEAD
 import javafx.scene.control.TextField;
 =======
 >>>>>>> parent of 13c7208... Merge branch 'main' of https://github.com/s204472/02121Project into main
+=======
+>>>>>>> parent of 308f202... Flag added
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
