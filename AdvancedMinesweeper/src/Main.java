@@ -47,7 +47,7 @@ public class Main extends Application {
 		});
 
 		GridPane root = (GridPane) loader.load();
-		primaryStage.setTitle("Basic-Minesweeper");
+		primaryStage.setTitle("Minesweeper");
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
 		primaryStage.show();

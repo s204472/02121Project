@@ -3,6 +3,7 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
@@ -57,10 +58,18 @@ public class Controller implements Initializable {
 				
 				int x = i;
 				int y = j;
-				buttons[i][j].setOnAction(event -> handleClick(x, y)); //makes each button able to handle a click. 
+				buttons[i][j].setOnMouseClicked(event -> 
+				{
+					if(event.getButton() == MouseButton.PRIMARY) {
+						handleClick(x, y);
+					} else if (event.getButton() == MouseButton.SECONDARY) {
+						handleLeftClick(x, y);
+					}
+				});
+				
+				} //makes each button able to handle a click. 
 			}
 		}
-	}
     //changing the appearance of a button 
     public void updateButton(int x, int y) {
     	GameObjects[][] board = gameModel.getCurrentBoard();
@@ -83,6 +92,20 @@ public class Controller implements Initializable {
 				buttons[x][y].getStyleClass().add("button-lost");
 			}
 
+		}
+	}
+	
+	public void handleLeftClick(int x, int y) {
+		GameObjects[][] board = gameModel.getCurrentBoard();
+		if (!gameModel.getGameOver()) {
+			if(gameModel.checkFlag(x, y)) {
+				gameModel.removeFlag(x, y);
+				updateButton(x, y);
+			} else if (board[x][y] == null) {
+				gameModel.setFlag(x, y);
+				updateButton(x,y);
+			}
+			
 		}
 	}
     
