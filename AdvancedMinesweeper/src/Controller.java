@@ -49,8 +49,7 @@ public class Controller implements Initializable {
 		
 	}
 	
-<<<<<<< HEAD
-=======
+
 	public void startGame() {
 		cleanBoard();
 		if (isTimerRunning) {
@@ -99,7 +98,6 @@ public class Controller implements Initializable {
 			}
 		}
 	}
->>>>>>> f29d79de5455ee91221e98748d5af69f2c52efdc
 
 	// creates all the Buttons and makes clickable.
 	public void createButtons() {
@@ -220,6 +218,7 @@ public class Controller implements Initializable {
 					buttons[i][j].setGraphic(((Mine) finalBoard[i][j]).getMineImage(screenHeight, ySize));
 				} else {
 					buttons[i][j].setText(finalBoard[i][j].toString());
+					buttons[i][j].getStyleClass().add("number1");	
 				}
 			}
 		}

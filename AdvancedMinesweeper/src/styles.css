@@ -62,3 +62,6 @@
 .menuContainer {
 	-fx-padding: 5px 10px;
 }
+.number1 {
+	-fx-text-fill: #0000ff;
+}
