@@ -78,8 +78,21 @@ public class GameModel {
 	//Reaction to the user clicking a specific field and updating the current-board to a new state.  
 	public void clickField(int x, int y) {
 		currentBoard[x][y] = finalBoard[x][y];
+		if (currentBoard[x][y] instanceof Number) {
+			Number test = (Number) currentBoard[x][y];
+			if (test.getValue() == 0) {
+				for (int i = x - 1; i <= x + 1; i++) {
+					for (int j = y - 1; j <= y + 1; j++) {
+						if((i!=x || j!=y) && i>=0 && i<currentBoard.length && j>=0 && j<currentBoard[i].length && currentBoard[i][j]==null) {
+							clickField(i,j);
+						}
+						}
+					}
+				}
+			} 
 		clickCount++;
-	}
+		}
+	
 	
 	public int getXSize() {
 		return xSize;

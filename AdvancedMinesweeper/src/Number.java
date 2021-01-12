@@ -8,5 +8,8 @@ public class Number extends GameObjects {
 	public String toString() {
 		return "" + val;
 	}
+	public int getValue() {
+		return val;
+	}
 }
 
