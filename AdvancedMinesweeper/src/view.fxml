@@ -4,6 +4,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Label?>
@@ -17,21 +18,27 @@
 <BorderPane fx:id="layout" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller"
 	stylesheets="@styles.css">
 	<top>
-		<HBox>
-			<VBox>
-				<Label styleClass="inputLabel" text="SizeX"/>
-   				<TextField fx:id="inputX" styleClass="inputField"/>
-   			</VBox>
-   			<VBox>
-				<Label styleClass="inputLabel" text="SizeY"/>
-   				<TextField fx:id="inputY" styleClass="inputField"/>
-   			</VBox>
-   			<VBox>
-				<Label styleClass="inputLabel" text="Mines"/>
-   				<TextField fx:id="inputMines" styleClass="inputField"/>
-   			</VBox>
-   			<Button fx:id="startButton" text="Start" onAction="#startGame"/>
-   			<Label fx:id="timer" text="s"/>
+		<HBox styleClass="menuContainer">
+			<HBox spacing="10" Alignment="CENTER">
+				<VBox>
+					<Label styleClass="inputLabel" text="X Size"/>
+	   				<TextField fx:id="inputX" styleClass="inputField" promptText="4-100"/>
+	   			</VBox>
+	   			<VBox>
+					<Label styleClass="inputLabel" text="Y Size"/>
+	   				<TextField fx:id="inputY" styleClass="inputField" promptText="4-100"/>
+	   			</VBox>
+	   			<VBox>
+					<Label styleClass="inputLabel" text="Mines"/>
+	   				<TextField fx:id="inputMines" styleClass="inputField" promptText="mine"/>
+	   			</VBox>
+	   			<Button fx:id="startButton" text="Start" onAction="#startGame"/>
+	   			
+			</HBox>
+			<HBox Alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+				<Label fx:id="timer" styleClass="timer" text="00:00" />
+			</HBox>
+			
 		</HBox>
 	</top>
 	<center>

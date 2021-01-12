@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Screen;
@@ -27,8 +28,8 @@ public class Controller implements Initializable {
 	@FXML
 	public TextField inputMines;
 	@FXML
+	
 	public Label timer;
-
 	private GameModel gameModel;
 	private int xSize;
 	private int ySize;
@@ -36,14 +37,67 @@ public class Controller implements Initializable {
 	private int screenHeight;
 	private int fontSize;
 	private GameObjects[][] currentBoard;
+	private boolean isTimerRunning;
+	private Timer clock;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		screenHeight = (int) (Screen.getPrimary().getBounds().getHeight() - 200);
+		screenHeight = (int) (Screen.getPrimary().getBounds().getHeight() - 100);
 		gameGrid.setPrefSize(screenHeight, screenHeight - 100);
 		
 	}
 	
+<<<<<<< HEAD
+=======
+	public void startGame() {
+		cleanBoard();
+		if (isTimerRunning) {
+			clock.cancel();
+		}
+		xSize = getInteger(inputX.getText());
+		ySize = getInteger(inputY.getText());
+		mines = getInteger(inputMines.getText());
+		
+		if (isInputValid()) {
+			gameModel = new GameModel(xSize, ySize, mines);
+
+			buttons = new Button[xSize][ySize];	
+
+			double fontMultiplier = xSize > 50 || ySize > 50 ? 0.7 : 0.3;
+			this.fontSize = (int) (fontMultiplier * screenHeight / ySize);
+
+			createButtons();
+		} else {
+			inputX.setText("");
+			inputY.setText("");
+			inputMines.setText("");
+		}
+	}
+	
+	public boolean isInputValid() {
+		if (xSize >= 4 && xSize <= 100) {
+			if (ySize >= 4 && ySize <= 100) {
+				if (mines >= 4 && mines <= (int) xSize * ySize * 0.9) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	public static Integer getInteger(String text) {
+		if (text == null) {
+			return 0;
+		} else {
+			try {
+				return Integer.parseInt(text);
+			} catch (NumberFormatException e) {
+				return 0;
+			}
+		}
+	}
+>>>>>>> f29d79de5455ee91221e98748d5af69f2c52efdc
 
 	// creates all the Buttons and makes clickable.
 	public void createButtons() {
@@ -127,6 +181,7 @@ public class Controller implements Initializable {
 				getFinalBoard();
 				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 				buttons[x][y].getStyleClass().add("button-won");
+				System.out.println("handleLeftClick:" + gameModel.getScoreModel().calculateEndScore());
 			}
 			if (gameModel.checkGameover(x, y)) {
 				getFinalBoard();
@@ -175,34 +230,19 @@ public class Controller implements Initializable {
 		}
 	}
 
-	public void startGame() {
-		cleanBoard();
-
-		xSize = Integer.parseInt(inputX.getText());
-		ySize = Integer.parseInt(inputY.getText());
-		mines = Integer.parseInt(inputMines.getText());
-
-		gameModel = new GameModel(xSize, ySize, mines);
-
-		buttons = new Button[xSize][ySize];
-
-		double fontMultiplier = xSize > 50 || ySize > 50 ? 0.7 : 0.3;
-		this.fontSize = (int) (fontMultiplier * screenHeight / ySize);
-
-		createButtons();
-	}
-
 	public void updateTimer() {
 		Platform.runLater(() -> timer.setText(gameModel.getScoreModel().getTimeElapsed()));
 	}
 
 	public void startTimer() {
-		Timer clock = new Timer();
+		clock = new Timer();
+		isTimerRunning = true;
 		clock.schedule(new TimerTask() {
 			@Override
 			public void run() {
 				if (gameModel.checkWin() || gameModel.getGameover()) {
 					clock.cancel();
+					isTimerRunning = false;
 				}
 				updateTimer();
 			}

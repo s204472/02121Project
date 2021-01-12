@@ -14,18 +14,46 @@
 	-fx-background-color: #ff4242;
 }
 .inputField {
-    -fx-background-color: #a9a9a9, #fff;
-    -fx-pref-width:100px;
+    -fx-background-color: #c2c2c2, #fff;
+    -fx-pref-width:75px;
+    -fx-background-insets: 0, 1 1 1 1;
+    -fx-background-radius: 0;
+	-fx-font-size: 10px;
+	-fx-font-family: Montserrat;
+	-fx-text-fill: #696969;
 }
 
 .inputField:focused {
-    -fx-background-color: #a9a9a9, #fefefe;	
+    -fx-background-color: #c2c2c2, #fdfdfd;	
 }
+
 .inputLabel {
-	-fx-font-family:Montserrat;
+	-fx-font-size: 10px;
+	-fx-font-family: Montserrat;
+	-fx-font-weight: bold;
+	-fx-text-fill: #696969;
 	-fx-margin:0px;
-	-fx-padding:5px 0px;
+	-fx-padding:5px 0px 0px 0px;
 }
 #startButton {
-	
+	-fx-background-color: #e0e0e0;
+	-fx-border-style: none;
+	-fx-background-radius: 0;
+	-fx-padding: 7px 20px;
+	-fx-font-family: Montserrat;
+	-fx-font-weight: bold;
+	-fx-font-size:10px;
+	-fx-text-fill: #696969;
+}
+.timer{
+	-fx-font-family: Montserrat;
+	-fx-font-weight: bold;
+	-fx-font-size: 20px;
+	-fx-margin: 0px;
+	-fx-padding: 0;
+	-fx-padding: 12px 0px;
+	-fx-text-fill: #3d3d3d;
+}
+.menuContainer {
+	-fx-padding: 5px 10px;
 }
