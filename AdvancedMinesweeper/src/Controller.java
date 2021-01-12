@@ -224,13 +224,15 @@ public class Controller implements Initializable {
 				}	
 				if (finalBoard[i][j] instanceof Mine) {
 					buttons[i][j].setGraphic(((Mine) finalBoard[i][j]).getMineImage(fontSize));
-				} else {
+				} else if (finalBoard[i][j] instanceof Number){
 					Number num = (Number) finalBoard[i][j];
-					if (num.getValue() != 0) {
-						String cssClass = "number" + num;
-						buttons[i][j].getStyleClass().add(cssClass);
-						buttons[i][j].setText(finalBoard[i][j].toString());
-					}
+					
+					String cssClass = "number" + num;
+					buttons[i][j].getStyleClass().add(cssClass);
+					buttons[i][j].setText(finalBoard[i][j].toString());
+					
+				} else { // instanceof Zero
+					buttons[i][j].getStyleClass().add("blank");
 				}
 			}
 		}
