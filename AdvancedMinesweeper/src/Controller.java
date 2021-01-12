@@ -139,21 +139,20 @@ public class Controller implements Initializable {
 	// changing the appearance of a button
 	public void updateButton(int x, int y) throws FileNotFoundException {
 		currentBoard = gameModel.getCurrentBoard();
-		if (currentBoard[x][y] instanceof Number) {
-			Number num = (Number) currentBoard[x][y];
-			if (num.getValue() == 0) {
-				for (int i = x - 1; i <= x + 1; i++) {
-					for (int j = y - 1; j <= y + 1; j++) {
-						if ((i != x || j != y) && i >= 0 && i < currentBoard.length && j >= 0 && j < currentBoard[i].length
-								&& buttons[i][j].getText() == "") {
-							if (!(currentBoard[i][j] instanceof Flag)) {
-								buttons[i][j].setText(" ");
-							}
-							updateButton(i, j);
+		if (currentBoard[x][y] instanceof Zero) {
+			for (int i = x - 1; i <= x + 1; i++) {
+				for (int j = y - 1; j <= y + 1; j++) {
+					
+					if ((i != x || j != y) && i >= 0 && i < currentBoard.length && j >= 0 && j < currentBoard[i].length && buttons[i][j].getText() == "") {
+						if (currentBoard[i][j] instanceof Zero) {
+							buttons[i][j].getStyleClass().add("blank");
+							buttons[i][j].setText(" ");	
 						}
+						updateButton(i, j);
 					}
 				}
 			}
+			
 		}
 		
 		if (currentBoard[x][y] instanceof Flag) {
@@ -170,7 +169,7 @@ public class Controller implements Initializable {
 				buttons[x][y].getStyleClass().add(cssClass);
 			}	
 		} else {
-			buttons[x][y].setText("");
+			//buttons[x][y].setText("");
 		}
 	}
 
@@ -221,6 +220,8 @@ public class Controller implements Initializable {
 				}	
 				if (finalBoard[i][j] instanceof Mine) {
 					buttons[i][j].setGraphic(((Mine) finalBoard[i][j]).getMineImage(screenHeight, ySize));
+				} else if (finalBoard[i][j] instanceof Zero){
+				
 				} else {
 					Number num = (Number) finalBoard[i][j];
 					if (num.getValue() != 0) {

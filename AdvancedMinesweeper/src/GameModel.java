@@ -94,12 +94,13 @@ public class GameModel {
 				if (mines[i][j]) {
 					tempBoard[i][j] = new Mine();
 				} else {
-					tempBoard[i][j] = new Number(getNeighbours(i, j));
+					tempBoard[i][j] = getNeighbours(i, j) == 0 ? new Zero() : new Number(getNeighbours(i, j));
 				}
 			}
 		}
 		return tempBoard;
 	}
+	
 
 	// Returns the number of neighbouring mines to a given field.
 	public int getNeighbours(int x, int y) {
@@ -126,18 +127,19 @@ public class GameModel {
 			scoreModel.startTimer();
 		}
 		currentBoard[x][y] = finalBoard[x][y];
-		if (currentBoard[x][y] instanceof Number) {
-			Number num = (Number) currentBoard[x][y];
-			if (num.getValue() == 0) {
-				for (int i = x - 1; i <= x + 1; i++) {
-					for (int j = y - 1; j <= y + 1; j++) {
-						if ((i != x || j != y) && i >= 0 && i < currentBoard.length && j >= 0
-								&& j < currentBoard[i].length && currentBoard[i][j] == null) {
-							clickField(i, j);
-						}
+		System.out.println("Field pressed: " + finalBoard[x][y]);
+		if (currentBoard[x][y] instanceof Zero) {
+			for (int i = x - 1; i <= x + 1; i++) {
+				for (int j = y - 1; j <= y + 1; j++) {
+					
+					if ((i != x || j != y) && i >= 0 && i < currentBoard.length && j >= 0
+							&& j < currentBoard[i].length && currentBoard[i][j] == null) {
+						//System.out.println(currentBoard[i][j]);
+						clickField(i, j);
 					}
 				}
 			}
+			
 		}
 		displayedFields++;
 	}

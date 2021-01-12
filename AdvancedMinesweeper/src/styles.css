@@ -86,3 +86,7 @@
 .number8 {
 	-fx-text-fill: #a686a6;
 }
+.blank{
+	-fx-background-color: #cfcfcf;
+
+}
