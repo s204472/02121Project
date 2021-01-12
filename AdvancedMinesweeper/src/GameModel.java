@@ -1,7 +1,9 @@
 import java.util.Random;
+import java.util.Date;
+
 
 public class GameModel {
-	public boolean gameover =false;
+	public boolean gameover;
 	private int xSize;
 	private int ySize;
 	private int mineCount;
@@ -9,6 +11,8 @@ public class GameModel {
     private GameObjects[][] currentBoard;
     private GameObjects[][] finalBoard;
     private int clickCount;
+    private ScoreModel scoreModel;
+
      
     //Constructing a GameModel object, with two boards of the given size and mines. 
     public GameModel(int n, int m, int mineCount) {
@@ -23,7 +27,10 @@ public class GameModel {
     	this.mines = genMines(mineCount);
     	this.finalBoard = fillFinalBoard();
     	
+    	this.gameover = false;
     	this.clickCount = 0;
+    	
+    	this.scoreModel = new ScoreModel(n*m,mineCount);
     }
     
 	//Generating the given number of mines in random positions. 
@@ -77,6 +84,10 @@ public class GameModel {
 	}
 	//Reaction to the user clicking a specific field and updating the current-board to a new state.  
 	public void clickField(int x, int y) {
+		if (clickCount == 0) {
+	    	scoreModel.startTimer();
+		}
+		
 		currentBoard[x][y] = finalBoard[x][y];
 		if (currentBoard[x][y] instanceof Number) {
 			Number test = (Number) currentBoard[x][y];
@@ -100,6 +111,18 @@ public class GameModel {
 	
 	public int getYSize() {
 		return ySize;
+	}
+	public int getClickCount() {
+		return clickCount;
+	}
+	public void setXSize(int xSize) {
+		this.xSize = xSize;
+	}
+	public void setYSize(int ySize) {
+		this.ySize = ySize;
+	}
+	public void setMines(int mines) {
+		this.mineCount = mines;
 	}
 	
 	public GameObjects[][] showAll() {
@@ -127,7 +150,25 @@ public class GameModel {
 		return gameover;
 	}
 	
-	
+	public void setFlag(int x, int y) {
+		currentBoard[x][y] = new Flag();
+	}
+
+	public void removeFlag(int x, int y) {
+		currentBoard[x][y] = null;
+	}
+
+	public boolean checkFlag (int x, int y) {
+		if (currentBoard[x][y] instanceof Flag) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public ScoreModel getScoreModel() {
+		return scoreModel;
+	}
 
 	
 	
