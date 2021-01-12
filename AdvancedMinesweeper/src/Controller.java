@@ -28,8 +28,10 @@ public class Controller implements Initializable {
 	@FXML
 	public TextField inputMines;
 	@FXML
-	
 	public Label timer;
+	@FXML
+	public Label points;
+	
 	private GameModel gameModel;
 	private int xSize;
 	private int ySize;
@@ -163,7 +165,7 @@ public class Controller implements Initializable {
 				getFinalBoard();
 				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 				buttons[x][y].getStyleClass().add("button-won");
-				System.out.println("handleLeftClick:" + gameModel.getScoreModel().calculateEndScore());
+				
 			}
 			if (gameModel.checkGameover(x, y)) {
 				getFinalBoard();
@@ -171,6 +173,7 @@ public class Controller implements Initializable {
 				buttons[x][y].getStyleClass().add("button-lost");	
 			}
 		}
+		
 	}
 
 	public void handleRightClick(int x, int y) {
@@ -204,8 +207,13 @@ public class Controller implements Initializable {
 		}
 	}
 
-	public void updateTimer() {
-		Platform.runLater(() -> timer.setText(gameModel.getScoreModel().getTimeElapsed()));
+	public void updateUI() {
+		Platform.runLater(() -> {
+			timer.setText(gameModel.getScoreModel().getTimeElapsed());
+			points.setText(gameModel.getScoreModel().getScore());
+		});
+		
+		
 	}
 
 	public void startTimer() {
@@ -218,7 +226,7 @@ public class Controller implements Initializable {
 					clock.cancel();
 					isTimerRunning = false;
 				}
-				updateTimer();
+				updateUI();
 			}
 		}, 0, 1000);
 	}

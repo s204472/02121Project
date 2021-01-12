@@ -7,7 +7,7 @@ public class ScoreModel {
 	private int timeElapsed;
 	
 	public ScoreModel (int mapSizeTotal, int mines) {
-		score = mapSizeTotal*(1+mines/mapSizeTotal);
+		score = mapSizeTotal * (1 + mines / mapSizeTotal);
 	}
 	
 	
@@ -18,7 +18,7 @@ public class ScoreModel {
 	
 	public String getTimeElapsed() {
 		Date timeNow = new Date();
-		int timeElapsed = (int) ((timeNow.getTime() - timeStart.getTime()) / 1000);
+		timeElapsed = (int) ((timeNow.getTime() - timeStart.getTime()) / 1000);
 		String minutes = timeElapsed / 60 < 10 ? "0" + (timeElapsed / 60) : "" + (timeElapsed / 60);
 		String seconds = timeElapsed % 60 < 10 ? "0" + (timeElapsed % 60) : "" + (timeElapsed % 60);
 
@@ -29,11 +29,11 @@ public class ScoreModel {
 		return timeString;
 	}
 	
-	public int calculateEndScore() {
-		int endScore = score-timeElapsed;
+	public String getScore() {
+		int endScore = score - timeElapsed;
 		if (endScore < 0) {
 			endScore = 0;
 		}
-		return endScore;
+		return "" + endScore;
 	}
 }

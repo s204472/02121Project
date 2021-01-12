@@ -51,8 +51,13 @@
 	-fx-font-size: 20px;
 	-fx-margin: 0px;
 	-fx-padding: 0;
-	-fx-padding: 12px 0px;
+	-fx-padding: 0px 0px;
 	-fx-text-fill: #3d3d3d;
+}
+.points{
+	-fx-text-alignment: right;
+	-fx-font-family: Montserrat;
+	-fx-font-size: 14px;
 }
 .menuContainer {
 	-fx-padding: 5px 10px;

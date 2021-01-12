@@ -36,7 +36,10 @@
 	   			
 			</HBox>
 			<HBox Alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
-				<Label fx:id="timer" styleClass="timer" text="00:00" />
+				<VBox Alignment="CENTER_RIGHT">
+					<Label fx:id="timer" styleClass="timer" text="00:00" />
+					<Label fx:id="points"/>
+				</VBox>
 			</HBox>
 			
 		</HBox>
