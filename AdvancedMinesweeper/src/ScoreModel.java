@@ -17,9 +17,9 @@ public class ScoreModel {
 	
 	public String getTimeElapsed() {
 		Date timeNow = new Date();
-		int timeElapsed = (int)((timeNow.getTime() - timeStart.getTime()) / 1000);
+		int timeElapsed = (int) ((timeNow.getTime() - timeStart.getTime()) / 1000);
 		
-		String timeString = timeElapsed/60 + " min " + timeElapsed%60 + "sec";
+		String timeString = timeElapsed / 60 + " min " + timeElapsed % 60 + "sec";
 		
 		return timeString;
 	}

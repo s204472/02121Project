@@ -35,11 +35,7 @@ public class Controller implements Initializable {
 	private int mines;
 	private int screenHeight;
 	private int fontSize;
-
-	// construct the Controller objekt, with a given GameModel
-	public Controller() {
-
-	}
+	private GameObjects[][] currentBoard;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -54,7 +50,7 @@ public class Controller implements Initializable {
 				buttons[i][j] = new Button();
 
 				// Setting button layout to fit screen
-				buttons[i][j].setPrefSize(screenHeight / ySize + 1, (screenHeight / ySize) + 1);
+				buttons[i][j].setPrefSize(screenHeight / ySize + 1, screenHeight / ySize + 1);
 				buttons[i][j].getStyleClass().add("gameButtons");
 				buttons[i][j].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 
@@ -62,7 +58,7 @@ public class Controller implements Initializable {
 
 				int x = i;
 				int y = j;
-				buttons[i][j].setOnMouseClicked(event -> {
+				buttons[x][y].setOnMouseClicked(event -> {
 					if (event.getButton() == MouseButton.PRIMARY) {
 						handleLeftClick(x, y);
 					} else if (event.getButton() == MouseButton.SECONDARY) {
@@ -73,50 +69,51 @@ public class Controller implements Initializable {
 			}
 		}
 	}
+	
+	
 
 	// changing the appearance of a button
 	public void updateButton(int x, int y) {
-		GameObjects[][] board = gameModel.getCurrentBoard();
-		if (board[x][y] instanceof Number) {
-			Number test = (Number) board[x][y];
-			if (test.getValue() == 0) {
+		currentBoard = gameModel.getCurrentBoard();
+		if (currentBoard[x][y] instanceof Number) {
+			Number num = (Number) currentBoard[x][y];
+			if (num.getValue() == 0) {
 				for (int i = x - 1; i <= x + 1; i++) {
 					for (int j = y - 1; j <= y + 1; j++) {
-						if ((i != x || j != y) && i >= 0 && i < board.length && j >= 0 && j < board[i].length
+						if ((i != x || j != y) && i >= 0 && i < currentBoard.length && j >= 0 && j < currentBoard[i].length
 								&& buttons[i][j].getText() == "") {
-							buttons[i][j].setText(board[i][j].toString());// Senere kan inds�ttes plank display her
-							updateButton(i, j); //move count here
+							buttons[i][j].setText(currentBoard[i][j].toString()); 
+							updateButton(i, j);
 						}
 					}
 				}
 			}
 		}
-		if (board[x][y] instanceof Flag) {
+		
+		if (currentBoard[x][y] instanceof Flag) {
 			buttons[x][y].setText("P");
-		} else if (board[x][y] instanceof Mine) {
-			buttons[x][y].setText("X");
-		} else if (board[x][y] instanceof Number) {
-			buttons[x][y].setText(board[x][y].toString());
+		} else if (currentBoard[x][y] instanceof Mine || currentBoard[x][y] instanceof Number) {
+			buttons[x][y].setText(currentBoard[x][y].toString());
 		} else {
 			buttons[x][y].setText("");
 		}
 	}
 
 	public void handleLeftClick(int x, int y) {
-		if (gameModel.getClickCount() == 0) {
+		if (gameModel.getDisplayedFields() == 0) {
 			gameModel.getScoreModel().startTimer();
 			startTimer();
 		}
-		if (!gameModel.getGameOver()) {
+		if (!gameModel.getGameover()) {
 			gameModel.clickField(x, y);
 			updateButton(x, y);
 			if (gameModel.checkWin()) {
-				showAll();
+				getFinalBoard();
 				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 				buttons[x][y].getStyleClass().add("button-won");
 			}
 			if (gameModel.checkGameover(x, y)) {
-				showAll();
+				getFinalBoard();
 				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 				buttons[x][y].getStyleClass().add("button-lost");	
 			}
@@ -124,12 +121,12 @@ public class Controller implements Initializable {
 	}
 
 	public void handleRightClick(int x, int y) {
-		GameObjects[][] board = gameModel.getCurrentBoard();
-		if (!gameModel.getGameOver()) {
+		currentBoard = gameModel.getCurrentBoard();
+		if (!gameModel.getGameover()) {
 			if (gameModel.checkFlag(x, y)) {
 				gameModel.removeFlag(x, y);
 				updateButton(x, y);
-			} else if (board[x][y] == null) {
+			} else if (currentBoard[x][y] == null) {
 				gameModel.setFlag(x, y);
 				updateButton(x, y);
 			}
@@ -137,8 +134,8 @@ public class Controller implements Initializable {
 		}
 	}
 
-	public void showAll() {
-		GameObjects[][] finalBoard = gameModel.showAll();
+	public void getFinalBoard() {
+		GameObjects[][] finalBoard = gameModel.getFinalBoard();
 		for (int i = 0; i < xSize; i++) {
 			for (int j = 0; j < ySize; j++) {
 				buttons[i][j].setText(finalBoard[i][j].toString());
@@ -152,7 +149,6 @@ public class Controller implements Initializable {
 				gameGrid.getChildren().remove(buttons[i][j]);
 			}
 		}
-
 	}
 
 	public void startGame() {
@@ -170,12 +166,10 @@ public class Controller implements Initializable {
 		this.fontSize = (int) (fontMultiplier * screenHeight / ySize);
 
 		createButtons();
-
 	}
 
 	public void updateTimer() {
 		Platform.runLater(() -> timer.setText(gameModel.getScoreModel().getTimeElapsed()));
-
 	}
 
 	public void startTimer() {
@@ -183,7 +177,7 @@ public class Controller implements Initializable {
 		clock.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				if (gameModel.checkWin() || gameModel.getGameOver()) {
+				if (gameModel.checkWin() || gameModel.getGameover()) {
 					clock.cancel();
 				}
 				updateTimer();

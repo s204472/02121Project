@@ -1,6 +1,4 @@
 import java.util.Random;
-import java.util.Date;
-
 
 public class GameModel {
 	public boolean gameover;
@@ -10,7 +8,7 @@ public class GameModel {
     private boolean[][] mines;
     private GameObjects[][] currentBoard;
     private GameObjects[][] finalBoard;
-    private int clickCount;
+    private int displayedFields;
     private ScoreModel scoreModel;
 
      
@@ -28,10 +26,42 @@ public class GameModel {
     	this.finalBoard = fillFinalBoard();
     	
     	this.gameover = false;
-    	this.clickCount = 0;
+    	this.displayedFields = 0;
     	
     	this.scoreModel = new ScoreModel(n*m,mineCount);
     }
+    
+    public int getXSize() {
+		return xSize;
+	}
+	public int getYSize() {
+		return ySize;
+	}
+	public int getDisplayedFields() {
+		return displayedFields;
+	}
+	public void setXSize(int xSize) {
+		this.xSize = xSize;
+	}
+	public void setYSize(int ySize) {
+		this.ySize = ySize;
+	}
+	public void setMines(int mines) {
+		this.mineCount = mines;
+	}
+	public GameObjects[][] getCurrentBoard(){
+		return currentBoard;
+	}
+	public GameObjects[][] getFinalBoard() {
+		return finalBoard;
+	}
+	public boolean getGameover() {
+		return gameover;
+	}
+	public ScoreModel getScoreModel() {
+		return scoreModel;
+	}
+
     
 	//Generating the given number of mines in random positions. 
 	private boolean[][] genMines(int mineCount) {
@@ -45,7 +75,6 @@ public class GameModel {
 				mineIndex++;
 			}	
 		}
-		
 		return mines;
 	}
 	
@@ -79,58 +108,30 @@ public class GameModel {
     	return neighbourBombs;
 	}
 	
-	public GameObjects[][] getCurrentBoard(){
-		return currentBoard;
-	}
+	
 	//Reaction to the user clicking a specific field and updating the current-board to a new state.  
 	public void clickField(int x, int y) {
-		if (clickCount == 0) {
+		if (displayedFields == 0) {
 	    	scoreModel.startTimer();
 		}
-		
 		currentBoard[x][y] = finalBoard[x][y];
 		if (currentBoard[x][y] instanceof Number) {
-			Number test = (Number) currentBoard[x][y];
-			if (test.getValue() == 0) {
+			Number num = (Number) currentBoard[x][y];
+			if (num.getValue() == 0) {
 				for (int i = x - 1; i <= x + 1; i++) {
 					for (int j = y - 1; j <= y + 1; j++) {
-						if((i!=x || j!=y) && i>=0 && i<currentBoard.length && j>=0 && j<currentBoard[i].length && currentBoard[i][j]==null) {
+						if((i != x || j != y) && i >= 0 && i < currentBoard.length && j >= 0 && j < currentBoard[i].length && currentBoard[i][j] == null) {
 							clickField(i,j);
-						}
 						}
 					}
 				}
-			} 
-		clickCount++;
-		}
-	
-	
-	public int getXSize() {
-		return xSize;
-	}
-	
-	public int getYSize() {
-		return ySize;
-	}
-	public int getClickCount() {
-		return clickCount;
-	}
-	public void setXSize(int xSize) {
-		this.xSize = xSize;
-	}
-	public void setYSize(int ySize) {
-		this.ySize = ySize;
-	}
-	public void setMines(int mines) {
-		this.mineCount = mines;
-	}
-	
-	public GameObjects[][] showAll() {
-		return finalBoard;
+			}
+		} 
+		displayedFields++;
 	}
 	
 	public boolean checkWin() {
-		if ((xSize * ySize) - mineCount == clickCount) {
+		if ((xSize * ySize) - mineCount == displayedFields) {
 			gameover = true;
 			return true;
 		} else {
@@ -145,9 +146,6 @@ public class GameModel {
 		} else {
 			return false;
 		}
-	}
-	public boolean getGameOver() {
-		return gameover;
 	}
 	
 	public void setFlag(int x, int y) {
@@ -165,11 +163,5 @@ public class GameModel {
 			return false;
 		}
 	}
-
-	public ScoreModel getScoreModel() {
-		return scoreModel;
-	}
-
-	
 	
 }
