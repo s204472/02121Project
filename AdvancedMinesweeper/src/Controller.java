@@ -36,6 +36,8 @@ public class Controller implements Initializable {
 	private int screenHeight;
 	private int fontSize;
 	private GameObjects[][] currentBoard;
+	private boolean isTimerRunning;
+	private Timer clock;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -153,6 +155,9 @@ public class Controller implements Initializable {
 
 	public void startGame() {
 		cleanBoard();
+		if (isTimerRunning) {
+			clock.cancel();
+		}
 
 		xSize = Integer.parseInt(inputX.getText());
 		ySize = Integer.parseInt(inputY.getText());
@@ -173,12 +178,14 @@ public class Controller implements Initializable {
 	}
 
 	public void startTimer() {
-		Timer clock = new Timer();
+		clock = new Timer();
+		isTimerRunning = true;
 		clock.schedule(new TimerTask() {
 			@Override
 			public void run() {
 				if (gameModel.checkWin() || gameModel.getGameover()) {
 					clock.cancel();
+					isTimerRunning = false;
 				}
 				updateTimer();
 			}
