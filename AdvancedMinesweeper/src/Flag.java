@@ -6,11 +6,11 @@ import javafx.scene.image.ImageView;
 
 public class Flag extends GameObjects {
 
-	public ImageView getFlagImage(int screenHeight, int ySize) throws FileNotFoundException {
-		Image flag = new Image(new FileInputStream("src\\Images\\FlagRegular.png"));
+	public ImageView getFlagImage(int fontSize) throws FileNotFoundException {
+		Image flag = new Image(new FileInputStream("src/Images/FlagRegular.png"));
 		ImageView viewFlag = new ImageView(flag);
-		viewFlag.setFitHeight(screenHeight / ySize / 2);
-		viewFlag.setFitWidth(screenHeight / ySize / 2);
+		viewFlag.setFitHeight(fontSize + 2);
+		viewFlag.setFitWidth(fontSize + 2);
 		
 		return viewFlag;
 	}
