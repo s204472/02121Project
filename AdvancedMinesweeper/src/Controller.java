@@ -5,14 +5,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
-
+import java.io.FileNotFoundException;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
 import javafx.stage.Screen;
+
 
 //Initializable makes the class able to interact with FXML file.
 public class Controller implements Initializable {
@@ -41,7 +41,9 @@ public class Controller implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		screenHeight = (int) (Screen.getPrimary().getBounds().getHeight() - 200);
 		gameGrid.setPrefSize(screenHeight, screenHeight - 100);
+		
 	}
+	
 
 	// creates all the Buttons and makes clickable.
 	public void createButtons() {
@@ -60,9 +62,17 @@ public class Controller implements Initializable {
 				int y = j;
 				buttons[x][y].setOnMouseClicked(event -> {
 					if (event.getButton() == MouseButton.PRIMARY) {
-						handleLeftClick(x, y);
+						try {
+							handleLeftClick(x, y);
+						} catch (FileNotFoundException e) {
+							e.printStackTrace();
+						}
 					} else if (event.getButton() == MouseButton.SECONDARY) {
-						handleRightClick(x, y);
+						try {
+							handleRightClick(x, y);
+						} catch (FileNotFoundException e) {
+							e.printStackTrace();
+						}
 					}
 				});
 
@@ -73,7 +83,8 @@ public class Controller implements Initializable {
 	
 
 	// changing the appearance of a button
-	public void updateButton(int x, int y) {
+	public void updateButton(int x, int y) throws FileNotFoundException {
+		
 		currentBoard = gameModel.getCurrentBoard();
 		if (currentBoard[x][y] instanceof Number) {
 			Number num = (Number) currentBoard[x][y];
@@ -82,7 +93,9 @@ public class Controller implements Initializable {
 					for (int j = y - 1; j <= y + 1; j++) {
 						if ((i != x || j != y) && i >= 0 && i < currentBoard.length && j >= 0 && j < currentBoard[i].length
 								&& buttons[i][j].getText() == "") {
-							buttons[i][j].setText(currentBoard[i][j].toString()); 
+							if (!(currentBoard[i][j] instanceof Flag)) {
+								buttons[i][j].setText(currentBoard[i][j].toString());
+							}
 							updateButton(i, j);
 						}
 					}
@@ -91,15 +104,18 @@ public class Controller implements Initializable {
 		}
 		
 		if (currentBoard[x][y] instanceof Flag) {
-			buttons[x][y].setText("P");
-		} else if (currentBoard[x][y] instanceof Mine || currentBoard[x][y] instanceof Number) {
+			buttons[x][y].setGraphic(((Flag) currentBoard[x][y]).getFlagImage(screenHeight, ySize));
+		} else if (currentBoard[x][y] == null) {
+			buttons[x][y].setGraphic(null);
+		} else if (currentBoard[x][y] instanceof Number) {
+			buttons[x][y].setGraphic(null);
 			buttons[x][y].setText(currentBoard[x][y].toString());
 		} else {
 			buttons[x][y].setText("");
 		}
 	}
 
-	public void handleLeftClick(int x, int y) {
+	public void handleLeftClick(int x, int y) throws FileNotFoundException {
 		if (gameModel.getDisplayedFields() == 0) {
 			gameModel.getScoreModel().startTimer();
 			startTimer();
@@ -120,7 +136,7 @@ public class Controller implements Initializable {
 		}
 	}
 
-	public void handleRightClick(int x, int y) {
+	public void handleRightClick(int x, int y) throws FileNotFoundException {
 		currentBoard = gameModel.getCurrentBoard();
 		if (!gameModel.getGameover()) {
 			if (gameModel.checkFlag(x, y)) {
@@ -134,11 +150,19 @@ public class Controller implements Initializable {
 		}
 	}
 
-	public void getFinalBoard() {
+	public void getFinalBoard() throws FileNotFoundException {
 		GameObjects[][] finalBoard = gameModel.getFinalBoard();
 		for (int i = 0; i < xSize; i++) {
 			for (int j = 0; j < ySize; j++) {
-				buttons[i][j].setText(finalBoard[i][j].toString());
+				
+				if (currentBoard[i][j] instanceof Flag) {
+					buttons[i][j].setGraphic(null);
+				}	
+				if (finalBoard[i][j] instanceof Mine) {
+					buttons[i][j].setGraphic(((Mine) finalBoard[i][j]).getMineImage(screenHeight, ySize));
+				} else {
+					buttons[i][j].setText(finalBoard[i][j].toString());
+				}
 			}
 		}
 	}
