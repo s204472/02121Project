@@ -113,6 +113,7 @@ public class Controller implements Initializable {
 				getFinalBoard();
 				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 				buttons[x][y].getStyleClass().add("button-won");
+				System.out.println("handleLeftClick:" + gameModel.getScoreModel().calculateEndScore());
 			}
 			if (gameModel.checkGameover(x, y)) {
 				getFinalBoard();
