@@ -9,7 +9,6 @@ import java.io.FileNotFoundException;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Screen;
@@ -41,6 +40,8 @@ public class Controller implements Initializable {
 	private GameObjects[][] currentBoard;
 	private boolean isTimerRunning;
 	private Timer clock;
+	private int biggestSide;
+
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -64,9 +65,12 @@ public class Controller implements Initializable {
 
 			buttons = new Button[xSize][ySize];	
 
-			double fontMultiplier = xSize > 50 || ySize > 50 ? 0.7 : 0.3;
-			this.fontSize = (int) (fontMultiplier * screenHeight / ySize);
+			double fontMultiplier = xSize > 50 || ySize > 50 ? 0.7 : 0.5;
+			biggestSide = xSize > ySize ? xSize : ySize;
+			System.out.print(biggestSide);
 
+			this.fontSize = (int) (fontMultiplier * screenHeight / biggestSide);
+			System.out.print(fontSize);
 			createButtons();
 		} else {
 			inputX.setText("");
@@ -106,7 +110,7 @@ public class Controller implements Initializable {
 				buttons[i][j] = new Button();
 
 				// Setting button layout to fit screen
-				buttons[i][j].setPrefSize(screenHeight / ySize + 1, screenHeight / ySize + 1);
+				buttons[i][j].setPrefSize(screenHeight / ySize + 1, screenHeight / biggestSide + 1);
 				buttons[i][j].getStyleClass().add("gameButtons");
 				buttons[i][j].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 
@@ -156,7 +160,7 @@ public class Controller implements Initializable {
 		}
 		
 		if (currentBoard[x][y] instanceof Flag) {
-			buttons[x][y].setGraphic(((Flag) currentBoard[x][y]).getFlagImage(screenHeight, ySize));
+			buttons[x][y].setGraphic(((Flag) currentBoard[x][y]).getFlagImage(fontSize));
 		} else if (currentBoard[x][y] == null) {
 			buttons[x][y].setGraphic(null);
 		} else if (currentBoard[x][y] instanceof Number) {
@@ -219,9 +223,7 @@ public class Controller implements Initializable {
 					buttons[i][j].setGraphic(null);
 				}	
 				if (finalBoard[i][j] instanceof Mine) {
-					buttons[i][j].setGraphic(((Mine) finalBoard[i][j]).getMineImage(screenHeight, ySize));
-				} else if (finalBoard[i][j] instanceof Zero){
-				
+					buttons[i][j].setGraphic(((Mine) finalBoard[i][j]).getMineImage(fontSize));
 				} else {
 					Number num = (Number) finalBoard[i][j];
 					if (num.getValue() != 0) {
