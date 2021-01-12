@@ -4,9 +4,10 @@ import java.util.Date;
 public class ScoreModel {
 	private Date timeStart;
 	private int score;
+	private int timeElapsed;
 	
 	public ScoreModel (int mapSizeTotal, int mines) {
-		score += 1000;
+		score = mapSizeTotal*(1+mines/mapSizeTotal);
 	}
 	
 	
@@ -20,6 +21,7 @@ public class ScoreModel {
 		int timeElapsed = (int) ((timeNow.getTime() - timeStart.getTime()) / 1000);
 		String minutes = timeElapsed / 60 < 10 ? "0" + (timeElapsed / 60) : "" + (timeElapsed / 60);
 		String seconds = timeElapsed % 60 < 10 ? "0" + (timeElapsed % 60) : "" + (timeElapsed % 60);
+
 		
 		
 		String timeString = minutes + ":" + seconds;
@@ -28,6 +30,10 @@ public class ScoreModel {
 	}
 	
 	public int calculateEndScore() {
-		return 0;
+		int endScore = score-timeElapsed;
+		if (endScore < 0) {
+			endScore = 0;
+		}
+		return endScore;
 	}
 }
