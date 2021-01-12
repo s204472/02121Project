@@ -22,15 +22,15 @@
 			<HBox spacing="10" Alignment="CENTER">
 				<VBox>
 					<Label styleClass="inputLabel" text="X Size"/>
-	   				<TextField fx:id="inputX" styleClass="inputField"/>
+	   				<TextField fx:id="inputX" styleClass="inputField" promptText="4-100"/>
 	   			</VBox>
 	   			<VBox>
 					<Label styleClass="inputLabel" text="Y Size"/>
-	   				<TextField fx:id="inputY" styleClass="inputField"/>
+	   				<TextField fx:id="inputY" styleClass="inputField" promptText="4-100"/>
 	   			</VBox>
 	   			<VBox>
 					<Label styleClass="inputLabel" text="Mines"/>
-	   				<TextField fx:id="inputMines" styleClass="inputField"/>
+	   				<TextField fx:id="inputMines" styleClass="inputField" promptText="mine"/>
 	   			</VBox>
 	   			<Button fx:id="startButton" text="Start" onAction="#startGame"/>
 	   			

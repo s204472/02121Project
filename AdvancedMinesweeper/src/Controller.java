@@ -28,6 +28,7 @@ public class Controller implements Initializable {
 	@FXML
 	public TextField inputMines;
 	@FXML
+	
 	public Label timer;
 	private GameModel gameModel;
 	private int xSize;
@@ -41,7 +42,7 @@ public class Controller implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		screenHeight = (int) (Screen.getPrimary().getBounds().getHeight() - 200);
+		screenHeight = (int) (Screen.getPrimary().getBounds().getHeight() - 100);
 		gameGrid.setPrefSize(screenHeight, screenHeight - 100);
 	}
 	
@@ -73,7 +74,7 @@ public class Controller implements Initializable {
 	public boolean isInputValid() {
 		if (xSize >= 4 && xSize <= 100) {
 			if (ySize >= 4 && ySize <= 100) {
-				if (mines >= 4 && mines <= (int) xSize*ySize*0.9) {
+				if (mines >= 4 && mines <= (int) xSize * ySize * 0.9) {
 					return true;
 				}
 			}
