@@ -22,8 +22,6 @@ public class ScoreModel {
 		timeElapsed = (int) ((timeNow.getTime() - timeStart.getTime()) / 1000);
 		String minutes = timeElapsed / 60 < 10 ? "0" + (timeElapsed / 60) : "" + (timeElapsed / 60);
 		String seconds = timeElapsed % 60 < 10 ? "0" + (timeElapsed % 60) : "" + (timeElapsed % 60);
-
-		
 		
 		String timeString = minutes + ":" + seconds;
 		

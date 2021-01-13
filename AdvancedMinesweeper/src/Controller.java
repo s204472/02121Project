@@ -141,23 +141,21 @@ public class Controller implements Initializable {
 
 	// changing the appearance of a button
 	public void updateButton(int x, int y) throws FileNotFoundException {
-		
 		currentBoard = gameModel.getCurrentBoard();
-		if (currentBoard[x][y] instanceof Number) {
-			Number num = (Number) currentBoard[x][y];
-			if (num.getValue() == 0) {
-				for (int i = x - 1; i <= x + 1; i++) {
-					for (int j = y - 1; j <= y + 1; j++) {
-						if ((i != x || j != y) && i >= 0 && i < currentBoard.length && j >= 0 && j < currentBoard[i].length
-								&& buttons[i][j].getText() == "") {
-							if (!(currentBoard[i][j] instanceof Flag)) {
-								buttons[i][j].setText(currentBoard[i][j].toString());
-							}
-							updateButton(i, j);
+		if (currentBoard[x][y] instanceof Zero) {
+			for (int i = x - 1; i <= x + 1; i++) {
+				for (int j = y - 1; j <= y + 1; j++) {
+					
+					if ((i != x || j != y) && i >= 0 && i < currentBoard.length && j >= 0 && j < currentBoard[i].length && buttons[i][j].getText() == "") {
+						if (currentBoard[i][j] instanceof Zero) {
+							buttons[i][j].getStyleClass().add("blank");
+							buttons[i][j].setText(" ");	
 						}
+						updateButton(i, j);
 					}
 				}
 			}
+			
 		}
 		
 		if (currentBoard[x][y] instanceof Flag) {
@@ -166,9 +164,15 @@ public class Controller implements Initializable {
 			buttons[x][y].setGraphic(null);
 		} else if (currentBoard[x][y] instanceof Number) {
 			buttons[x][y].setGraphic(null);
-			buttons[x][y].setText(currentBoard[x][y].toString());
+			Number num = (Number) currentBoard[x][y];
+			if (num.getValue() != 0) {
+				buttons[x][y].setText(currentBoard[x][y].toString());
+				
+				String cssClass = "number" + num;
+				buttons[x][y].getStyleClass().add(cssClass);
+			}	
 		} else {
-			buttons[x][y].setText("");
+			//buttons[x][y].setText("");
 		}
 	}
 
@@ -219,9 +223,15 @@ public class Controller implements Initializable {
 				}	
 				if (finalBoard[i][j] instanceof Mine) {
 					buttons[i][j].setGraphic(((Mine) finalBoard[i][j]).getMineImage(fontSize));
-				} else {
+				} else if (finalBoard[i][j] instanceof Number){
+					Number num = (Number) finalBoard[i][j];
+					
+					String cssClass = "number" + num;
+					buttons[i][j].getStyleClass().add(cssClass);
 					buttons[i][j].setText(finalBoard[i][j].toString());
-					buttons[i][j].getStyleClass().add("number1");	
+					
+				} else { // instanceof Zero
+					buttons[i][j].getStyleClass().add("blank");
 				}
 			}
 		}
@@ -240,13 +250,7 @@ public class Controller implements Initializable {
 			timer.setText(gameModel.getScoreModel().getTimeElapsed());
 			points.setText(gameModel.getScoreModel().getScore());
 		});
-		
-	}
-
-	public void startTimer() {
 		clock = new Timer();
-		isTimerRunning = true;
-		clock.schedule(new TimerTask() {
 			@Override
 			public void run() {
 				if (gameModel.checkWin() || gameModel.getGameover()) {

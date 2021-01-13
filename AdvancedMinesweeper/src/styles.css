@@ -63,5 +63,30 @@
 	-fx-padding: 5px 10px;
 }
 .number1 {
-	-fx-text-fill: #0000ff;
+	-fx-text-fill: #4287f5;
+}
+.number2 {
+	-fx-text-fill: #32a852;
+}
+.number3 {
+	-fx-text-fill: #f54242;
+}
+.number4 {
+	-fx-text-fill: #ba00b7;
+}
+.number5 {
+	-fx-text-fill: #bf8c00;
+}
+.number6 {
+	-fx-text-fill: #518f8f;
+}
+.number7 {
+	-fx-text-fill: #696969;
+}
+.number8 {
+	-fx-text-fill: #a686a6;
+}
+.blank{
+	-fx-background-color: #cfcfcf;
+
 }
