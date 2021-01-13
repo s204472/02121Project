@@ -67,10 +67,9 @@ public class Controller implements Initializable {
 
 			double fontMultiplier = xSize > 50 || ySize > 50 ? 0.7 : 0.5;
 			biggestSide = xSize > ySize ? xSize : ySize;
-			System.out.print(biggestSide);
 
 			this.fontSize = (int) (fontMultiplier * screenHeight / biggestSide);
-			System.out.print(fontSize);
+
 			createButtons();
 		} else {
 			inputX.setText("");
@@ -241,7 +240,6 @@ public class Controller implements Initializable {
 			timer.setText(gameModel.getScoreModel().getTimeElapsed());
 			points.setText(gameModel.getScoreModel().getScore());
 		});
-		
 		
 	}
 
