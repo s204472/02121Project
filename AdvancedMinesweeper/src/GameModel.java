@@ -144,14 +144,17 @@ public class GameModel {
 			if (((Number) finalBoard[x][y]).getNumVisible()) {
 				displayedFields++;
 				((Number) finalBoard[x][y]).toggleNumVisible();
-			} else if (finalBoard[x][y] instanceof Zero) {
-				if (((Zero) finalBoard[x][y]).getZeroVisible())
-					;
+			}
+		} else if (finalBoard[x][y] instanceof Zero) {
+			if (((Zero) finalBoard[x][y]).getZeroVisible()) {
 				displayedFields++;
 				((Zero) finalBoard[x][y]).toggleZeroVisible();
 			}
 		}
+		System.out.println(displayedFields);
 	}
+
+
 
 	public void remakeBoard(int x, int y) {
 		currentBoard = new GameObjects[xSize][ySize]; // representing the board displayed to the player
