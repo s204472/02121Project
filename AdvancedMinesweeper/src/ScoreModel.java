@@ -5,6 +5,7 @@ public class ScoreModel {
 	private Date timeStart;
 	private int score;
 	private int timeElapsed;
+	private int secondsPassed;
 	
 	public ScoreModel (int mapSizeTotal, int mines) {
 		score = mapSizeTotal * (1 + mines / mapSizeTotal);

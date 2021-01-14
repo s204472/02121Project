@@ -20,6 +20,7 @@ public class Controller implements Initializable {
 	private int ySize;
 	private int screenHeight;
 	private int fontSize;
+	private int biggestSide;
 	
 	//construct the Controller objekt, with a given GameModel
 	public Controller(GameModel gameModel) {
@@ -34,12 +35,16 @@ public class Controller implements Initializable {
     	this.buttons = new Button[xSize][ySize];
     	
         this.screenHeight = (int) (Screen.getPrimary().getBounds().getHeight() - 200);
-        double fontMultiplier = xSize > 50 || ySize > 50 ? 0.7 : 0.3; 
-        this.fontSize = (int)(fontMultiplier * screenHeight / ySize);
+		gameGrid.setPrefSize(screenHeight, screenHeight - 100);
+
+        double fontMultiplier = xSize > 50 || ySize > 50 ? 0.7 : 0.5;
+		biggestSide = xSize > ySize ? xSize : ySize;
+
+		this.fontSize = (int) (fontMultiplier * screenHeight / biggestSide);
+
     	
     	createButtons();
     	
-    	gameGrid.setPrefSize((screenHeight / ySize + 1) * xSize, (screenHeight / ySize + 1) * ySize);
     }
    //creates all the Buttons and makes clickable.
     public void createButtons() {
@@ -49,7 +54,7 @@ public class Controller implements Initializable {
 				buttons[i][j] = new Button();
 				
 				// Setting button layout to fit screen
-				buttons[i][j].setPrefSize(screenHeight / ySize+1, (screenHeight / ySize) + 1);
+				buttons[i][j].setPrefSize(screenHeight / ySize + 1, screenHeight / biggestSide + 1);
 				
 				buttons[i][j].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 
