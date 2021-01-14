@@ -137,11 +137,10 @@ public class Controller implements Initializable {
 			}
 		}
 	}
-	
-	
 
 	// changing the appearance of a button
 	public void updateButton(int x, int y) throws FileNotFoundException {
+
 		currentBoard = gameModel.getCurrentBoard();
 		if (currentBoard[x][y] instanceof Flag) {
 			buttons[x][y].setGraphic(((Flag) currentBoard[x][y]).getFlagImage(fontSize));
@@ -171,6 +170,7 @@ public class Controller implements Initializable {
 				}
 			}
 		}
+
 	}
 
 	public void handleLeftClick(int x, int y) throws FileNotFoundException {
