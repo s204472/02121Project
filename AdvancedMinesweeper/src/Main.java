@@ -31,10 +31,9 @@ public class Main extends Application {
 
 	public void start(Stage primaryStage) throws Exception {
 
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource("view.fxml"));
-
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("view.fxml"));
 		BorderPane root = (BorderPane) loader.load();
+		
 		primaryStage.setTitle("Minesweeper");
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);

@@ -4,6 +4,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
@@ -41,14 +42,16 @@
 					<Label fx:id="points"/>
 				</VBox>
 			</HBox>
-			
 		</HBox>
 	</top>
 	<center>
-		<GridPane fx:id="gameGrid">
-
-	
-		</GridPane>
+		<ScrollPane>
+			<content>
+				<GridPane fx:id="gameGrid">
+		
+				</GridPane>
+			</content>
+		</ScrollPane>
 	</center>
 	
 </BorderPane>
