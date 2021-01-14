@@ -156,7 +156,6 @@ public class Controller implements Initializable {
 					}
 				}
 			}
-			
 		}
 		
 		if (currentBoard[x][y] instanceof Flag) {
