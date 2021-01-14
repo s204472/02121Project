@@ -127,7 +127,6 @@ public class GameModel {
 			scoreModel.startTimer();
 		}
 		currentBoard[x][y] = finalBoard[x][y];
-		System.out.println("Field pressed: " + finalBoard[x][y]);
 		if (currentBoard[x][y] instanceof Zero) {
 			for (int i = x - 1; i <= x + 1; i++) {
 				for (int j = y - 1; j <= y + 1; j++) {
@@ -141,7 +140,17 @@ public class GameModel {
 			}
 			
 		}
-		displayedFields++;
+		if (finalBoard[x][y] instanceof Number) {
+			if (((Number) finalBoard[x][y]).getNumVisible()) {
+				displayedFields++;
+				((Number) finalBoard[x][y]).toggleNumVisible();
+			} else if (finalBoard[x][y] instanceof Zero) {
+				if (((Zero) finalBoard[x][y]).getZeroVisible())
+					;
+				displayedFields++;
+				((Zero) finalBoard[x][y]).toggleZeroVisible();
+			}
+		}
 	}
 
 	public void remakeBoard(int x, int y) {
