@@ -143,37 +143,33 @@ public class Controller implements Initializable {
 	// changing the appearance of a button
 	public void updateButton(int x, int y) throws FileNotFoundException {
 		currentBoard = gameModel.getCurrentBoard();
-		if (currentBoard[x][y] instanceof Zero) {
-			for (int i = x - 1; i <= x + 1; i++) {
-				for (int j = y - 1; j <= y + 1; j++) {
-					
-					if ((i != x || j != y) && i >= 0 && i < currentBoard.length && j >= 0 && j < currentBoard[i].length && buttons[i][j].getText() == "") {
-						if (currentBoard[i][j] instanceof Zero) {
-							buttons[i][j].getStyleClass().add("blank");
-							buttons[i][j].setText(" ");	
-						}
-						updateButton(i, j);
-					}
-				}
-			}
-			
-		}
-		
 		if (currentBoard[x][y] instanceof Flag) {
 			buttons[x][y].setGraphic(((Flag) currentBoard[x][y]).getFlagImage(fontSize));
 		} else if (currentBoard[x][y] == null) {
 			buttons[x][y].setGraphic(null);
 		} else if (currentBoard[x][y] instanceof Number) {
 			buttons[x][y].setGraphic(null);
-			Number num = (Number) currentBoard[x][y];
-			if (num.getValue() != 0) {
-				buttons[x][y].setText(currentBoard[x][y].toString());
-				
-				String cssClass = "number" + num;
-				buttons[x][y].getStyleClass().add(cssClass);
-			}	
-		} else {
-			//buttons[x][y].setText("");
+			buttons[x][y].setText(currentBoard[x][y].toString());
+			String cssClass = "number" + currentBoard[x][y].toString();
+			buttons[x][y].getStyleClass().add(cssClass);	
+		} else if (currentBoard[x][y] instanceof Zero) {
+			buttons[x][y].setText(" ");
+			buttons[x][y].getStyleClass().add("blank");
+		}
+	}
+	
+	public void checkZero(int x, int y) throws FileNotFoundException {
+		GameObjects[][] finalBoard = gameModel.getFinalBoard();
+		if (finalBoard[x][y] instanceof Zero) {
+			for (int i = x - 1; i <= x + 1; i++) {
+				for (int j = y - 1; j <= y + 1; j++) {	
+					if ((i != x || j != y) && i >= 0 && i < finalBoard.length && j >= 0 && j < finalBoard[i].length && buttons[i][j].getText() == "") {
+						gameModel.clickField(i, j);
+						updateButton(i, j);	
+						checkZero(i, j);
+					}
+				}
+			}
 		}
 	}
 
@@ -185,6 +181,8 @@ public class Controller implements Initializable {
 		if (!gameModel.getGameover()) {
 			gameModel.clickField(x, y);
 			updateButton(x, y);
+			checkZero(x, y);
+
 			if (gameModel.checkWin()) {
 				getFinalBoard();
 				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
@@ -196,8 +194,7 @@ public class Controller implements Initializable {
 				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 				buttons[x][y].getStyleClass().add("button-lost");	
 			}
-		}
-		
+		}	
 	}
 
 	public void handleRightClick(int x, int y) throws FileNotFoundException {
@@ -218,10 +215,9 @@ public class Controller implements Initializable {
 		GameObjects[][] finalBoard = gameModel.getFinalBoard();
 		for (int i = 0; i < xSize; i++) {
 			for (int j = 0; j < ySize; j++) {
-				
 				if (currentBoard[i][j] instanceof Flag) {
 					buttons[i][j].setGraphic(null);
-				}	
+				}
 				if (finalBoard[i][j] instanceof Mine) {
 					buttons[i][j].setGraphic(((Mine) finalBoard[i][j]).getMineImage(fontSize));
 				} else if (finalBoard[i][j] instanceof Number){
@@ -233,7 +229,7 @@ public class Controller implements Initializable {
 					
 				} else { // instanceof Zero
 					buttons[i][j].getStyleClass().add("blank");
-				}
+				}				
 			}
 		}
 	}

@@ -128,19 +128,6 @@ public class GameModel {
 		}
 		currentBoard[x][y] = finalBoard[x][y];
 		System.out.println("Field pressed: " + finalBoard[x][y]);
-		if (currentBoard[x][y] instanceof Zero) {
-			for (int i = x - 1; i <= x + 1; i++) {
-				for (int j = y - 1; j <= y + 1; j++) {
-					
-					if ((i != x || j != y) && i >= 0 && i < currentBoard.length && j >= 0
-							&& j < currentBoard[i].length && currentBoard[i][j] == null) {
-						//System.out.println(currentBoard[i][j]);
-						clickField(i, j);
-					}
-				}
-			}
-			
-		}
 		displayedFields++;
 	}
 
