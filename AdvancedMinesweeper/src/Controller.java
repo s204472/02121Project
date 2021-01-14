@@ -5,7 +5,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
+import java.io.File;
 import java.io.FileNotFoundException;
+
+
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -30,6 +37,10 @@ public class Controller implements Initializable {
 	public Label timer;
 	@FXML
 	public Label points;
+	
+	public File Bomb = new File("src\\audio\\mixkit-explosion-in-battle-2809.wav");
+	
+	
 	
 	private GameModel gameModel;
 	private int xSize;
@@ -177,6 +188,7 @@ public class Controller implements Initializable {
 	}
 
 	public void handleLeftClick(int x, int y) throws FileNotFoundException {
+		playaudio(Bomb);
 		if (gameModel.getDisplayedFields() == 0) {
 			gameModel.getScoreModel().startTimer();
 			startTimer();
@@ -266,5 +278,17 @@ public class Controller implements Initializable {
 		}, 0, 1000);
 	}
 
-
+	public static void playaudio(File Sound) {
+		
+		try {
+			Clip clip = AudioSystem.getClip() ;
+			clip.open(AudioSystem.getAudioInputStream(Sound));
+			clip.start(); 
+			
+		}
+		catch(Exception e) {
+		}
+		
+	}
+	
 }
