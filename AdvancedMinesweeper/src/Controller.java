@@ -152,19 +152,20 @@ public class Controller implements Initializable {
 			String cssClass = "number" + currentBoard[x][y].toString();
 			buttons[x][y].getStyleClass().add(cssClass);	
 		} else if (currentBoard[x][y] instanceof Zero) {
-			buttons[x][y].setText(" ");
 			buttons[x][y].getStyleClass().add("blank");
 		}
 	}
 	
 	public void checkZero(int x, int y) throws FileNotFoundException {
 		GameObjects[][] finalBoard = gameModel.getFinalBoard();
+		currentBoard = gameModel.getCurrentBoard();
 		if (finalBoard[x][y] instanceof Zero) {
 			for (int i = x - 1; i <= x + 1; i++) {
 				for (int j = y - 1; j <= y + 1; j++) {	
-					if ((i != x || j != y) && i >= 0 && i < finalBoard.length && j >= 0 && j < finalBoard[i].length && buttons[i][j].getText() == "") {
+					if ((i != x || j != y) && i >= 0 && i < finalBoard.length && j >= 0 && j < finalBoard[i].length && !currentBoard[i][j].getVisited()) {
 						gameModel.clickField(i, j);
 						updateButton(i, j);	
+						currentBoard[i][j].setVisited();
 						checkZero(i, j);
 					}
 				}
