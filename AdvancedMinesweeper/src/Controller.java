@@ -250,7 +250,11 @@ public class Controller implements Initializable {
 			timer.setText(gameModel.getScoreModel().getTimeElapsed());
 			points.setText(gameModel.getScoreModel().getScore());
 		});
+	}
+	public void startTimer() {
 		clock = new Timer();
+		isTimerRunning = true;
+		clock.schedule(new TimerTask() {
 			@Override
 			public void run() {
 				if (gameModel.checkWin() || gameModel.getGameover()) {
@@ -261,5 +265,6 @@ public class Controller implements Initializable {
 			}
 		}, 0, 1000);
 	}
+
 
 }
