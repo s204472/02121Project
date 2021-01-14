@@ -151,7 +151,6 @@ public class GameModel {
 				((Zero) finalBoard[x][y]).toggleZeroVisible();
 			}
 		}
-		System.out.println(displayedFields);
 	}
 
 

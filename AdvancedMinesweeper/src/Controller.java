@@ -144,14 +144,18 @@ public class Controller implements Initializable {
 		currentBoard = gameModel.getCurrentBoard();
 		if (currentBoard[x][y] instanceof Flag) {
 			buttons[x][y].setGraphic(((Flag) currentBoard[x][y]).getFlagImage(fontSize));
+			
 		} else if (currentBoard[x][y] == null) {
 			buttons[x][y].setGraphic(null);
+			
 		} else if (currentBoard[x][y] instanceof Number) {
 			buttons[x][y].setGraphic(null);
 			buttons[x][y].setText(currentBoard[x][y].toString());
 			String cssClass = "number" + currentBoard[x][y].toString();
-			buttons[x][y].getStyleClass().add(cssClass);	
+			buttons[x][y].getStyleClass().add(cssClass);
+			
 		} else if (currentBoard[x][y] instanceof Zero) {
+			buttons[x][y].setGraphic(null);
 			buttons[x][y].getStyleClass().add("blank");
 		}
 	}
