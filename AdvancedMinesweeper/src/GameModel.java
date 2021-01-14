@@ -133,7 +133,6 @@ public class GameModel {
 					
 					if ((i != x || j != y) && i >= 0 && i < currentBoard.length && j >= 0
 							&& j < currentBoard[i].length && currentBoard[i][j] == null) {
-						//System.out.println(currentBoard[i][j]);
 						clickField(i, j);
 					}
 				}
