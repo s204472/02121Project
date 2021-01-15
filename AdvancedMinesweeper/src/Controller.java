@@ -5,7 +5,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
+import java.io.File;
 import java.io.FileNotFoundException;
+
+
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -31,6 +38,14 @@ public class Controller implements Initializable {
 	public Label timer;
 	@FXML
 	public Label points;
+	
+	public File Bomb = new File("src\\audio\\bombSound.wav");
+	public File clickSound = new File("src\\audio\\clickSound.wav");
+	public File uLovLigtInput = new File("src\\audio\\ulovligtinput.wav");
+	public File backGroundMusic = new File("src\\audio\\John_Bartmann_-_07_-_African_Moon (online-audio-converter.com).wav");
+	public File Flag = new File("src\\audio\\flag.wav");
+	public File winSound = new File("src\\audio\\Ta Da-SoundBible.com-1884170640.wav");
+	
 	
 	private GameModel gameModel;
 	private int xSize;
@@ -77,6 +92,7 @@ public class Controller implements Initializable {
 
 			createButtons();
 		} else {
+			playAudio(uLovLigtInput);
 			inputX.setText("");
 			inputY.setText("");
 			inputMines.setText("");
@@ -148,7 +164,11 @@ public class Controller implements Initializable {
 		currentBoard = gameModel.getCurrentBoard();
 		if (currentBoard[x][y] instanceof Flag) {
 			buttons[x][y].setGraphic(((Flag) currentBoard[x][y]).getFlagImage(fontSize));
+<<<<<<< HEAD
+			playAudio(Flag);
+=======
 			
+>>>>>>> bd6da0375fee66705b36c5840b3466312c81ae38
 		} else if (currentBoard[x][y] == null) {
 			buttons[x][y].setGraphic(null);
 			
@@ -186,9 +206,11 @@ public class Controller implements Initializable {
 		if (gameModel.getDisplayedFields() == 0) {
 			gameModel.getScoreModel().startTimer();
 			startTimer();
+			playAudio(backGroundMusic);
 		}
 		if (!gameModel.getGameover()) {
 			gameModel.clickField(x, y);
+			playAudio(clickSound);
 			updateButton(x, y);
 			checkZero(x, y);
 
@@ -196,12 +218,14 @@ public class Controller implements Initializable {
 				getFinalBoard();
 				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 				buttons[x][y].getStyleClass().add("button-won");
+				playAudio(winSound);
 				
 				
 				
 				
 			}
 			if (gameModel.checkGameover(x, y)) {
+				playAudio(Bomb);
 				getFinalBoard();
 				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 				buttons[x][y].getStyleClass().add("button-lost");	
@@ -275,5 +299,17 @@ public class Controller implements Initializable {
 		}, 0, 1000);
 	}
 
-
+	public static void playAudio(File Sound) {
+		
+		try {
+			Clip clip = AudioSystem.getClip() ;
+			clip.open(AudioSystem.getAudioInputStream(Sound));
+			clip.start(); 
+			
+		}
+		catch(Exception e) {
+		}
+		
+	}
+	
 }
