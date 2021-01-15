@@ -34,6 +34,7 @@
 	   				<TextField fx:id="inputMines" styleClass="inputField" promptText="mine"/>
 	   			</VBox>
 	   			<Button fx:id="startButton" text="Start" onAction="#startGame"/>
+	   			<Button fx:id="hintButton" text="Hint" onAction="#hint"/>
 	   			
 			</HBox>
 			<HBox Alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">

@@ -41,7 +41,8 @@ public class Controller implements Initializable {
 	private boolean isTimerRunning;
 	private Timer clock;
 	private int biggestSide;
-
+	private int x;
+	private int y;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -199,6 +200,8 @@ public class Controller implements Initializable {
 				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 				buttons[x][y].getStyleClass().add("button-lost");	
 			}
+			this.x = x;
+			this.y = y;
 		}	
 	}
 
@@ -212,7 +215,6 @@ public class Controller implements Initializable {
 				gameModel.setFlag(x, y);
 				updateButton(x, y);
 			}
-
 		}
 	}
 
@@ -237,6 +239,12 @@ public class Controller implements Initializable {
 				}				
 			}
 		}
+	}
+	
+	public void hint () throws FileNotFoundException {
+		int[] fieldToClick = gameModel.findHint(x, y);
+		updateButton(fieldToClick[0], fieldToClick[1]);	
+		
 	}
 
 	public void cleanBoard() {
