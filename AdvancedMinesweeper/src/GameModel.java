@@ -27,7 +27,7 @@ public class GameModel {
 		this.gameover = false;
 		this.displayedFields = 0;
 
-		this.scoreModel = new ScoreModel(n * m, mineCount);
+		this.scoreModel = new ScoreModel(finalBoard);
 	}
 
 	public int getXSize() {
@@ -36,6 +36,9 @@ public class GameModel {
 
 	public int getYSize() {
 		return ySize;
+	}
+	public int getMines() {
+		return mineCount;
 	}
 
 	public int getDisplayedFields() {
@@ -124,7 +127,6 @@ public class GameModel {
 			if (mines[x][y]) { // makes you unable to lose on first move
 				remakeBoard(x, y);
 			}
-			scoreModel.startTimer();
 		}
 		currentBoard[x][y] = finalBoard[x][y];
 		if (currentBoard[x][y] instanceof Zero) {
@@ -164,7 +166,8 @@ public class GameModel {
 		this.gameover = false;
 		this.displayedFields = 0;
 
-		this.scoreModel = new ScoreModel(xSize * ySize, mineCount);
+		this.scoreModel = new ScoreModel(finalBoard);
+
 		clickField(x, y);
 	}
 
