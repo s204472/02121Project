@@ -3,10 +3,11 @@ public class ScoreModel {
 	private int value3BV;
 	private int secondsPassed;
 	private boolean[][] checkedZeros;
-	
 	private boolean[][] zerosToCheck;
+	private GameObjects[][] solutionBoard;
 
-	public ScoreModel (GameObjects[][] solutionBoard) {
+	public ScoreModel (GameObjects[][] finalBoard) {
+		this.solutionBoard = finalBoard;
 		
 		// Calculates the most optimal solution using 3BV
 		checkedZeros = new boolean[solutionBoard.length][solutionBoard[0].length];
@@ -15,17 +16,16 @@ public class ScoreModel {
 		for (int i = 0; i < solutionBoard.length; i++) {
 			for (int j = 0; j < solutionBoard[i].length; j++) {
 				
-				// Checks how many zeros needed to be pressed
-				if (solutionBoard[i][j] instanceof Zero && !checkedZeros[i][j]) {
-					checkZeroSequence(solutionBoard, i,j);
+				if (solutionBoard[i][j] instanceof Zero && !checkedZeros[i][j]) { // Checks how many zeros needs to be pressed
+					checkZeroSequence(i,j);
 					value3BV++;
-				}
-				
-				if (solutionBoard[i][j] instanceof Number) {
-					if (!canBeDiscoveredByBlank(solutionBoard, i, j)) {
+				} else if (solutionBoard[i][j] instanceof Number) { // Checks how many numbers needs to be pressed
+					if (!canBeDiscoveredByBlank(i, j)) {
 						value3BV++;
 					} 
 				}
+				
+				
 				
 			}
 		}
@@ -33,13 +33,11 @@ public class ScoreModel {
 		System.out.println("Amount of clicks " + value3BV);
 	}
 	
-	// Checks whether the square can be discovered by the blank square sequence.
-	// Only used for numbered squares (Not zeros)
-	public boolean canBeDiscoveredByBlank(GameObjects[][] solutionBoard, int x, int y) {
+	// Checks whether the numbered square has any blank squares next to it
+	public boolean canBeDiscoveredByBlank(int x, int y) {
 		for (int i = x - 1; i <= x + 1; i++) {
 			for (int j = y - 1; j <= y + 1; j++) {
 				
-				// If any square next to the searched square is a zero the method ends with 'true'
 				if ((i != x || j != y) && i >= 0 && i < solutionBoard.length && j >= 0
 						&& j < solutionBoard[i].length && solutionBoard[i][j] instanceof Zero) {
 					
@@ -53,7 +51,7 @@ public class ScoreModel {
 		return false;
 	}
 	
-	public void checkZeroSequence(GameObjects[][] solutionBoard, int x, int y) {		
+	public void checkZeroSequence(int x, int y) {		
 		for (int i = x - 1; i <= x + 1; i++) {
 			for (int j = y - 1; j <= y + 1; j++) {
 				
@@ -74,11 +72,12 @@ public class ScoreModel {
 		zerosToCheck[x][y] = false;
 		
 		
-		// Makes sure that all the zero squares in the sequence will be checked
+		// Makes sure that all the zero squares in the same sequence won't be counted again
+		// By checking them all without adding to the 3BV score
 		for (int i = 0; i < zerosToCheck.length; i++) {
 			for (int j = 0; j < zerosToCheck[i].length; j++) {
 				if (zerosToCheck[i][j]) {
-					checkZeroSequence(solutionBoard, i, j);
+					checkZeroSequence(i, j);
 				}
 			}
 		}
