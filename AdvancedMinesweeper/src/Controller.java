@@ -57,13 +57,9 @@ public class Controller implements Initializable {
 	private boolean isTimerRunning;
 	private Timer clock;
 	private int biggestSide;
-<<<<<<< HEAD
 	private int x;
 	private int y;
-=======
 
-    
->>>>>>> e806260b18c879b5f36600d9e4bd2519e17fe35e
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
