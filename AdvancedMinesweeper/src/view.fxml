@@ -58,10 +58,10 @@
 	<right>
 		<TableView fx:id="tableView"> 
 	        <columns>
-        		<!--<TableColumn fx:id="idColumn" prefWidth="50.0" style="-fx-alignment: CENTER;" text="Name"/>
-               	<TableColumn fx:id="nameColumn" prefWidth="53.0" style="-fx-alignment: CENTER;" text="Score"/>
-               	<TableColumn fx:id="nameColumn" prefWidth="53.0" style="-fx-alignment: CENTER;" text="Map Size"/>
-               	<TableColumn fx:id="nameColumn" prefWidth="53.0" style="-fx-alignment: CENTER;" text="Mines"/>-->
+        		<TableColumn fx:id="nameColumn" style="-fx-alignment: CENTER;" text="Name"/>
+               	<TableColumn fx:id="scoreColumn" style="-fx-alignment: CENTER;" text="Score"/>
+               	<TableColumn fx:id="mapColumn" style="-fx-alignment: CENTER;" text="Map Size"/>
+               	<TableColumn fx:id="minesColumn" style="-fx-alignment: CENTER;" text="Mines"/>
             </columns>
 	    </TableView>
 	</right>

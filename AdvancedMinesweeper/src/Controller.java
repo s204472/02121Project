@@ -1,4 +1,6 @@
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import java.net.URL;
@@ -14,7 +16,10 @@ import java.io.FileNotFoundException;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Screen;
@@ -37,6 +42,17 @@ public class Controller implements Initializable {
 	public Label timer;
 	@FXML
 	public Label points;
+	@FXML
+	public TableView<Score> tableView;
+	@FXML
+    public TableColumn<Score, String> nameColumn;
+    @FXML
+    public TableColumn<Score, Integer> scoreColumn;
+    @FXML
+    public TableColumn<Score, String> mapColumn;
+    @FXML
+    public TableColumn<Score, Integer> minesColumn;
+	
 	
 	public File Bomb = new File("src\\audio\\bombSound.wav");
 	public File clickSound = new File("src\\audio\\clickSound.wav");
@@ -47,6 +63,7 @@ public class Controller implements Initializable {
 	
 	
 	private GameModel gameModel;
+	private FileHandler fh;
 	private int xSize;
 	private int ySize;
 	private int mines;
@@ -56,6 +73,8 @@ public class Controller implements Initializable {
 	private boolean isTimerRunning;
 	private Timer clock;
 	private int biggestSide;
+	
+	private ObservableList<Score> scores;
 
     
 
@@ -64,6 +83,19 @@ public class Controller implements Initializable {
 		screenHeight = (int) (Screen.getPrimary().getBounds().getHeight() - 100);
 		gameGrid.setPrefSize(screenHeight, screenHeight - 100);
 		
+		fh = new FileHandler();
+		
+		nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+		scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
+		mapColumn.setCellValueFactory(new PropertyValueFactory<>("map"));
+		minesColumn.setCellValueFactory(new PropertyValueFactory<>("mines"));
+		
+		scores = fh.readScores();
+		/*scores = FXCollections.observableArrayList(
+	            new Score("Magnus", 10, 11, 12, 13),
+	            new Score("Anders", 10, 11, 12 ,13)
+	    );*/
+		tableView.setItems(scores);
 		
 		
 	}
@@ -91,7 +123,7 @@ public class Controller implements Initializable {
 
 			createButtons();
 		} else {
-			playAudio(uLovLigtInput);
+			//playAudio(uLovLigtInput);
 			inputX.setText("");
 			inputY.setText("");
 			inputMines.setText("");
@@ -163,7 +195,7 @@ public class Controller implements Initializable {
 		currentBoard = gameModel.getCurrentBoard();
 		if (currentBoard[x][y] instanceof Flag) {
 			buttons[x][y].setGraphic(((Flag) currentBoard[x][y]).getFlagImage(fontSize));
-			playAudio(Flag);
+			//playAudio(Flag);
 
 		} else if (currentBoard[x][y] == null) {
 			buttons[x][y].setGraphic(null);
@@ -201,11 +233,11 @@ public class Controller implements Initializable {
 	public void handleLeftClick(int x, int y) throws FileNotFoundException {
 		if (gameModel.getDisplayedFields() == 0) {
 			startTimer();
-			playAudio(backGroundMusic);
+			//playAudio(backGroundMusic);
 		}
 		if (!gameModel.getGameover()) {
 			gameModel.clickField(x, y);
-			playAudio(clickSound);
+			//playAudio(clickSound);
 			updateButton(x, y);
 			checkZero(x, y);
 
@@ -213,14 +245,15 @@ public class Controller implements Initializable {
 				getFinalBoard();
 				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 				buttons[x][y].getStyleClass().add("button-won");
-				playAudio(winSound);
+				//playAudio(winSound);
 				
-				
-				
-				
+				Score score = new Score("Magnus", gameModel.getScoreModel().getScore(), gameModel.getXSize(), gameModel.getYSize(), gameModel.getMines());
+				scores.add(score);
+				tableView.setItems(scores);
+				fh.saveScores(scores);
 			}
 			if (gameModel.checkGameover(x, y)) {
-				playAudio(Bomb);
+				//playAudio(Bomb);
 				getFinalBoard();
 				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 				buttons[x][y].getStyleClass().add("button-lost");	
