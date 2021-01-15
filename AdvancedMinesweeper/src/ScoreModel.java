@@ -29,7 +29,7 @@ public class ScoreModel {
 				
 			}
 		}
-		
+		// FOR TESTING CAN BE DELETED
 		System.out.println("Amount of clicks " + value3BV);
 	}
 	
@@ -103,12 +103,5 @@ public class ScoreModel {
 			endScore = 0;
 		}
 		return "" + endScore;
-	}
-	public int getScoreValue() {
-		int endScore = score - timeElapsed;
-		if (endScore < 0) {
-			endScore = 0;
-		}
-		return endScore;
 	}
 }
