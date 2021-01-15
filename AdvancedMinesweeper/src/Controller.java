@@ -1,31 +1,18 @@
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.io.FileNotFoundException;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Screen;
-import javafx.util.Callback;
+
 
 
 //Initializable makes the class able to interact with FXML file.
@@ -44,8 +31,6 @@ public class Controller implements Initializable {
 	public Label timer;
 	@FXML
 	public Label points;
-	@FXML
-	public TableView tableView;
 	
 	private GameModel gameModel;
 	private int xSize;
@@ -57,7 +42,7 @@ public class Controller implements Initializable {
 	private boolean isTimerRunning;
 	private Timer clock;
 	private int biggestSide;
-	DatabaseConfig db;
+
     
 
 	@Override
@@ -65,14 +50,7 @@ public class Controller implements Initializable {
 		screenHeight = (int) (Screen.getPrimary().getBounds().getHeight() - 100);
 		gameGrid.setPrefSize(screenHeight, screenHeight - 100);
 		
-		try {
-			db = new DatabaseConfig();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
-		printScoreBoard(db.getScoreBoard());
 		
 	}
 	
@@ -203,20 +181,6 @@ public class Controller implements Initializable {
 		}
 
 	}
-	public void printScoreBoard(ResultSet rs) {
-		try {
-			for (int i = 1; i < rs.getMetaData().getColumnCount(); i++) {
-				ObservableList<Score> data = FXCollections.observableArrayList(new Score("Anders", 10, 10, 10, 11));
-			    TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
-			    tableView.getColumns().addAll(col);
-			    
-
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
 	public void handleLeftClick(int x, int y) throws FileNotFoundException {
 		if (gameModel.getDisplayedFields() == 0) {
@@ -233,9 +197,7 @@ public class Controller implements Initializable {
 				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 				buttons[x][y].getStyleClass().add("button-won");
 				
-				db.addToScoreBoard("Magnus", gameModel.getScoreModel().getScoreValue(), gameModel.getXSize(), gameModel.getYSize(), gameModel.getMines());
-				ResultSet rs = db.getScoreBoard();
-				printScoreBoard(rs);
+				
 				
 				
 			}
