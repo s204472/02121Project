@@ -18,11 +18,11 @@
 		<HBox styleClass="menuContainer">
 			<HBox spacing="10" Alignment="CENTER">
 				<VBox>
-					<Label styleClass="inputLabel" text="X Size"/>
+					<Label styleClass="inputLabel" text="Width"/>
 	   				<TextField fx:id="inputX" styleClass="inputField" promptText="4-100"/>
 	   			</VBox>
 	   			<VBox>
-					<Label styleClass="inputLabel" text="Y Size"/>
+					<Label styleClass="inputLabel" text="Length"/>
 	   				<TextField fx:id="inputY" styleClass="inputField" promptText="4-100"/>
 	   			</VBox>
 	   			<VBox>
@@ -32,7 +32,11 @@
 	   			<Button fx:id="startButton" text="Start" onAction="#startGame"/>
 	   			
 			</HBox>
-			<HBox Alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+			<HBox Alignment="CENTER_RIGHT" spacing="30" HBox.hgrow="ALWAYS">
+				<VBox Alignment="CENTER_RIGHT">
+					<Label fx:id="difficultyHeader" styleClass="difficultyHeader" text="Difficulty" />
+					<Label fx:id="difficulty" styleClass="difficulty" text="Hard" />
+				</VBox>
 				<VBox Alignment="CENTER_RIGHT">
 					<Label fx:id="timer" styleClass="timer" text="00:00" />
 					<Label fx:id="points"/>
