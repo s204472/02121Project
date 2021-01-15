@@ -37,6 +37,9 @@ public class GameModel {
 	public int getYSize() {
 		return ySize;
 	}
+	public int getMines() {
+		return mineCount;
+	}
 
 	public int getDisplayedFields() {
 		return displayedFields;

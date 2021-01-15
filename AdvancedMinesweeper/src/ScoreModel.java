@@ -1,4 +1,3 @@
-
 import java.util.Date;
 
 public class ScoreModel {
@@ -34,5 +33,12 @@ public class ScoreModel {
 			endScore = 0;
 		}
 		return "" + endScore;
+	}
+	public int getScoreValue() {
+		int endScore = score - timeElapsed;
+		if (endScore < 0) {
+			endScore = 0;
+		}
+		return endScore;
 	}
 }
