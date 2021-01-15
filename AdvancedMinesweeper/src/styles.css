@@ -5,6 +5,8 @@
 	-fx-font-family:Montserrat;
 	-fx-margin:0px;
 	-fx-padding:0;
+	-fx-min-width:20px;
+	-fx-min-height:20px;
 }
 
 .button-won {
@@ -88,5 +90,85 @@
 }
 .blank{
 	-fx-background-color: #cfcfcf;
-
 }
+
+.track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.increment-button, .decrement-button{
+	-fx-background-color: transparent;
+    -fx-background-radius: 0px;
+}
+.scroll-bar:horizontal .increment-button, .scroll-bar:horizontal .decrement-button {
+    -fx-padding: 0px 0px 10px 0px;
+}
+.scroll-bar:vertical .increment-button, .scroll-bar:vertical .decrement-button {
+    -fx-padding: 0px 10px 0px 0px;
+}
+.increment-arrow, .decrement-arrow{
+    -fx-shape: " ";    
+    -fx-padding: 0px 0px;
+}
+.thumb {
+    -fx-background-color: #9c9c9c;
+}
+.thumb:hover {
+    -fx-background-color: #757575;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+TableView{
+   -fx-background-color: transparent;
+}
+
+TableView:focused{
+    -fx-background-color: transparent;
+}
+
+TableView .column-header-background{
+    -fx-background-color: #e0e0e0;
+}
+
+TableView .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: #696969;
+}
+
+TableView .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: #b3b3b3;
+}
+
+TableView .table-cell{
+    -fx-text-fill: #696969;
+}
+
+.table-row-cell:filled:selected { 
+  	-fx-background: -fx-control-inner-background;
+  	-fx-background-color: -fx-table-cell-border-color, -fx-background ;
+  	-fx-background-insets: 0, 0 0 1 0 ;
+    -fx-table-cell-border-color: derive(-fx-color, 5%);
+}
+.table-row-cell:odd:filled:selected {
+  	-fx-background: -fx-control-inner-background-alt ;
+}
+
+
+
+

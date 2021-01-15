@@ -5,3 +5,8 @@ Magnus 20 10x10 5
 Magnus 6 10x10 4
 Magnus 22 10x11 4
 Magnus 7 10x12 4
+Magnus 9 12x12 4
+Magnus 6 12x12 4
+Magnus 6 12x12 4
+Magnus 10 12x12 4
+Magnus 15 12x12 4

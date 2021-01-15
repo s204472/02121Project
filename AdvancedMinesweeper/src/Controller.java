@@ -44,8 +44,6 @@ public class Controller implements Initializable {
 	public Label points;
 	@FXML
 	public TableView<Score> tableView;
-	@FXML
-    public TableColumn<Score, String> nameColumn;
     @FXML
     public TableColumn<Score, Integer> scoreColumn;
     @FXML
@@ -63,7 +61,6 @@ public class Controller implements Initializable {
 	
 	
 	private GameModel gameModel;
-	private FileHandler fh;
 	private int xSize;
 	private int ySize;
 	private int mines;
@@ -83,21 +80,11 @@ public class Controller implements Initializable {
 		screenHeight = (int) (Screen.getPrimary().getBounds().getHeight() - 100);
 		gameGrid.setPrefSize(screenHeight, screenHeight - 100);
 		
-		fh = new FileHandler();
-		
-		nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 		scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
 		mapColumn.setCellValueFactory(new PropertyValueFactory<>("map"));
 		minesColumn.setCellValueFactory(new PropertyValueFactory<>("mines"));
-		
-		scores = fh.readScores();
-		/*scores = FXCollections.observableArrayList(
-	            new Score("Magnus", 10, 11, 12, 13),
-	            new Score("Anders", 10, 11, 12 ,13)
-	    );*/
-		tableView.setItems(scores);
-		
-		
+
+		scores = FXCollections.observableArrayList();
 	}
 	
 
@@ -162,7 +149,7 @@ public class Controller implements Initializable {
 
 				
 				buttons[i][j].setPrefSize(screenHeight / ySize + 1, screenHeight / biggestSide + 1);
-				buttons[i][j].setMinSize(30, 30);
+
 				buttons[i][j].getStyleClass().add("gameButtons");
 				buttons[i][j].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 
@@ -247,10 +234,10 @@ public class Controller implements Initializable {
 				buttons[x][y].getStyleClass().add("button-won");
 				//playAudio(winSound);
 				
-				Score score = new Score("Magnus", gameModel.getScoreModel().getScore(), gameModel.getXSize(), gameModel.getYSize(), gameModel.getMines());
+				Score score = new Score(gameModel.getScoreModel().getScore(), gameModel.getXSize(), gameModel.getYSize(), gameModel.getMines());
 				scores.add(score);
 				tableView.setItems(scores);
-				fh.saveScores(scores);
+				
 			}
 			if (gameModel.checkGameover(x, y)) {
 				//playAudio(Bomb);
@@ -340,5 +327,4 @@ public class Controller implements Initializable {
 		}
 		
 	}
-	
 }

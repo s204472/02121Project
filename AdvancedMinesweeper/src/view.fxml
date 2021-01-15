@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Button?>
-
 
 <BorderPane fx:id="layout" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller"
 	stylesheets="@styles.css">
@@ -58,7 +52,6 @@
 	<right>
 		<TableView fx:id="tableView"> 
 	        <columns>
-        		<TableColumn fx:id="nameColumn" style="-fx-alignment: CENTER;" text="Name"/>
                	<TableColumn fx:id="scoreColumn" style="-fx-alignment: CENTER;" text="Score"/>
                	<TableColumn fx:id="mapColumn" style="-fx-alignment: CENTER;" text="Map Size"/>
                	<TableColumn fx:id="minesColumn" style="-fx-alignment: CENTER;" text="Mines"/>
