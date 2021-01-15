@@ -201,7 +201,6 @@ public class Controller implements Initializable {
 
 	public void handleLeftClick(int x, int y) throws FileNotFoundException {
 		if (gameModel.getDisplayedFields() == 0) {
-			gameModel.getScoreModel().startTimer();
 			startTimer();
 			playAudio(backGroundMusic);
 		}
@@ -277,6 +276,7 @@ public class Controller implements Initializable {
 
 	public void updateUI() {
 		Platform.runLater(() -> {
+			gameModel.getScoreModel().incSeconds();
 			timer.setText(gameModel.getScoreModel().getTimeElapsed());
 			points.setText(gameModel.getScoreModel().getScore());
 		});
