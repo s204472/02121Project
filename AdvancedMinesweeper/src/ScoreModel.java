@@ -62,9 +62,6 @@ public class ScoreModel {
 					if (solutionBoard[i][j] instanceof Zero && !checkedZeros[i][j]) {
 						zerosToCheck[i][j] = true;
 					}
-					
-					
-					
 				}
 			}
 		}
@@ -97,11 +94,11 @@ public class ScoreModel {
 		return timeString;
 	}
 	
-	public String getScore() {
-		int endScore = value3BV*6-secondsPassed;
+	public int getScore() {
+		int endScore = value3BV * 6 - secondsPassed;
 		if (endScore < 0) {
 			endScore = 0;
 		}
-		return "" + endScore;
+		return endScore;
 	}
 }

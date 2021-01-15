@@ -12,7 +12,6 @@ import javax.sound.sampled.Clip;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -278,7 +277,7 @@ public class Controller implements Initializable {
 		Platform.runLater(() -> {
 			gameModel.getScoreModel().incSeconds();
 			timer.setText(gameModel.getScoreModel().getTimeElapsed());
-			points.setText(gameModel.getScoreModel().getScore());
+			points.setText("" + gameModel.getScoreModel().getScore());
 		});
 	}
 	public void startTimer() {
