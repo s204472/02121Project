@@ -38,8 +38,12 @@ public class Controller implements Initializable {
 	@FXML
 	public Label points;
 	
-	public File Bomb = new File("src\\audio\\mixkit-explosion-in-battle-2809.wav");
-	
+	public File Bomb = new File("src\\audio\\bombSound.wav");
+	public File clickSound = new File("src\\audio\\clickSound.wav");
+	public File uLovLigtInput = new File("src\\audio\\ulovligtinput.wav");
+	public File backGroundMusic = new File("src\\audio\\John_Bartmann_-_07_-_African_Moon (online-audio-converter.com).wav");
+	public File Flag = new File("src\\audio\\flag.wav");
+	public File winSound = new File("src\\audio\\Ta Da-SoundBible.com-1884170640.wav");
 	
 	
 	private GameModel gameModel;
@@ -84,6 +88,7 @@ public class Controller implements Initializable {
 
 			createButtons();
 		} else {
+			playAudio(uLovLigtInput);
 			inputX.setText("");
 			inputY.setText("");
 			inputMines.setText("");
@@ -155,6 +160,7 @@ public class Controller implements Initializable {
 		currentBoard = gameModel.getCurrentBoard();
 		if (currentBoard[x][y] instanceof Flag) {
 			buttons[x][y].setGraphic(((Flag) currentBoard[x][y]).getFlagImage(fontSize));
+			playAudio(Flag);
 		} else if (currentBoard[x][y] == null) {
 			buttons[x][y].setGraphic(null);
 		} else if (currentBoard[x][y] instanceof Number) {
@@ -186,13 +192,14 @@ public class Controller implements Initializable {
 	}
 
 	public void handleLeftClick(int x, int y) throws FileNotFoundException {
-		playaudio(Bomb);
 		if (gameModel.getDisplayedFields() == 0) {
 			gameModel.getScoreModel().startTimer();
 			startTimer();
+			playAudio(backGroundMusic);
 		}
 		if (!gameModel.getGameover()) {
 			gameModel.clickField(x, y);
+			playAudio(clickSound);
 			updateButton(x, y);
 			checkZero(x, y);
 
@@ -200,9 +207,11 @@ public class Controller implements Initializable {
 				getFinalBoard();
 				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 				buttons[x][y].getStyleClass().add("button-won");
+				playAudio(winSound);
 				
 			}
 			if (gameModel.checkGameover(x, y)) {
+				playAudio(Bomb);
 				getFinalBoard();
 				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 				buttons[x][y].getStyleClass().add("button-lost");	
@@ -276,7 +285,7 @@ public class Controller implements Initializable {
 		}, 0, 1000);
 	}
 
-	public static void playaudio(File Sound) {
+	public static void playAudio(File Sound) {
 		
 		try {
 			Clip clip = AudioSystem.getClip() ;
