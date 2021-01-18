@@ -15,7 +15,8 @@ import javax.sound.sampled.*;
 
 //Initializable makes the class able to interact with FXML file.
 public class Controller implements Initializable {
-	@FXML // loading GridPane from the FXML file
+	// loading GridPane from the FXML file
+	@FXML
 	private GridPane gameGrid;
 	@FXML
 	private Button[][] buttons;
@@ -23,14 +24,13 @@ public class Controller implements Initializable {
 	private TextField inputX, inputY, inputMines;
 	@FXML
 	private Label timer, points, difficulty;
-
+	@FXML
 	private TableView<Score> tableView;
-    @FXML
-    private TableColumn<Score, Integer> scoreColumn, minesColumn;
-    @FXML
-    private TableColumn<Score, String> mapColumn;
-	
-	
+	@FXML
+	private TableColumn<Score, Integer> scoreColumn, minesColumn;
+	@FXML
+	private TableColumn<Score, String> mapColumn;
+
 	public File bombSound = new File("src//audio//bombSound.wav");
 	public File clickSound = new File("src//audio//clickSound.wav");
 	public File illegalInputSound = new File("src//audio//IllegalInput.wav");
@@ -38,7 +38,7 @@ public class Controller implements Initializable {
 	public File flagSound = new File("src//audio//flagSound.wav");
 	public File winSound = new File("src//audio//winSound.wav");
 	public Clip backGroundClip;
-	
+
 	private GameModel gameModel;
 
 	private ObservableList<Score> scores;
@@ -129,20 +129,12 @@ public class Controller implements Initializable {
 
 				int x = i;
 				int y = j;
-				
-				buttons[x][y].setOnMouseClicked(event -> {
+
+				buttons[i][j].setOnMouseClicked(event -> {
 					if (event.getButton() == MouseButton.PRIMARY) {
-						try {
-							handleLeftClick(x, y);
-						} catch (FileNotFoundException e) {
-							e.printStackTrace();
-						}
+						handleLeftClick(x, y);
 					} else if (event.getButton() == MouseButton.SECONDARY) {
-						try {
-							handleRightClick(x, y);
-						} catch (FileNotFoundException e) {
-							e.printStackTrace();
-						}
+						handleRightClick(x, y);
 					}
 				});
 			}
@@ -150,36 +142,35 @@ public class Controller implements Initializable {
 	}
 
 	// changing the appearance of a button
-	private void updateButton(int x, int y) throws FileNotFoundException {
+	private void updateButton(int x, int y) {
 		GameObjects[][] currentBoard = gameModel.getCurrentBoard();
 		if (currentBoard[x][y] instanceof Flag) {
 			buttons[x][y].setGraphic(((Flag) currentBoard[x][y]).getFlagImage(fontSize));
-			playAudio(flagSound);
-			
-		} else if (currentBoard[x][y] == null) {
-			buttons[x][y].setGraphic(null);
-			
+
 		} else if (currentBoard[x][y] instanceof Number) {
 			buttons[x][y].setGraphic(null);
 			buttons[x][y].setText(currentBoard[x][y].toString());
-			String cssClass = "number" + currentBoard[x][y].toString();
-			buttons[x][y].getStyleClass().add(cssClass);
+			buttons[x][y].getStyleClass().add("number" + currentBoard[x][y].toString());
 
 		} else if (currentBoard[x][y] instanceof Zero) {
 			buttons[x][y].setGraphic(null);
 			buttons[x][y].getStyleClass().add("blank");
+
+		} else if (currentBoard[x][y] == null) {
+			buttons[x][y].setGraphic(null);
 		}
 	}
 
-	private void checkZero(int x, int y) throws FileNotFoundException {
+	private void checkZero(int x, int y) {
 		GameObjects[][] finalBoard = gameModel.getFinalBoard();
 		GameObjects[][] currentBoard = gameModel.getCurrentBoard();
 		if (currentBoard[x][y] instanceof Zero) {
 			for (int i = x - 1; i <= x + 1; i++) {
-				for (int j = y - 1; j <= y + 1; j++) {	
-					if ((i != x || j != y) && i >= 0 && i < finalBoard.length && j >= 0 && j < finalBoard[i].length && !finalBoard[i][j].getVisited()) {
+				for (int j = y - 1; j <= y + 1; j++) {
+					if ((i != x || j != y) && i >= 0 && i < finalBoard.length && j >= 0 && j < finalBoard[i].length
+							&& !finalBoard[i][j].getVisited()) {
 						gameModel.clickField(i, j);
-						updateButton(i, j);	
+						updateButton(i, j);
 						finalBoard[i][j].setVisited();
 						checkZero(i, j);
 					}
@@ -188,44 +179,45 @@ public class Controller implements Initializable {
 		}
 	}
 
-	public void handleLeftClick(int x, int y) throws FileNotFoundException {
-		if (gameModel.getDisplayedFields() == 0) {
-			startTimer();
-			backGroundClip = playAudioloop(backgroundMusic);
-		}
-
-		if (!gameModel.getGameover()) {
-			gameModel.clickField(x, y);
-			playAudio(clickSound);
-			updateButton(x, y);
-			checkZero(x, y);
-
-			if (gameModel.checkWin()) {
-				stopAudioloop(backGroundClip);
-				getFinalBoard();
-				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
-				buttons[x][y].getStyleClass().add("button-won");
-				playAudio(winSound);
-
-				Score score = new Score(gameModel.getScoreModel().getScore(), gameModel.getXSize(),
-						gameModel.getYSize(), gameModel.getMines());
-				scores.add(score);
-				tableView.setItems(scores);
-
+	public void handleLeftClick(int x, int y) {
+			if (gameModel.getDisplayedFields() == 0) {
+				startTimer();
+				backGroundClip = playAudioloop(backgroundMusic);
 			}
-			if (gameModel.checkGameover(x, y)) {
-				stopAudioloop(backGroundClip);
-				playAudio(bombSound);
-				getFinalBoard();
-				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
-				buttons[x][y].getStyleClass().add("button-lost");
+
+			if (!gameModel.getGameover()) {
+				gameModel.clickField(x, y);
+				playAudio(clickSound);
+				updateButton(x, y);
+				checkZero(x, y);
+
+				if (gameModel.checkWin()) {
+					stopAudioloop(backGroundClip);
+					showFinalBoard();
+					buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
+					buttons[x][y].getStyleClass().add("button-won");
+					playAudio(winSound);
+
+					Score score = new Score(gameModel.getScoreModel().getScore(), gameModel.getXSize(),
+							gameModel.getYSize(), gameModel.getMines());
+					scores.add(score);
+					tableView.setItems(scores);
+
+				}
+				if (gameModel.checkGameover(x, y)) {
+					stopAudioloop(backGroundClip);
+					playAudio(bombSound);
+					showFinalBoard();
+					buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
+					buttons[x][y].getStyleClass().add("button-lost");
+				}
 			}
-		}
 	}
 
-	public void handleRightClick(int x, int y) throws FileNotFoundException {
+	public void handleRightClick(int x, int y) {
 		GameObjects[][] currentBoard = gameModel.getCurrentBoard();
 		if (!gameModel.getGameover()) {
+			playAudio(flagSound);
 			if (gameModel.checkFlag(x, y)) {
 				gameModel.removeFlag(x, y);
 				updateButton(x, y);
@@ -234,9 +226,10 @@ public class Controller implements Initializable {
 				updateButton(x, y);
 			}
 		}
+
 	}
 
-	public void getFinalBoard() throws FileNotFoundException {
+	public void showFinalBoard() {
 		GameObjects[][] finalBoard = gameModel.getFinalBoard();
 		GameObjects[][] currentBoard = gameModel.getCurrentBoard();
 		for (int i = 0; i < gameModel.getXSize(); i++) {
@@ -253,7 +246,7 @@ public class Controller implements Initializable {
 					buttons[i][j].getStyleClass().add(cssClass);
 					buttons[i][j].setText(finalBoard[i][j].toString());
 
-				} else { // instanceof Zero
+				} else { // instance of Zero
 					buttons[i][j].getStyleClass().add("blank");
 				}
 			}
@@ -285,7 +278,7 @@ public class Controller implements Initializable {
 =======
 >>>>>>> bf2bb6eae4d586174221d641af6e9423e7822249
 
-	public void hint() throws FileNotFoundException {
+	public void hint() {
 		int[] fieldToClick = gameModel.findHint();
 		int x = fieldToClick[0];
 		int y = fieldToClick[1];
@@ -293,7 +286,6 @@ public class Controller implements Initializable {
 		gameModel.clickField(x, y);
 		checkZero(x, y);
 		updateButton(x, y);
-
 	}
 
 	public void cleanBoard() {
@@ -311,7 +303,7 @@ public class Controller implements Initializable {
 			points.setText("" + gameModel.getScoreModel().getScore());
 		});
 	}
-	
+
 	public void startTimer() {
 		clock = new Timer();
 		isTimerRunning = true;
@@ -327,6 +319,7 @@ public class Controller implements Initializable {
 		}, 0, 1000);
 	}
 
+	//anders G fix anden klasse !!!!
 	public static void playAudio(File Sound) {
 
 		try {
