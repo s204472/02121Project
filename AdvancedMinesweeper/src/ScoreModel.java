@@ -104,13 +104,12 @@ public class ScoreModel {
 				endScore = 0;
 			}
 		}
-		
 		return endScore;
 	}
 	
 	public String calculateDifficulty() {
 		String difficulty = "";
-		int totalSquares = solutionBoard.length*solutionBoard[0].length;
+		int totalSquares = solutionBoard.length * solutionBoard[0].length;
 		double difficultyRating = ( (double) value3BV/totalSquares) * 100;
 
 		
@@ -131,4 +130,5 @@ public class ScoreModel {
 		
 		return difficulty;
 	}
+	
 }

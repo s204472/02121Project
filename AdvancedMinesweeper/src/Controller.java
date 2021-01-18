@@ -29,29 +29,19 @@ import javafx.stage.Screen;
 //Initializable makes the class able to interact with FXML file.
 public class Controller implements Initializable {
 	@FXML // loading GridPane from the FXML file
-	public GridPane gameGrid;
+	private GridPane gameGrid;
 	@FXML
-	public Button[][] buttons;
+	private Button[][] buttons;
 	@FXML
-	public TextField inputX;
+	private TextField inputX, inputY, inputMines;
 	@FXML
-	public TextField inputY;
+	private Label timer, points, difficulty;
 	@FXML
-	public TextField inputMines;
-	@FXML
-	public Label timer;
-	@FXML
-	public Label points;
-	@FXML
-	public Label difficulty;
-	@FXML
-	public TableView<Score> tableView;
+	private TableView<Score> tableView;
     @FXML
-    public TableColumn<Score, Integer> scoreColumn;
+    private TableColumn<Score, Integer> scoreColumn, minesColumn;
     @FXML
-    public TableColumn<Score, String> mapColumn;
-    @FXML
-    public TableColumn<Score, Integer> minesColumn;
+    private TableColumn<Score, String> mapColumn;
 	
 	
 	public File Bomb = new File("src\\audio\\bombSound.wav");
@@ -61,22 +51,18 @@ public class Controller implements Initializable {
 	public File Flag = new File("src\\audio\\flag.wav");
 	public File winSound = new File("src\\audio\\Ta Da-SoundBible.com-1884170640.wav");
 	
-	
 	private GameModel gameModel;
-	private int xSize;
-	private int ySize;
-	private int mines;
-	private int screenHeight;
-	private int fontSize;
 	private GameObjects[][] currentBoard;
-	private boolean isTimerRunning;
-	private Timer clock;
-	private int biggestSide;
 	
 	private ObservableList<Score> scores;
-
-    
-
+	
+	private Timer clock;
+	
+	private int xSize, ySize, mines;
+	private int screenHeight, fontSize, biggestSide;
+	
+	private boolean isTimerRunning;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		screenHeight = (int) (Screen.getPrimary().getBounds().getHeight() - 100);
@@ -128,7 +114,6 @@ public class Controller implements Initializable {
 				}
 			}
 		}
-		
 		return false;
 	}
 	
@@ -149,13 +134,9 @@ public class Controller implements Initializable {
 		for (int i = 0; i < xSize; i++) {
 			for (int j = 0; j < ySize; j++) {
 				buttons[i][j] = new Button();
-
-				
 				buttons[i][j].setPrefSize(screenHeight / ySize + 1, screenHeight / biggestSide + 1);
-
 				buttons[i][j].getStyleClass().add("gameButtons");
 				buttons[i][j].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
-
 				gameGrid.add(buttons[i][j], i, j);
 
 				int x = i;
@@ -181,14 +162,10 @@ public class Controller implements Initializable {
 
 	// changing the appearance of a button
 	public void updateButton(int x, int y) throws FileNotFoundException {
-
 		currentBoard = gameModel.getCurrentBoard();
 		if (currentBoard[x][y] instanceof Flag) {
 			buttons[x][y].setGraphic(((Flag) currentBoard[x][y]).getFlagImage(fontSize));
 			//playAudio(Flag);
-
-		} else if (currentBoard[x][y] == null) {
-			buttons[x][y].setGraphic(null);
 			
 		} else if (currentBoard[x][y] instanceof Number) {
 			buttons[x][y].setGraphic(null);
@@ -199,7 +176,11 @@ public class Controller implements Initializable {
 		} else if (currentBoard[x][y] instanceof Zero) {
 			buttons[x][y].setGraphic(null);
 			buttons[x][y].getStyleClass().add("blank");
-		}
+			
+		} else if (currentBoard[x][y] == null) {
+			buttons[x][y].setGraphic(null);
+			
+		} 
 	}
 	
 	public void checkZero(int x, int y) throws FileNotFoundException {
@@ -319,12 +300,10 @@ public class Controller implements Initializable {
 	}
 
 	public static void playAudio(File Sound) {
-		
 		try {
 			Clip clip = AudioSystem.getClip() ;
 			clip.open(AudioSystem.getAudioInputStream(Sound));
 			clip.start(); 
-			
 		}
 		catch(Exception e) {
 		}
