@@ -41,7 +41,7 @@ public class Controller implements Initializable {
 	public File winSound = new File("src\\audio\\Ta Da-SoundBible.com-1884170640.wav");
 	
 	private GameModel gameModel;
-	private GameObjects[][] currentBoard;
+	
 	
 	private ObservableList<Score> scores;
 	
@@ -129,6 +129,7 @@ public class Controller implements Initializable {
 
 				int x = i;
 				int y = j;
+				
 				buttons[x][y].setOnMouseClicked(event -> {
 					if (event.getButton() == MouseButton.PRIMARY) {
 						try {
@@ -150,7 +151,7 @@ public class Controller implements Initializable {
 
 	// changing the appearance of a button
 	private void updateButton(int x, int y) throws FileNotFoundException {
-		currentBoard = gameModel.getCurrentBoard();
+		GameObjects[][] currentBoard = gameModel.getCurrentBoard();
 		if (currentBoard[x][y] instanceof Flag) {
 			buttons[x][y].setGraphic(((Flag) currentBoard[x][y]).getFlagImage(fontSize));
 			//playAudio(Flag);
@@ -169,7 +170,7 @@ public class Controller implements Initializable {
 	
 	private void checkZero(int x, int y) throws FileNotFoundException {
 		GameObjects[][] finalBoard = gameModel.getFinalBoard();
-		currentBoard = gameModel.getCurrentBoard();
+		GameObjects[][] currentBoard = gameModel.getCurrentBoard();
 		if (currentBoard[x][y] instanceof Zero) {
 			for (int i = x - 1; i <= x + 1; i++) {
 				for (int j = y - 1; j <= y + 1; j++) {	
@@ -182,7 +183,6 @@ public class Controller implements Initializable {
 				}
 			}
 		}
-
 	}
 
 	public void handleLeftClick(int x, int y) throws FileNotFoundException {
@@ -217,7 +217,7 @@ public class Controller implements Initializable {
 	}
 
 	public void handleRightClick(int x, int y) throws FileNotFoundException {
-		currentBoard = gameModel.getCurrentBoard();
+		GameObjects[][] currentBoard = gameModel.getCurrentBoard();
 		if (!gameModel.getGameover()) {
 			if (gameModel.checkFlag(x, y)) {
 				gameModel.removeFlag(x, y);
@@ -231,6 +231,7 @@ public class Controller implements Initializable {
 
 	public void getFinalBoard() throws FileNotFoundException {
 		GameObjects[][] finalBoard = gameModel.getFinalBoard();
+		GameObjects[][] currentBoard = gameModel.getCurrentBoard();
 		for (int i = 0; i < gameModel.getXSize(); i++) {
 			for (int j = 0; j < gameModel.getYSize(); j++) {
 				if (currentBoard[i][j] instanceof Flag) {
@@ -278,6 +279,7 @@ public class Controller implements Initializable {
 			points.setText("" + gameModel.getScoreModel().getScore());
 		});
 	}
+	
 	public void startTimer() {
 		clock = new Timer();
 		isTimerRunning = true;

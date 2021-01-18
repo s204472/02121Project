@@ -109,12 +109,10 @@ public class GameModel {
 	// Returns the number of neighbouring mines to a given field.
 	public int getNeighbours(int x, int y) {
 		int neighbourBombs = 0;
-		for (int i = -1; i < 2; i++) {
-			for (int j = -1; j < 2; j++) {
-				int cx = x + i;
-				int cy = y + j;
-				if (cx >= 0 && cx < xSize && cy >= 0 && cy < ySize && !(i == 0 && j == 0)) {
-					neighbourBombs += (mines[x + i][y + j] ? 1 : 0);
+		for (int i = x - 1; i <= x + 1; i++) {
+			for (int j = y - 1; j <= y + 1; j++) {
+				if (i >= 0 && i < xSize && j >= 0 && j < ySize && !(i == x && j == y)) {
+					neighbourBombs += (mines[i][j] ? 1 : 0);
 				}
 			}
 		}
@@ -130,6 +128,8 @@ public class GameModel {
 			}
 		}
 		currentBoard[x][y] = finalBoard[x][y];
+		lastX = x;
+		lastY = y;
 		if (finalBoard[x][y] instanceof Number) {
 			if (((Number) finalBoard[x][y]).getNumVisible()) {
 				displayedFields++;
@@ -141,8 +141,7 @@ public class GameModel {
 				((Zero) finalBoard[x][y]).toggleZeroVisible();
 			}
 		}
-		lastX = x;
-		lastY = y;
+		System.out.println(displayedFields);
 	}
 
 
