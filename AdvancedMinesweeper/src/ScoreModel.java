@@ -8,6 +8,7 @@ public class ScoreModel {
 	private int endScore;
 
 	public ScoreModel (GameObjects[][] finalBoard) {
+		this.secondsPassed = 0;
 		this.solutionBoard = finalBoard;
 		
 		// Calculates the most optimal solution using 3BV
@@ -31,9 +32,12 @@ public class ScoreModel {
 			}
 		}
 		this.endScore = value3BV*10;
+<<<<<<< HEAD
 		
 		// FOR TESTING CAN BE DELETED
 //		System.out.println("Amount of clicks " + value3BV);
+=======
+>>>>>>> bf2bb6eae4d586174221d641af6e9423e7822249
 	}
 	
 	// Checks whether the numbered square has any blank squares next to it
