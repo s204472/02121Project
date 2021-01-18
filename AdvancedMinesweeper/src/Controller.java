@@ -50,10 +50,9 @@ public class Controller implements Initializable {
 	public File backgroundMusic = new File("src//audio//backgroundMusic.wav");
 	public File flagSound = new File("src//audio//flagSound.wav");
 	public File winSound = new File("src//audio//winSound.wav");
+	public Clip backGroundClip;
 	
 	private GameModel gameModel;
-	private GameObjects[][] currentBoard;
-	
 	private ObservableList<Score> scores;
 	
 	private Timer clock;
@@ -99,7 +98,7 @@ public class Controller implements Initializable {
 			createButtons();
 			difficulty.setText(gameModel.getScoreModel().calculateDifficulty());
 		} else {
-			//playAudio(uLovLigtInput);
+			playAudio(illegalInputSound);
 			inputX.setText("");
 			inputY.setText("");
 			inputMines.setText("");
@@ -141,6 +140,7 @@ public class Controller implements Initializable {
 
 				int x = i;
 				int y = j;
+				
 				buttons[x][y].setOnMouseClicked(event -> {
 					if (event.getButton() == MouseButton.PRIMARY) {
 						try {
@@ -161,11 +161,14 @@ public class Controller implements Initializable {
 	}
 
 	// changing the appearance of a button
-	public void updateButton(int x, int y) throws FileNotFoundException {
-		currentBoard = gameModel.getCurrentBoard();
+	private void updateButton(int x, int y) throws FileNotFoundException {
+		GameObjects[][] currentBoard = gameModel.getCurrentBoard();
 		if (currentBoard[x][y] instanceof Flag) {
 			buttons[x][y].setGraphic(((Flag) currentBoard[x][y]).getFlagImage(fontSize));
-			//playAudio(Flag);
+			playAudio(flagSound);
+			
+		} else if (currentBoard[x][y] == null) {
+			buttons[x][y].setGraphic(null);
 			
 		} else if (currentBoard[x][y] instanceof Number) {
 			buttons[x][y].setGraphic(null);
@@ -185,8 +188,8 @@ public class Controller implements Initializable {
 	
 	public void checkZero(int x, int y) throws FileNotFoundException {
 		GameObjects[][] finalBoard = gameModel.getFinalBoard();
-		currentBoard = gameModel.getCurrentBoard();
-		if (finalBoard[x][y] instanceof Zero) {
+		GameObjects[][] currentBoard = gameModel.getCurrentBoard();
+		if (currentBoard[x][y] instanceof Zero) {
 			for (int i = x - 1; i <= x + 1; i++) {
 				for (int j = y - 1; j <= y + 1; j++) {	
 					if ((i != x || j != y) && i >= 0 && i < finalBoard.length && j >= 0 && j < finalBoard[i].length & !finalBoard[i][j].getVisited()) {
@@ -198,13 +201,12 @@ public class Controller implements Initializable {
 				}
 			}
 		}
-
 	}
 
 	public void handleLeftClick(int x, int y) throws FileNotFoundException {
 		if (gameModel.getDisplayedFields() == 0) {
 			startTimer();
-			//playAudio(backGroundMusic);
+			backGroundClip = playAudioloop(backgroundMusic);
 		}
 		if (!gameModel.getGameover()) {
 			gameModel.clickField(x, y);
@@ -224,7 +226,8 @@ public class Controller implements Initializable {
 				
 			}
 			if (gameModel.checkGameover(x, y)) {
-				//playAudio(Bomb);
+				stopAudioloop(backGroundClip);
+				playAudio(bombSound);
 				getFinalBoard();
 				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 				buttons[x][y].getStyleClass().add("button-lost");	
@@ -233,7 +236,7 @@ public class Controller implements Initializable {
 	}
 
 	public void handleRightClick(int x, int y) throws FileNotFoundException {
-		currentBoard = gameModel.getCurrentBoard();
+		GameObjects[][] currentBoard = gameModel.getCurrentBoard();
 		if (!gameModel.getGameover()) {
 			if (gameModel.checkFlag(x, y)) {
 				gameModel.removeFlag(x, y);
@@ -248,8 +251,9 @@ public class Controller implements Initializable {
 
 	public void getFinalBoard() throws FileNotFoundException {
 		GameObjects[][] finalBoard = gameModel.getFinalBoard();
-		for (int i = 0; i < xSize; i++) {
-			for (int j = 0; j < ySize; j++) {
+		GameObjects[][] currentBoard = gameModel.getCurrentBoard();
+		for (int i = 0; i < gameModel.getXSize(); i++) {
+			for (int j = 0; j < gameModel.getYSize(); j++) {
 				if (currentBoard[i][j] instanceof Flag) {
 					buttons[i][j].setGraphic(null);
 				}
@@ -284,6 +288,7 @@ public class Controller implements Initializable {
 			points.setText("" + gameModel.getScoreModel().getScore());
 		});
 	}
+	
 	public void startTimer() {
 		clock = new Timer();
 		isTimerRunning = true;
