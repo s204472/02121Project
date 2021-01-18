@@ -50,6 +50,9 @@ public class Controller implements Initializable {
 	
 	private int screenHeight, fontSize;
 	
+	private int x, y;
+
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		screenHeight = (int) (Screen.getPrimary().getBounds().getHeight() - 100);
@@ -164,11 +167,11 @@ public class Controller implements Initializable {
 		} else if (currentBoard[x][y] instanceof Zero) {
 			buttons[x][y].setGraphic(null);
 			buttons[x][y].getStyleClass().add("blank");
-			
-		} else if (currentBoard[x][y] == null) {
-			buttons[x][y].setGraphic(null);
-			
-		} 
+		}
+		if (currentBoard[x][y] instanceof Number) {
+			this.x = x;
+			this.y = y;
+		}
 	}
 	
 	private void checkZero(int x, int y) throws FileNotFoundException {
@@ -230,7 +233,6 @@ public class Controller implements Initializable {
 				gameModel.setFlag(x, y);
 				updateButton(x, y);
 			}
-
 		}
 	}
 
@@ -255,6 +257,17 @@ public class Controller implements Initializable {
 				}				
 			}
 		}
+	}
+	
+	public void hint () throws FileNotFoundException {
+		int[] fieldToClick = gameModel.findHint(x, y);
+		int x = fieldToClick[0];
+		int y = fieldToClick[1];
+		System.out.println("Controller " + x + " : " + y);
+		gameModel.clickField(x, y);
+		checkZero(x, y);
+		updateButton(x, y);	
+		
 	}
 
 	public void cleanBoard() {

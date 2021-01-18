@@ -30,6 +30,8 @@
 	   				<TextField fx:id="inputMines" styleClass="inputField" promptText="Mines"/>
 	   			</VBox>
 	   			<Button fx:id="startButton" text="Start" onAction="#startGame"/>
+	   			<Button fx:id="hintButton" text="Hint" onAction="#hint"/>
+	   			
 			</HBox>
 			<HBox Alignment="CENTER_RIGHT" spacing="30" HBox.hgrow="ALWAYS">
 				<VBox Alignment="CENTER_RIGHT">
