@@ -69,7 +69,13 @@ public class Controller implements Initializable {
 		
 	}
 	
-
+	public int getXSize() {
+		return xSize;
+	}
+	
+	public int getYSize() {
+		return ySize;
+	}
 	public void startGame() {
 		cleanBoard();
 		if (isTimerRunning) {
@@ -179,6 +185,10 @@ public class Controller implements Initializable {
 			buttons[x][y].setGraphic(null);
 			buttons[x][y].getStyleClass().add("blank");
 		}
+		if (currentBoard[x][y] instanceof Number) {
+			this.x = x;
+			this.y = y;
+		}
 	}
 	
 	public void checkZero(int x, int y) throws FileNotFoundException {
@@ -226,8 +236,6 @@ public class Controller implements Initializable {
 				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 				buttons[x][y].getStyleClass().add("button-lost");	
 			}
-			this.x = x;
-			this.y = y;
 		}	
 	}
 
@@ -269,7 +277,12 @@ public class Controller implements Initializable {
 	
 	public void hint () throws FileNotFoundException {
 		int[] fieldToClick = gameModel.findHint(x, y);
-		updateButton(fieldToClick[0], fieldToClick[1]);	
+		int x = fieldToClick[0];
+		int y = fieldToClick[1];
+		System.out.println("Controller " + x + " : " + y);
+		gameModel.clickField(x, y);
+		checkZero(x, y);
+		updateButton(x, y);	
 		
 	}
 

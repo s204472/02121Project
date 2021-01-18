@@ -5,6 +5,15 @@ import javafx.scene.image.ImageView;
 
 public class Mine extends GameObjects {
 	private boolean visible = true;
+	private boolean visited = false;
+	
+	public void toggleMineVisited() {
+		visible = !visible;
+	}
+	public boolean getMineVisited () {
+		return visited;
+	}
+	
 
 	public void toggleMineBoolean() {
 		visible = !visible;

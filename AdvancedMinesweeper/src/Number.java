@@ -1,6 +1,15 @@
 public class Number extends GameObjects {
 	private int val;
 	private boolean visible = true;
+	private boolean visited = false;
+	
+	
+	public void toggleNumVisited() {
+		visible = !visible;
+	}
+	public boolean getNumVisited () {
+		return visited;
+	}
 
 	public void toggleNumVisible() {
 		visible = !visible;
@@ -20,5 +29,7 @@ public class Number extends GameObjects {
 	public int getValue() {
 		return val;
 	}
+	
+	
 }
 

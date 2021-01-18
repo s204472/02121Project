@@ -205,25 +205,30 @@ public class GameModel {
 		}
 	}
 	
-	public int[] findHint (int x, int y) {
+	public int[] findHint(int x, int y) {
 		int[] fieldToClick = new int[2];
-		System.out.println(x + " : " + y);
 		for (int i = x - 1; i <= x + 1; i++) {
 			for (int j = y - 1; j <= y + 1; j++) {
 				if ((i != x || j != y) && i >= 0 && i < currentBoard.length && j >= 0 && j < currentBoard[i].length) {
-					System.out.println(i + " : " + j);
-					if (finalBoard[i][j] instanceof Number || finalBoard[i][j] instanceof Zero) {
+					if ((finalBoard[i][j] instanceof Number || finalBoard[i][j] instanceof Zero)
+							&& currentBoard[i][j] == null) {
 						fieldToClick[0] = i;
 						fieldToClick[1] = j;
-						break;
-						
-					} else {
-						findHint(i, j);
 					}
 				}
 			}
-			break;
 		}
+		if (fieldToClick[0] == 0 && fieldToClick[1] == 0) {
+			for (int i = 0; i < currentBoard.length; i++) {
+				for (int j = 0; j < currentBoard[i].length; j++) {
+					if ((finalBoard[i][j] instanceof Number && currentBoard[i][j] == null) ||	(finalBoard[i][j] instanceof Zero && currentBoard[i][j] == null) ) {
+						fieldToClick[0] = i;
+						fieldToClick[1] = j;
+					}
+				}
+			}
+		}
+
 		return fieldToClick;
 	}
 }
