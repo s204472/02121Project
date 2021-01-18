@@ -5,6 +5,7 @@ public class ScoreModel {
 	private boolean[][] checkedZeros;
 	private boolean[][] zerosToCheck;
 	private GameObjects[][] solutionBoard;
+	private int endScore;
 
 	public ScoreModel (GameObjects[][] finalBoard) {
 		this.solutionBoard = finalBoard;
@@ -29,6 +30,8 @@ public class ScoreModel {
 				
 			}
 		}
+		this.endScore = value3BV*10;
+		
 		// FOR TESTING CAN BE DELETED
 		System.out.println("Amount of clicks " + value3BV);
 	}
@@ -95,10 +98,37 @@ public class ScoreModel {
 	}
 	
 	public int getScore() {
-		int endScore = value3BV * 6 - secondsPassed;
-		if (endScore < 0) {
-			endScore = 0;
+		if (secondsPassed % 5 == 0) {
+			endScore -= 2;
+			if (endScore < 0) {
+				endScore = 0;
+			}
 		}
 		return endScore;
 	}
+	
+	public String calculateDifficulty() {
+		String difficulty = "";
+		int totalSquares = solutionBoard.length * solutionBoard[0].length;
+		double difficultyRating = ( (double) value3BV/totalSquares) * 100;
+
+		
+		if (difficultyRating < 12) {
+			difficulty += "Easy";
+			if (difficultyRating < 5) {
+				difficulty = "Very " + difficulty;
+			}
+		} else if (difficultyRating < 20) {
+			difficulty += "Medium";
+		} else if (difficultyRating < 30) {
+			difficulty += "Hard";
+		} else if (difficultyRating < 50) {
+			difficulty += "Very Hard";
+		} else {
+			difficulty += "Insane";
+		}
+		
+		return difficulty;
+	}
+	
 }

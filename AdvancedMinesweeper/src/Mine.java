@@ -1,4 +1,3 @@
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,7 +23,7 @@ public class Mine extends GameObjects {
 	}
 	
 	public ImageView getMineImage(int fontSize) throws FileNotFoundException {
-		Image bomb = new Image(new FileInputStream("src/Images/BombSolid.png"));
+		Image bomb = new Image(getClass().getResource("Images/BombSolid.png").toString());
 		ImageView viewBomb = new ImageView(bomb);
 		viewBomb.setFitHeight(fontSize + 2);
 		viewBomb.setFitWidth(fontSize + 2);
