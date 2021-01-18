@@ -174,13 +174,13 @@ public class Controller implements Initializable {
 	private void checkZero(int x, int y) throws FileNotFoundException {
 		GameObjects[][] finalBoard = gameModel.getFinalBoard();
 		currentBoard = gameModel.getCurrentBoard();
-		if (finalBoard[x][y] instanceof Zero) {
+		if (currentBoard[x][y] instanceof Zero) {
 			for (int i = x - 1; i <= x + 1; i++) {
 				for (int j = y - 1; j <= y + 1; j++) {	
-					if ((i != x || j != y) && i >= 0 && i < finalBoard.length && j >= 0 && j < finalBoard[i].length && !currentBoard[i][j].getVisited()) {
+					if ((i != x || j != y) && i >= 0 && i < finalBoard.length && j >= 0 && j < finalBoard[i].length && !finalBoard[i][j].getVisited()) {
 						gameModel.clickField(i, j);
 						updateButton(i, j);	
-						currentBoard[i][j].setVisited();
+						finalBoard[i][j].setVisited();
 						checkZero(i, j);
 					}
 				}
