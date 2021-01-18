@@ -1,14 +1,14 @@
 import java.util.Random;
 
 public class GameModel {
-	public boolean gameover;
-	private int xSize;
-	private int ySize;
-	private int mineCount;
+	public boolean gameOver;
+	
+	private int xSize, ySize, mineCount;
+	
 	private boolean[][] mines;
-	private GameObjects[][] currentBoard;
-	private GameObjects[][] finalBoard;
 	private int displayedFields;
+	
+	private GameObjects[][] currentBoard, finalBoard;
 	private ScoreModel scoreModel;
 	private int lastX, lastY;
 
@@ -25,7 +25,7 @@ public class GameModel {
 		this.mines = genMines(mineCount);
 		this.finalBoard = fillFinalBoard();
 
-		this.gameover = false;
+		this.gameOver = false;
 		this.displayedFields = 0;
 
 		this.scoreModel = new ScoreModel(finalBoard);
@@ -67,7 +67,7 @@ public class GameModel {
 	}
 
 	public boolean getGameover() {
-		return gameover;
+		return gameOver;
 	}
 
 	public ScoreModel getScoreModel() {
@@ -122,8 +122,9 @@ public class GameModel {
 	// Reaction to the user clicking a specific field and updating the current-board
 	// to a new state.
 	public void clickField(int x, int y) {
+		// Makes you unable to lose on first move
 		if (displayedFields == 0) {
-			if (mines[x][y]) { // makes you unable to lose on first move
+			if (mines[x][y]) { 
 				remakeBoard(x, y);
 			}
 		}
@@ -154,7 +155,7 @@ public class GameModel {
 		this.mines = genMines(mineCount);
 		this.finalBoard = fillFinalBoard();
 
-		this.gameover = false;
+		this.gameOver = false;
 		this.displayedFields = 0;
 
 		this.scoreModel = new ScoreModel(finalBoard);
@@ -164,7 +165,7 @@ public class GameModel {
 
 	public boolean checkWin() {
 		if ((xSize * ySize) - mineCount == displayedFields) {
-			gameover = true;
+			gameOver = true;
 			return true;
 		} else {
 			return false;
@@ -173,7 +174,7 @@ public class GameModel {
 
 	public boolean checkGameover(int x, int y) {
 		if (mines[x][y]) {
-			gameover = true;
+			gameOver = true;
 			return true;
 		} else {
 			return false;
