@@ -110,20 +110,20 @@ public class ScoreModel {
 	
 	public String calculateDifficulty() {
 		String difficulty = "";
-		
 		int totalSquares = solutionBoard.length*solutionBoard[0].length;
-		int difficultyRating = value3BV/totalSquares*100;
+		double difficultyRating = ( (double) value3BV/totalSquares) * 100;
+
 		
-		if (difficultyRating < 10) {
+		if (difficultyRating < 12) {
 			difficulty += "Easy";
 			if (difficultyRating < 5) {
 				difficulty = "Very " + difficulty;
 			}
-		} else if (difficultyRating < 25) {
+		} else if (difficultyRating < 20) {
 			difficulty += "Medium";
-		} else if (difficultyRating < 50) {
+		} else if (difficultyRating < 30) {
 			difficulty += "Hard";
-		} else if (difficultyRating < 75) {
+		} else if (difficultyRating < 50) {
 			difficulty += "Very Hard";
 		} else {
 			difficulty += "Insane";
