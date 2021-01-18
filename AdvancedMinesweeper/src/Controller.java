@@ -180,7 +180,6 @@ public class Controller implements Initializable {
 	}
 
 	public void handleLeftClick(int x, int y) {
-		try {
 			if (gameModel.getDisplayedFields() == 0) {
 				startTimer();
 				backGroundClip = playAudioloop(backgroundMusic);
@@ -194,7 +193,7 @@ public class Controller implements Initializable {
 
 				if (gameModel.checkWin()) {
 					stopAudioloop(backGroundClip);
-					getFinalBoard();
+					showFinalBoard();
 					buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 					buttons[x][y].getStyleClass().add("button-won");
 					playAudio(winSound);
@@ -208,37 +207,29 @@ public class Controller implements Initializable {
 				if (gameModel.checkGameover(x, y)) {
 					stopAudioloop(backGroundClip);
 					playAudio(bombSound);
-					getFinalBoard();
+					showFinalBoard();
 					buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 					buttons[x][y].getStyleClass().add("button-lost");
 				}
 			}
-		} catch (Exception e) {
-
-		}
-
 	}
 
 	public void handleRightClick(int x, int y) {
-		try {
-			GameObjects[][] currentBoard = gameModel.getCurrentBoard();
-			if (!gameModel.getGameover()) {
-				playAudio(flagSound);
-				if (gameModel.checkFlag(x, y)) {
-					gameModel.removeFlag(x, y);
-					updateButton(x, y);
-				} else if (currentBoard[x][y] == null) {
-					gameModel.setFlag(x, y);
-					updateButton(x, y);
-				}
+		GameObjects[][] currentBoard = gameModel.getCurrentBoard();
+		if (!gameModel.getGameover()) {
+			playAudio(flagSound);
+			if (gameModel.checkFlag(x, y)) {
+				gameModel.removeFlag(x, y);
+				updateButton(x, y);
+			} else if (currentBoard[x][y] == null) {
+				gameModel.setFlag(x, y);
+				updateButton(x, y);
 			}
-		} catch (Exception e) {
-			
 		}
 
 	}
 
-	public void getFinalBoard() {
+	public void showFinalBoard() {
 		GameObjects[][] finalBoard = gameModel.getFinalBoard();
 		GameObjects[][] currentBoard = gameModel.getCurrentBoard();
 		for (int i = 0; i < gameModel.getXSize(); i++) {
@@ -255,7 +246,7 @@ public class Controller implements Initializable {
 					buttons[i][j].getStyleClass().add(cssClass);
 					buttons[i][j].setText(finalBoard[i][j].toString());
 
-				} else { // instanceof Zero
+				} else { // instance of Zero
 					buttons[i][j].getStyleClass().add("blank");
 				}
 			}
@@ -270,7 +261,6 @@ public class Controller implements Initializable {
 		gameModel.clickField(x, y);
 		checkZero(x, y);
 		updateButton(x, y);
-
 	}
 
 	public void cleanBoard() {
@@ -304,6 +294,7 @@ public class Controller implements Initializable {
 		}, 0, 1000);
 	}
 
+	//anders G fix anden klasse !!!!
 	public static void playAudio(File Sound) {
 
 		try {
