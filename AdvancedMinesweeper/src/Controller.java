@@ -253,14 +253,25 @@ public class Controller implements Initializable {
 	}
 	
 	public void hint() throws FileNotFoundException {
-		int[] fieldToClick = gameModel.findHint();
-		int x = fieldToClick[0];
-		int y = fieldToClick[1];
-		System.out.println("Controller " + x + " : " + y);
-		gameModel.clickField(x, y);
-		checkZero(x, y);
-		updateButton(x, y);	
-		
+		if (!gameModel.getGameover()) {
+			int[] fieldToClick = gameModel.findHint();
+			int x = fieldToClick[0];
+			int y = fieldToClick[1];
+			gameModel.clickField(x, y);
+			checkZero(x, y);
+			updateButton(x, y);
+			if (gameModel.checkWin()) {
+				getFinalBoard();
+				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
+				buttons[x][y].getStyleClass().add("button-won");
+				// playAudio(winSound);
+
+				Score score = new Score(gameModel.getScoreModel().getScore(), gameModel.getXSize(),
+						gameModel.getYSize(), gameModel.getMines());
+				scores.add(score);
+				tableView.setItems(scores);
+			}
+		}
 	}
 
 	public void cleanBoard() {

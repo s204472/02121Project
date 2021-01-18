@@ -33,7 +33,7 @@ public class ScoreModel {
 		this.endScore = value3BV*10;
 		
 		// FOR TESTING CAN BE DELETED
-		System.out.println("Amount of clicks " + value3BV);
+//		System.out.println("Amount of clicks " + value3BV);
 	}
 	
 	// Checks whether the numbered square has any blank squares next to it
