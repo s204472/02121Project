@@ -44,12 +44,12 @@ public class Controller implements Initializable {
     private TableColumn<Score, String> mapColumn;
 	
 	
-	public File Bomb = new File("src\\audio\\bombSound.wav");
-	public File clickSound = new File("src\\audio\\clickSound.wav");
-	public File uLovLigtInput = new File("src\\audio\\ulovligtinput.wav");
-	public File backGroundMusic = new File("src\\audio\\John_Bartmann_-_07_-_African_Moon (online-audio-converter.com).wav");
-	public File Flag = new File("src\\audio\\flag.wav");
-	public File winSound = new File("src\\audio\\Ta Da-SoundBible.com-1884170640.wav");
+	public File bombSound = new File("src//audio//bombSound.wav");
+	public File clickSound = new File("src//audio//clickSound.wav");
+	public File illegalInputSound = new File("src//audio//IllegalInput.wav");
+	public File backgroundMusic = new File("src//audio//backgroundMusic.wav");
+	public File flagSound = new File("src//audio//flagSound.wav");
+	public File winSound = new File("src//audio//winSound.wav");
 	
 	private GameModel gameModel;
 	private GameObjects[][] currentBoard;
@@ -189,10 +189,11 @@ public class Controller implements Initializable {
 		if (finalBoard[x][y] instanceof Zero) {
 			for (int i = x - 1; i <= x + 1; i++) {
 				for (int j = y - 1; j <= y + 1; j++) {	
-					if ((i != x || j != y) && i >= 0 && i < finalBoard.length && j >= 0 && j < finalBoard[i].length && !currentBoard[i][j].getVisited()) {
+					if ((i != x || j != y) && i >= 0 && i < finalBoard.length && j >= 0 && j < finalBoard[i].length & !finalBoard[i][j].getVisited()) {
+						
 						gameModel.clickField(i, j);
 						updateButton(i, j);	
-						currentBoard[i][j].setVisited();
+						finalBoard[i][j].setVisited();
 						checkZero(i, j);
 					}
 				}
