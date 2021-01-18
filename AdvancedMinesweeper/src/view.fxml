@@ -27,7 +27,7 @@
 	   			</VBox>
 	   			<VBox>
 					<Label styleClass="inputLabel" text="Mines"/>
-	   				<TextField fx:id="inputMines" styleClass="inputField" promptText="mine"/>
+	   				<TextField fx:id="inputMines" styleClass="inputField" promptText="Mines"/>
 	   			</VBox>
 	   			<Button fx:id="startButton" text="Start" onAction="#startGame"/>
 	   			
@@ -45,10 +45,9 @@
 		</HBox>
 	</top>
 	<center>
-		<ScrollPane>
+		<ScrollPane styleClass="edge-to-edge">
 			<content>
 				<GridPane fx:id="gameGrid">
-		
 				</GridPane>
 			</content>
 		</ScrollPane>

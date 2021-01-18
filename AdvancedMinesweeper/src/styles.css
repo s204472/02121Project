@@ -20,7 +20,7 @@
     -fx-pref-width:75px;
     -fx-background-insets: 0, 1 1 1 1;
     -fx-background-radius: 0;
-	-fx-font-size: 10px;
+	-fx-font-size: 11px;
 	-fx-font-family: "Arial";
 	-fx-text-fill: #696969;
 }
@@ -30,7 +30,7 @@
 }
 
 .inputLabel {
-	-fx-font-size: 10px;
+	-fx-font-size: 11px;
 	-fx-font-family: "Arial";
 	-fx-font-weight: bold;
 	-fx-text-fill: #696969;
@@ -44,7 +44,7 @@
 	-fx-padding: 7px 20px;
 	-fx-font-family: "Arial";
 	-fx-font-weight: bold;
-	-fx-font-size:10px;
+	-fx-font-size:11px;
 	-fx-text-fill: #696969;
 }
 .timer{
@@ -59,7 +59,7 @@
 .points{
 	-fx-text-alignment: right;
 	-fx-font-family: "Arial";
-	-fx-font-size: 14px;
+	-fx-font-size: 11px;
 }
 .difficultyHeader{
 	-fx-font-size: 20px;
@@ -123,20 +123,6 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 TableView{
    -fx-background-color: transparent;
 }
@@ -172,7 +158,6 @@ TableView .table-cell{
 .table-row-cell:odd:filled:selected {
   	-fx-background: -fx-control-inner-background-alt ;
 }
-
 
 
 

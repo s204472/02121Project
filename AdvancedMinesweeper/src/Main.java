@@ -9,7 +9,7 @@ public class Main extends Application {
 
 	
 	public static void main(String[] args) {
-		launch(args); //lauNches the method start
+		launch(args); //launches the method start
     }
 
 	public void start(Stage primaryStage) throws Exception {

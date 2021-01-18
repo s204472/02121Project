@@ -20,6 +20,4 @@ public class Score {
 	public int getMines() {
 		return mines.get();
 	}
-	
-	
 }
