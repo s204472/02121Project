@@ -10,6 +10,7 @@ public class GameModel {
 	
 	private GameObjects[][] currentBoard, finalBoard;
 	private ScoreModel scoreModel;
+	private int lastX, lastY;
 
 	// Constructing a GameModel object, with two boards of the given size and mines.
 	public GameModel(int n, int m, int mineCount) {
@@ -130,7 +131,19 @@ public class GameModel {
 			}
 		}
 		currentBoard[x][y] = finalBoard[x][y];
-		displayedFields++;
+		if (finalBoard[x][y] instanceof Number) {
+			if (((Number) finalBoard[x][y]).getNumVisible()) {
+				displayedFields++;
+				((Number) finalBoard[x][y]).toggleNumVisible();
+			}
+		} else if (finalBoard[x][y] instanceof Zero) {
+			if (((Zero) finalBoard[x][y]).getZeroVisible()) {
+				displayedFields++;
+				((Zero) finalBoard[x][y]).toggleZeroVisible();
+			}
+		}
+		lastX = x;
+		lastY = y;
 	}
 
 
@@ -184,5 +197,30 @@ public class GameModel {
 			return false;
 		}
 	}
-
+	
+	public int[] findHint() {
+		int[] fieldToClick = new int[2];
+		for (int i = lastX - 1; i <= lastX + 1; i++) {
+			for (int j = lastY - 1; j <= lastY + 1; j++) {
+				if ((i != lastX || j != lastY) && i >= 0 && i < currentBoard.length && j >= 0 && j < currentBoard[i].length) {
+					if ((finalBoard[i][j] instanceof Number || finalBoard[i][j] instanceof Zero)
+							&& currentBoard[i][j] == null) {
+						fieldToClick[0] = i;
+						fieldToClick[1] = j;
+					}
+				}
+			}
+		}
+		if (fieldToClick[0] == 0 && fieldToClick[1] == 0) {
+			for (int i = 0; i < currentBoard.length; i++) {
+				for (int j = 0; j < currentBoard[i].length; j++) {
+					if ((finalBoard[i][j] instanceof Number && currentBoard[i][j] == null) ||	(finalBoard[i][j] instanceof Zero && currentBoard[i][j] == null) ) {
+						fieldToClick[0] = i;
+						fieldToClick[1] = j;
+					}
+				}
+			}
+		}
+		return fieldToClick;
+	}
 }

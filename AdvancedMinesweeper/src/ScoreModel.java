@@ -108,7 +108,7 @@ public class ScoreModel {
 	public String calculateDifficulty() {
 		String difficulty = "";
 		int totalSquares = solutionBoard.length * solutionBoard[0].length;
-		double difficultyRating = ( (double) value3BV/totalSquares) * 100;
+		double difficultyRating = ( (double) value3BV / totalSquares) * 100;
 
 		
 		if (difficultyRating < 12) {
