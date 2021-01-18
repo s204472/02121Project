@@ -10,6 +10,7 @@ public class GameModel {
 	private GameObjects[][] finalBoard;
 	private int displayedFields;
 	private ScoreModel scoreModel;
+	private int lastX, lastY;
 
 	// Constructing a GameModel object, with two boards of the given size and mines.
 	public GameModel(int n, int m, int mineCount) {
@@ -140,6 +141,8 @@ public class GameModel {
 				((Zero) finalBoard[x][y]).toggleZeroVisible();
 			}
 		}
+		lastX = x;
+		lastY = y;
 	}
 
 
@@ -194,11 +197,11 @@ public class GameModel {
 		}
 	}
 	
-	public int[] findHint(int x, int y) {
+	public int[] findHint() {
 		int[] fieldToClick = new int[2];
-		for (int i = x - 1; i <= x + 1; i++) {
-			for (int j = y - 1; j <= y + 1; j++) {
-				if ((i != x || j != y) && i >= 0 && i < currentBoard.length && j >= 0 && j < currentBoard[i].length) {
+		for (int i = lastX - 1; i <= lastX + 1; i++) {
+			for (int j = lastY - 1; j <= lastY + 1; j++) {
+				if ((i != lastX || j != lastY) && i >= 0 && i < currentBoard.length && j >= 0 && j < currentBoard[i].length) {
 					if ((finalBoard[i][j] instanceof Number || finalBoard[i][j] instanceof Zero)
 							&& currentBoard[i][j] == null) {
 						fieldToClick[0] = i;
@@ -217,7 +220,6 @@ public class GameModel {
 				}
 			}
 		}
-
 		return fieldToClick;
 	}
 }
