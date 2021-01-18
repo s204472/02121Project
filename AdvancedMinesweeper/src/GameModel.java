@@ -1,29 +1,25 @@
 import java.util.Random;
 
 public class GameModel {
-	public boolean gameOver;
-	
-	private int xSize, ySize, mineCount;
-	
+	private int width, height, mineCount;
+	private int lastX, lastY, displayedFields;
 	private boolean[][] mines;
-	private int displayedFields;
+	private boolean gameOver;
 	
 	private GameObjects[][] currentBoard, finalBoard;
 	private ScoreModel scoreModel;
-	private int lastX, lastY;
+	
 
 	// Constructing a GameModel object, with two boards of the given size and mines.
-	public GameModel(int n, int m, int mineCount) {
-		this.xSize = n;
-		this.ySize = m;
+	public GameModel(int width, int height, int mineCount) {
+		this.width = width;
+		this.height = height;
 		this.mineCount = mineCount;
 
-		this.currentBoard = new GameObjects[n][m]; // representing the board displayed to the player
-		this.finalBoard = new GameObjects[n][m]; // representing the solution
-		this.mines = new boolean[n][m];
+		this.currentBoard = new GameObjects[width][height]; // representing the board displayed to the player
 
-		this.mines = genMines(mineCount);
-		this.finalBoard = fillFinalBoard();
+		this.mines = genMines(width, height, mineCount);
+		this.finalBoard = fillFinalBoard(width, height, mines);
 
 		this.gameOver = false;
 		this.displayedFields = 0;
@@ -31,12 +27,12 @@ public class GameModel {
 		this.scoreModel = new ScoreModel(finalBoard);
 	}
 
-	public int getXSize() {
-		return xSize;
+	public int getWidth() {
+		return width;
 	}
 
-	public int getYSize() {
-		return ySize;
+	public int getHeight() {
+		return height;
 	}
 	public int getMines() {
 		return mineCount;
@@ -44,18 +40,6 @@ public class GameModel {
 
 	public int getDisplayedFields() {
 		return displayedFields;
-	}
-
-	public void setXSize(int xSize) {
-		this.xSize = xSize;
-	}
-
-	public void setYSize(int ySize) {
-		this.ySize = ySize;
-	}
-
-	public void setMines(int mines) {
-		this.mineCount = mines;
 	}
 
 	public GameObjects[][] getCurrentBoard() {
@@ -66,23 +50,41 @@ public class GameModel {
 		return finalBoard;
 	}
 
-	public boolean getGameover() {
+	public boolean getGameOver() {
 		return gameOver;
 	}
 
 	public ScoreModel getScoreModel() {
 		return scoreModel;
 	}
+	
+	public void setFlag(int x, int y) {
+		currentBoard[x][y] = new Flag();
+	}
+
+	public void removeFlag(int x, int y) {
+		currentBoard[x][y] = null;
+	}
+	public boolean checkFlag(int x, int y) {
+		if (currentBoard[x][y] instanceof Flag) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	// Generating the given number of mines in random positions.
-	private boolean[][] genMines(int mineCount) {
+	private boolean[][] genMines(int x, int y, int mineCount) {
 		Random rand = new Random();
+		
+		boolean[][] mines = new boolean[x][y];
+		
 		int mineIndex = 0;
 		while (mineIndex < mineCount) {
-			int x = rand.nextInt(xSize);
-			int y = rand.nextInt(ySize);
-			if (!mines[x][y]) {
-				mines[x][y] = true;
+			int i = rand.nextInt(width);
+			int j = rand.nextInt(height);
+			if (!mines[i][j]) {
+				mines[i][j] = true;
 				mineIndex++;
 			}
 		}
@@ -91,18 +93,18 @@ public class GameModel {
 
 	// Fills the final board with mines and numbers representing the number of
 	// neighbouring mines.
-	private GameObjects[][] fillFinalBoard() {
-		GameObjects[][] tempBoard = new GameObjects[xSize][ySize];
+	private GameObjects[][] fillFinalBoard(int width, int height, boolean[][] mines) {
+		GameObjects[][] finalBoard = new GameObjects[width][height];
 		for (int i = 0; i < mines.length; i++) {
 			for (int j = 0; j < mines[i].length; j++) {
 				if (mines[i][j]) {
-					tempBoard[i][j] = new Mine();
+					finalBoard[i][j] = new Mine();
 				} else {
-					tempBoard[i][j] = getNeighbours(i, j) == 0 ? new Zero() : new Number(getNeighbours(i, j));
+					finalBoard[i][j] = getNeighbours(i, j) == 0 ? new Zero() : new Number(getNeighbours(i, j));
 				}
 			}
 		}
-		return tempBoard;
+		return finalBoard;
 	}
 	
 
@@ -111,7 +113,7 @@ public class GameModel {
 		int neighbourBombs = 0;
 		for (int i = x - 1; i <= x + 1; i++) {
 			for (int j = y - 1; j <= y + 1; j++) {
-				if (i >= 0 && i < xSize && j >= 0 && j < ySize && !(i == x && j == y)) {
+				if (i >= 0 && i < width && j >= 0 && j < height && !(i == x && j == y)) {
 					neighbourBombs += (mines[i][j] ? 1 : 0);
 				}
 			}
@@ -131,40 +133,27 @@ public class GameModel {
 		currentBoard[x][y] = finalBoard[x][y];
 		lastX = x;
 		lastY = y;
-		if (finalBoard[x][y] instanceof Number) {
-			if (((Number) finalBoard[x][y]).getNumVisible()) {
-				displayedFields++;
-				((Number) finalBoard[x][y]).toggleNumVisible();
-			}
-		} else if (finalBoard[x][y] instanceof Zero) {
-			if (((Zero) finalBoard[x][y]).getZeroVisible()) {
-				displayedFields++;
-				((Zero) finalBoard[x][y]).toggleZeroVisible();
-			}
+		
+		if ((finalBoard[x][y] instanceof Zero || finalBoard[x][y] instanceof Number) && !finalBoard[x][y].getVisited() ) {	
+			finalBoard[x][y].setVisited();
+			displayedFields++;
 		}
-		System.out.println(displayedFields);
 	}
 
 
 
 	public void remakeBoard(int x, int y) {
-		currentBoard = new GameObjects[xSize][ySize]; // representing the board displayed to the player
-		finalBoard = new GameObjects[xSize][ySize]; // representing the solution
-		this.mines = new boolean[xSize][ySize];
-
-		this.mines = genMines(mineCount);
-		this.finalBoard = fillFinalBoard();
-
-		this.gameOver = false;
-		this.displayedFields = 0;
-
-		this.scoreModel = new ScoreModel(finalBoard);
-
+		mines = genMines(width, height, mineCount);
+		finalBoard = fillFinalBoard(width, height, mines);
+		gameOver = false;
+		displayedFields = 0;
+		scoreModel = new ScoreModel(finalBoard);
+		
 		clickField(x, y);
 	}
 
 	public boolean checkWin() {
-		if ((xSize * ySize) - mineCount == displayedFields) {
+		if ((width * height) - mineCount == displayedFields) {
 			gameOver = true;
 			return true;
 		} else {
@@ -180,40 +169,23 @@ public class GameModel {
 			return false;
 		}
 	}
-
-	public void setFlag(int x, int y) {
-		currentBoard[x][y] = new Flag();
-	}
-
-	public void removeFlag(int x, int y) {
-		currentBoard[x][y] = null;
-	}
-
-	public boolean checkFlag(int x, int y) {
-		if (currentBoard[x][y] instanceof Flag) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
+		
 	public int[] findHint() {
 		int[] fieldToClick = new int[2];
 		for (int i = lastX - 1; i <= lastX + 1; i++) {
 			for (int j = lastY - 1; j <= lastY + 1; j++) {
-				if ((i != lastX || j != lastY) && i >= 0 && i < currentBoard.length && j >= 0 && j < currentBoard[i].length) {
-					if ((finalBoard[i][j] instanceof Number || finalBoard[i][j] instanceof Zero)
-							&& currentBoard[i][j] == null) {
-						fieldToClick[0] = i;
-						fieldToClick[1] = j;
-					}
+				if ((i != lastX || j != lastY) && i >= 0 
+						&& i < currentBoard.length && j >= 0 && currentBoard[i][j] == null
+						&& j < currentBoard[i].length && (finalBoard[i][j] instanceof Number || finalBoard[i][j] instanceof Zero)) {
+					fieldToClick[0] = i;
+					fieldToClick[1] = j;
 				}
 			}
 		}
 		if (fieldToClick[0] == 0 && fieldToClick[1] == 0) {
 			for (int i = 0; i < currentBoard.length; i++) {
 				for (int j = 0; j < currentBoard[i].length; j++) {
-					if ((finalBoard[i][j] instanceof Number && currentBoard[i][j] == null) ||	(finalBoard[i][j] instanceof Zero && currentBoard[i][j] == null) ) {
+					if ((finalBoard[i][j] instanceof Number	|| (finalBoard[i][j] instanceof Zero) && currentBoard[i][j] == null) ) {
 						fieldToClick[0] = i;
 						fieldToClick[1] = j;
 					}
