@@ -37,15 +37,10 @@ public class Controller implements Initializable {
 	public File backgroundMusic = new File("src//audio//backgroundMusic.wav");
 	public File flagSound = new File("src//audio//flagSound.wav");
 	public File winSound = new File("src//audio//winSound.wav");
+	public Clip backGroundClip;
 	
 	private GameModel gameModel;
-<<<<<<< HEAD
-	
-	
-=======
-	private GameObjects[][] currentBoard;
 
->>>>>>> 55f83ae96ad6141b402bd5da6a7708b4cfc2db48
 	private ObservableList<Score> scores;
 
 	private Timer clock;
@@ -92,7 +87,7 @@ public class Controller implements Initializable {
 			createButtons(xSize, ySize, biggestSide);
 			difficulty.setText(gameModel.getScoreModel().calculateDifficulty());
 		} else {
-			playAudio(uLovLigtInput);
+			playAudio(illegalInputSound);
 			inputX.setText("");
 			inputY.setText("");
 			inputMines.setText("");
@@ -159,7 +154,7 @@ public class Controller implements Initializable {
 		GameObjects[][] currentBoard = gameModel.getCurrentBoard();
 		if (currentBoard[x][y] instanceof Flag) {
 			buttons[x][y].setGraphic(((Flag) currentBoard[x][y]).getFlagImage(fontSize));
-			playAudio(Flag);
+			playAudio(flagSound);
 			
 		} else if (currentBoard[x][y] == null) {
 			buttons[x][y].setGraphic(null);
@@ -196,7 +191,7 @@ public class Controller implements Initializable {
 	public void handleLeftClick(int x, int y) throws FileNotFoundException {
 		if (gameModel.getDisplayedFields() == 0) {
 			startTimer();
-			backGroundClip = playAudioloop(backGroundMusic);
+			backGroundClip = playAudioloop(backgroundMusic);
 		}
 
 		if (!gameModel.getGameover()) {
@@ -220,7 +215,7 @@ public class Controller implements Initializable {
 			}
 			if (gameModel.checkGameover(x, y)) {
 				stopAudioloop(backGroundClip);
-				playAudio(Bomb);
+				playAudio(bombSound);
 				getFinalBoard();
 				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 				buttons[x][y].getStyleClass().add("button-lost");
