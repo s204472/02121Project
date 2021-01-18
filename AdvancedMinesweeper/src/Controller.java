@@ -43,6 +43,8 @@ public class Controller implements Initializable {
 	@FXML
 	public Label points;
 	@FXML
+	public Label difficulty;
+	@FXML
 	public TableView<Score> tableView;
     @FXML
     public TableColumn<Score, Integer> scoreColumn;
@@ -109,6 +111,7 @@ public class Controller implements Initializable {
 			this.fontSize = (int) (fontMultiplier * screenHeight / biggestSide);
 
 			createButtons();
+			difficulty.setText(gameModel.getScoreModel().calculateDifficulty());
 		} else {
 			//playAudio(uLovLigtInput);
 			inputX.setText("");
