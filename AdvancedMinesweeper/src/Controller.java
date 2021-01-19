@@ -8,9 +8,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Screen;
+
 import java.net.URL;
 import java.util.*;
-import java.io.*;
+
 import javax.sound.sampled.*;
 
 //Initializable makes the class able to interact with FXML file.
@@ -223,12 +224,18 @@ public class Controller implements Initializable {
 			int[] fieldToClick = gameModel.findHint();
 			maxHint--;
 			int x = fieldToClick[0];
+<<<<<<< HEAD
 			int y = fieldToClick[1];		
+=======
+			int y = fieldToClick[1];
+			
+>>>>>>> ff33569e7c304358060e93cf344f5aa7874b2276
 			gameModel.clickField(x, y);
 			checkZero(x, y);
 			updateButton(x, y);
 			checkWin(x, y);
-//			ScoreModel.decreaseScore();
+			
+			gameModel.getScoreModel().decreaseHintScore();
 		}
 	}
 
@@ -268,8 +275,7 @@ public class Controller implements Initializable {
 			showFinalBoard();
 			buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 			buttons[x][y].getStyleClass().add("button-won");
-			// playAudio(winSound);
-
+			
 			Score score = new Score(gameModel.getScoreModel().getScore(), gameModel.getWidth(), gameModel.getHeight(),
 					gameModel.getMines());
 			scores.add(score);
