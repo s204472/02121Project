@@ -19,8 +19,8 @@ public class Controller implements Initializable {
 	// loading GridPane from the FXML file
 	@FXML
 	private GridPane gameGrid;
-	//@FXML
-	//private Button[][] buttons;
+	@FXML
+	private GameButtons[][] buttons;
 	@FXML
 	private TextField inputWidth, inputHeight, inputMines;
 	@FXML
@@ -31,6 +31,8 @@ public class Controller implements Initializable {
 	private TableColumn<Score, Integer> scoreColumn, minesColumn;
 	@FXML
 	private TableColumn<Score, String> mapColumn;
+	@FXML
+	private Button hintButton;
 
 	private GameModel gameModel;
 
@@ -41,10 +43,9 @@ public class Controller implements Initializable {
 	
 	public Clip backGroundClip;
 
-	private int screenHeight, fontSize, maxHint;
+	private int screenHeight, fontSize;
 	
-	@FXML
-	private GameButtons[][] buttons;
+	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -83,14 +84,14 @@ public class Controller implements Initializable {
 
 			createButtons(width, height, biggestSide);
 			difficulty.setText(gameModel.getScoreModel().calculateDifficulty());
+			hintButton.setText("Hints: " + gameModel.getMaxHints());
 		} else {
 			GameSound.playIllegalInputSound();
 			inputWidth.setText("");
 			inputHeight.setText("");
 			inputMines.setText("");
 		}
-		
-		this.maxHint = (gameModel.getScoreModel().get3BV() / 10) + 1;
+
 	}
 
 	private boolean isInputValid(int width, int height, int mines) {
@@ -220,9 +221,9 @@ public class Controller implements Initializable {
 	}
 	
 	public void hint() {
-		if (!gameModel.getGameOver() && maxHint != 0 && gameModel.getDisplayedFields() != 0) {
+		if (!gameModel.getGameOver() && gameModel.getMaxHints() != 0 && gameModel.getDisplayedFields() != 0) {
 			int[] fieldToClick = gameModel.findHint();
-			maxHint--;
+			gameModel.decreaseMaxHints();;
 			int x = fieldToClick[0];
 			int y = fieldToClick[1];		
 			gameModel.clickField(x, y);
@@ -230,6 +231,7 @@ public class Controller implements Initializable {
 			updateButton(x, y);
 			gameModel.getScoreModel().decreaseHintScore();
 			checkWin(x, y);
+			hintButton.setText("Hints: " + gameModel.getMaxHints());
 		}
 	}
 
