@@ -18,10 +18,10 @@ public class Controller implements Initializable {
 	// loading GridPane from the FXML file
 	@FXML
 	private GridPane gameGrid;
+	//@FXML
+	//private Button[][] buttons;
 	@FXML
-	private Button[][] buttons;
-	@FXML
-	private TextField inputX, inputY, inputMines;
+	private TextField inputWidth, inputHeight, inputMines;
 	@FXML
 	private Label timer, points, difficulty;
 	@FXML
@@ -47,6 +47,9 @@ public class Controller implements Initializable {
 	private boolean isTimerRunning;
 
 	private int screenHeight, fontSize;
+	
+	@FXML
+	private GameButtons[][] buttons;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -69,67 +72,53 @@ public class Controller implements Initializable {
 			clock.cancel();
 		}
 
-		int xSize = getInteger(inputX.getText());
-		int ySize = getInteger(inputY.getText());
+		int width = getInteger(inputWidth.getText());
+		int height = getInteger(inputHeight.getText());
 		int mines = getInteger(inputMines.getText());
 
-		if (isInputValid(xSize, ySize, mines)) {
+		if (isInputValid(width, height, mines)) {
 
-			gameModel = new GameModel(xSize, ySize, mines);
+			gameModel = new GameModel(width, height, mines);
+			buttons = new GameButtons[width][height];
 
-			buttons = new Button[xSize][ySize];
-
-			int biggestSide = xSize > ySize ? xSize : ySize;
+			int biggestSide = width > height ? width : height;
 			double fontMultiplier = biggestSide > 50 ? 1.2 : 0.5;
-
 			this.fontSize = (int) (fontMultiplier * screenHeight / biggestSide);
 
-			createButtons(xSize, ySize, biggestSide);
+			createButtons(width, height, biggestSide);
 			difficulty.setText(gameModel.getScoreModel().calculateDifficulty());
 		} else {
 			playAudio(illegalInputSound);
-			inputX.setText("");
-			inputY.setText("");
+			inputWidth.setText("");
+			inputHeight.setText("");
 			inputMines.setText("");
 		}
 	}
 
-	private boolean isInputValid(int xSize, int ySize, int mines) {
-		if (xSize >= 4 && xSize <= 100) {
-			if (ySize >= 4 && ySize <= 100) {
-				if (mines >= 4 && mines <= (int) xSize * ySize * 0.9) {
-					return true;
-				}
-			}
-		}
-		return false;
+	private boolean isInputValid(int width, int height, int mines) {
+		return (width >= 4 && width <= 100 &&
+				height >= 4 && height <= 100 &&
+				mines >= 4 && mines <= (int) width * height * 0.9) 
+				? true : false;
 	}
 
 	private static Integer getInteger(String text) {
-		if (text == null) {
-			return 0;
-		} else {
+		if (text != null) {
 			try {
 				return Integer.parseInt(text);
 			} catch (NumberFormatException e) {
 				return 0;
 			}
 		}
+		return 0;
 	}
 
 	// creates all the Buttons and makes clickable.
-	private void createButtons(int xSize, int ySize, int biggestSide) {
-		for (int i = 0; i < xSize; i++) {
-			for (int j = 0; j < ySize; j++) {
-				buttons[i][j] = new Button();
-				buttons[i][j].setPrefSize(screenHeight / ySize + 1, screenHeight / biggestSide + 1);
-				buttons[i][j].getStyleClass().add("gameButtons");
-				buttons[i][j].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
-				gameGrid.add(buttons[i][j], i, j);
-
-				int x = i;
-				int y = j;
-
+	private void createButtons(int width, int height, int biggestSide) {
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				int x = i, y = j;
+				buttons[i][j] = new GameButtons(height, screenHeight, biggestSide, fontSize);
 				buttons[i][j].setOnMouseClicked(event -> {
 					if (event.getButton() == MouseButton.PRIMARY) {
 						handleLeftClick(x, y);
@@ -137,6 +126,7 @@ public class Controller implements Initializable {
 						handleRightClick(x, y);
 					}
 				});
+				gameGrid.add(buttons[i][j], i, j);
 			}
 		}
 	}
@@ -145,19 +135,13 @@ public class Controller implements Initializable {
 	private void updateButton(int x, int y) {
 		GameObjects[][] currentBoard = gameModel.getCurrentBoard();
 		if (currentBoard[x][y] instanceof Flag) {
-			buttons[x][y].setGraphic(((Flag) currentBoard[x][y]).getFlagImage(fontSize));
-
+			buttons[x][y].setFlag((Flag) currentBoard[x][y]);
 		} else if (currentBoard[x][y] instanceof Number) {
-			buttons[x][y].setGraphic(null);
-			buttons[x][y].setText(currentBoard[x][y].toString());
-			buttons[x][y].getStyleClass().add("number" + currentBoard[x][y].toString());
-
+			buttons[x][y].setNumber((Number) currentBoard[x][y]);
 		} else if (currentBoard[x][y] instanceof Zero) {
-			buttons[x][y].setGraphic(null);
-			buttons[x][y].getStyleClass().add("blank");
-
+			buttons[x][y].setZero();
 		} else if (currentBoard[x][y] == null) {
-			buttons[x][y].setGraphic(null);
+			buttons[x][y].setEmpty();
 		}
 	}
 
@@ -167,8 +151,7 @@ public class Controller implements Initializable {
 		if (currentBoard[x][y] instanceof Zero) {
 			for (int i = x - 1; i <= x + 1; i++) {
 				for (int j = y - 1; j <= y + 1; j++) {
-					if ((i != x || j != y) && i >= 0 && i < finalBoard.length && j >= 0 && j < finalBoard[i].length
-							&& !finalBoard[i][j].getVisited()) {
+					if ((i != x || j != y) && i >= 0 && i < finalBoard.length && j >= 0 && j < finalBoard[i].length && !finalBoard[i][j].getVisited()) {
 						gameModel.clickField(i, j);
 						updateButton(i, j);
 						finalBoard[i][j].setVisited();
@@ -180,43 +163,39 @@ public class Controller implements Initializable {
 	}
 
 	public void handleLeftClick(int x, int y) {
-			if (gameModel.getDisplayedFields() == 0) {
-				startTimer();
-				backGroundClip = playAudioloop(backgroundMusic);
+		if (gameModel.getDisplayedFields() == 0) {
+			startTimer();
+			backGroundClip = playAudioloop(backgroundMusic);
+		}
+
+		if (!gameModel.getGameOver()) {
+			gameModel.clickField(x, y);
+			playAudio(clickSound);
+			updateButton(x, y);
+			checkZero(x, y);
+
+			if (gameModel.checkWin()) {
+				stopAudioloop(backGroundClip);
+				playAudio(winSound);
+				showFinalBoard();
+				buttons[x][y].styleWin();	
+				
+				Score score = new Score(gameModel.getScoreModel().getScore(), gameModel.getWidth(), gameModel.getHeight(), gameModel.getMines());
+				scores.add(score);
+				tableView.setItems(scores);
+				
+			} else if (gameModel.checkGameover(x, y)) {
+				stopAudioloop(backGroundClip);
+				playAudio(bombSound);
+				showFinalBoard();
+				buttons[x][y].styleGameover();
 			}
-
-			if (!gameModel.getGameover()) {
-				gameModel.clickField(x, y);
-				playAudio(clickSound);
-				updateButton(x, y);
-				checkZero(x, y);
-
-				if (gameModel.checkWin()) {
-					stopAudioloop(backGroundClip);
-					showFinalBoard();
-					buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
-					buttons[x][y].getStyleClass().add("button-won");
-					playAudio(winSound);
-
-					Score score = new Score(gameModel.getScoreModel().getScore(), gameModel.getXSize(),
-							gameModel.getYSize(), gameModel.getMines());
-					scores.add(score);
-					tableView.setItems(scores);
-
-				}
-				if (gameModel.checkGameover(x, y)) {
-					stopAudioloop(backGroundClip);
-					playAudio(bombSound);
-					showFinalBoard();
-					buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
-					buttons[x][y].getStyleClass().add("button-lost");
-				}
-			}
+		}
 	}
 
 	public void handleRightClick(int x, int y) {
 		GameObjects[][] currentBoard = gameModel.getCurrentBoard();
-		if (!gameModel.getGameover()) {
+		if (!gameModel.getGameOver()) {
 			playAudio(flagSound);
 			if (gameModel.checkFlag(x, y)) {
 				gameModel.removeFlag(x, y);
@@ -232,27 +211,23 @@ public class Controller implements Initializable {
 	public void showFinalBoard() {
 		GameObjects[][] finalBoard = gameModel.getFinalBoard();
 		GameObjects[][] currentBoard = gameModel.getCurrentBoard();
-		for (int i = 0; i < gameModel.getXSize(); i++) {
-			for (int j = 0; j < gameModel.getYSize(); j++) {
+		for (int i = 0; i < gameModel.getWidth(); i++) {
+			for (int j = 0; j < gameModel.getHeight(); j++) {
 				if (currentBoard[i][j] instanceof Flag) {
-					buttons[i][j].setGraphic(null);
+					buttons[i][j].setEmpty();
 				}
 				if (finalBoard[i][j] instanceof Mine) {
-					buttons[i][j].setGraphic(((Mine) finalBoard[i][j]).getMineImage(fontSize));
+					buttons[i][j].setMine((Mine) finalBoard[i][j]);
+					
 				} else if (finalBoard[i][j] instanceof Number) {
-					Number num = (Number) finalBoard[i][j];
-
-					String cssClass = "number" + num;
-					buttons[i][j].getStyleClass().add(cssClass);
-					buttons[i][j].setText(finalBoard[i][j].toString());
-
-				} else { // instance of Zero
-					buttons[i][j].getStyleClass().add("blank");
+					buttons[i][j].setNumber((Number) finalBoard[i][j]);
+					
+				} else { 
+					buttons[i][j].setZero();
 				}
 			}
 		}
 	}
-<<<<<<< HEAD
 	
 	public void hint() throws FileNotFoundException {
 		if (!gameModel.getGameover()) {
@@ -275,22 +250,10 @@ public class Controller implements Initializable {
 			}
 		}
 	}
-=======
->>>>>>> bf2bb6eae4d586174221d641af6e9423e7822249
-
-	public void hint() {
-		int[] fieldToClick = gameModel.findHint();
-		int x = fieldToClick[0];
-		int y = fieldToClick[1];
-		System.out.println("Controller " + x + " : " + y);
-		gameModel.clickField(x, y);
-		checkZero(x, y);
-		updateButton(x, y);
-	}
 
 	public void cleanBoard() {
-		for (int i = 0; i < gameModel.getXSize(); i++) {
-			for (int j = 0; j < gameModel.getYSize(); j++) {
+		for (int i = 0; i < gameModel.getWidth(); i++) {
+			for (int j = 0; j < gameModel.getHeight(); j++) {
 				gameGrid.getChildren().remove(buttons[i][j]);
 			}
 		}
@@ -310,7 +273,7 @@ public class Controller implements Initializable {
 		clock.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				if (gameModel.checkWin() || gameModel.getGameover()) {
+				if (gameModel.checkWin() || gameModel.getGameOver()) {
 					clock.cancel();
 					isTimerRunning = false;
 				}
@@ -318,8 +281,7 @@ public class Controller implements Initializable {
 			}
 		}, 0, 1000);
 	}
-
-	//anders G fix anden klasse !!!!
+	
 	public static void playAudio(File Sound) {
 
 		try {

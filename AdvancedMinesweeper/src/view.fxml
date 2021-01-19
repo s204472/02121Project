@@ -10,11 +10,11 @@
 			<HBox spacing="10" Alignment="CENTER">
 				<VBox>
 					<Label styleClass="inputLabel" text="Width"/>
-	   				<TextField fx:id="inputX" styleClass="inputField" promptText="4-100"/>
+	   				<TextField fx:id="inputWidth" styleClass="inputField" promptText="4-100"/>
 	   			</VBox>
 	   			<VBox>
-					<Label styleClass="inputLabel" text="Length"/>
-	   				<TextField fx:id="inputY" styleClass="inputField" promptText="4-100"/>
+					<Label styleClass="inputLabel" text="Height"/>
+	   				<TextField fx:id="inputHeight" styleClass="inputField" promptText="4-100"/>
 	   			</VBox>
 	   			<VBox>
 					<Label styleClass="inputLabel" text="Mines"/>
