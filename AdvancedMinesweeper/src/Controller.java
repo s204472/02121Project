@@ -90,7 +90,7 @@ public class Controller implements Initializable {
 			inputMines.setText("");
 		}
 		
-		this.maxHint = (ScoreModel.get3BV() / 10) + 1;
+		this.maxHint = (gameModel.getScoreModel().get3BV() / 10) + 1;
 	}
 
 	private boolean isInputValid(int width, int height, int mines) {

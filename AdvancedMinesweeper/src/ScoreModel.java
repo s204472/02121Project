@@ -1,5 +1,5 @@
 public class ScoreModel {
-	private static int value3BV;
+	private int value3BV;
 	private int secondsPassed;
 	private GameObjects[][] finalBoard;
 	private int endScore;
@@ -7,15 +7,13 @@ public class ScoreModel {
 
 	public ScoreModel(GameObjects[][] finalBoard, int mineCount) {
 		this.secondsPassed = 0;
-		this.finalBoard = finalBoard;
 		
 		checked = new boolean[finalBoard.length][finalBoard[0].length];
-		value3BV = getFields(finalBoard) - mineCount - getZeroNeighbours(finalBoard) + getZeroBlocks(finalBoard);
+		value3BV = getTotalFields() - mineCount - getZeroNeighbours() + getZeroBlocks();
 		endScore = value3BV * 10;
-		System.out.println(value3BV);
 	}
 	
-	public int getZeroBlocks(GameObjects[][] finalBoard) {
+	public int getZeroBlocks() {
 		int counter = 0;
 		for(int i = 0; i < finalBoard.length; i ++) {
 			for (int j = 0; j < finalBoard[i].length; j++) {					
@@ -43,19 +41,21 @@ public class ScoreModel {
 		}	
 	}
 	
-	public int getZeroNeighbours(GameObjects[][] finalBoard) {
+	public int getZeroNeighbours() {
 		int counter = 0;
-		boolean counted = false;
+		boolean neighboursCounted = false;
 		for(int i = 0; i < finalBoard.length; i ++) {
 			for (int j = 0; j < finalBoard[i].length; j++) {
 				if (finalBoard[i][j] instanceof Number || finalBoard[i][j] instanceof Zero) {
-					counted = false;
+					neighboursCounted = false;
+					
+					// Checks every neighbouring tile if they are of the type Zero
 					for (int k = i - 1; k <= i + 1; k++) {
 						for (int l = j - 1; l <= j + 1; l++) {
 							if (k >= 0 && k < finalBoard.length && l >= 0 && l < finalBoard[k].length) {
-								if (finalBoard[k][l] instanceof Zero && !counted) {
+								if (finalBoard[k][l] instanceof Zero && !neighboursCounted) {
 									counter++;
-									counted = true;
+									neighboursCounted = true;
 								}
 							}
 						}
@@ -66,10 +66,9 @@ public class ScoreModel {
 		return counter;
 	}
 
-	public int getFields(GameObjects[][] finalBoard) {
+	public int getTotalFields() {
 		return finalBoard.length * finalBoard[0].length;
 	}
-	
 	
 	// Timing part of score
 	public void incSeconds() {
@@ -102,8 +101,7 @@ public class ScoreModel {
 
 	public String calculateDifficulty() {
 		String difficulty = "";
-		int totalSquares = finalBoard.length * finalBoard[0].length;
-		double difficultyRating = ((double) value3BV / totalSquares) * 100;
+		double difficultyRating = ((double) value3BV / this.getTotalFields()) * 100;
 
 		if (difficultyRating < 5) {
 			difficulty += "Very Easy";
@@ -122,7 +120,7 @@ public class ScoreModel {
 		return difficulty;
 	}
 	
-	public static int get3BV() {
+	public int get3BV() {
 		return value3BV;
 	}
 
