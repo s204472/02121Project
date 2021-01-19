@@ -40,7 +40,7 @@ public class Controller implements Initializable {
 	
 	public Clip backGroundClip;
 
-	private int screenHeight, fontSize;
+	private int screenHeight, fontSize, maxHint;
 	
 	@FXML
 	private GameButtons[][] buttons;
@@ -69,7 +69,8 @@ public class Controller implements Initializable {
 		int width = getInteger(inputWidth.getText());
 		int height = getInteger(inputHeight.getText());
 		int mines = getInteger(inputMines.getText());
-
+		
+		
 		if (isInputValid(width, height, mines)) {
 
 			gameModel = new GameModel(width, height, mines);
@@ -87,6 +88,8 @@ public class Controller implements Initializable {
 			inputHeight.setText("");
 			inputMines.setText("");
 		}
+		
+		this.maxHint = (ScoreModel.get3BV() / 10) + 1;
 	}
 
 	private boolean isInputValid(int width, int height, int mines) {
@@ -168,17 +171,9 @@ public class Controller implements Initializable {
 			updateButton(x, y);
 			checkZero(x, y);
 
-			if (gameModel.checkWin()) {
-				GameSound.stopAudioloop(backGroundClip);
-				GameSound.playWinSound();
-				showFinalBoard();
-				buttons[x][y].styleWin();	
+			checkWin(x, y);
 				
-				Score score = new Score(gameModel.getScoreModel().getScore(), gameModel.getWidth(), gameModel.getHeight(), gameModel.getMines());
-				scores.add(score);
-				tableView.setItems(scores);
-				
-			} else if (gameModel.checkGameover(x, y)) {
+			if (gameModel.checkGameover(x, y)) {
 				GameSound.stopAudioloop(backGroundClip);
 				GameSound.playMineSound();
 				showFinalBoard();
@@ -223,25 +218,21 @@ public class Controller implements Initializable {
 		}
 	}
 	
-	public void hint() throws FileNotFoundException {
-		if (!gameModel.getGameOver()) {
+	public void hint() {
+		if (!gameModel.getGameOver() && maxHint != 0) {
 			int[] fieldToClick = gameModel.findHint();
+			maxHint--;
 			int x = fieldToClick[0];
 			int y = fieldToClick[1];
+//			maxHint--;
+//			System.out.println(maxHint);
+//			System.out.println(fieldToClick[0] + " : " + fieldToClick[1]);
+			
 			gameModel.clickField(x, y);
 			checkZero(x, y);
 			updateButton(x, y);
-			if (gameModel.checkWin()) {
-				showFinalBoard();
-				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
-				buttons[x][y].getStyleClass().add("button-won");
-				// playAudio(winSound);
-
-				Score score = new Score(gameModel.getScoreModel().getScore(), gameModel.getWidth(),
-						gameModel.getHeight(), gameModel.getMines());
-				scores.add(score);
-				tableView.setItems(scores);
-			}
+			checkWin(x, y);
+//			ScoreModel.decreaseScore();
 		}
 	}
 
@@ -274,6 +265,20 @@ public class Controller implements Initializable {
 				updateUI();
 			}
 		}, 0, 1000);
+	}
+	
+	public void checkWin(int x, int y) {
+		if (gameModel.checkWin()) {
+			showFinalBoard();
+			buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
+			buttons[x][y].getStyleClass().add("button-won");
+			// playAudio(winSound);
+
+			Score score = new Score(gameModel.getScoreModel().getScore(), gameModel.getWidth(), gameModel.getHeight(),
+					gameModel.getMines());
+			scores.add(score);
+			tableView.setItems(scores);
+		}
 	}
 
 }

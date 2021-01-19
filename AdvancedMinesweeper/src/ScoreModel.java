@@ -1,6 +1,6 @@
 
 public class ScoreModel {
-	private int value3BV;
+	private static int value3BV;
 	private int secondsPassed;
 	private boolean[][] checkedZeros, zerosToCheck;
 	private GameObjects[][] finalBoard;
@@ -119,6 +119,10 @@ public class ScoreModel {
 		}
 
 		return difficulty;
+	}
+	
+	public static int get3BV() {
+		return value3BV;
 	}
 
 }
