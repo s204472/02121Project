@@ -230,7 +230,7 @@ public class Controller implements Initializable {
 	}
 	
 	public void hint() throws FileNotFoundException {
-		if (!gameModel.getGameover()) {
+		if (!gameModel.getGameOver()) {
 			int[] fieldToClick = gameModel.findHint();
 			int x = fieldToClick[0];
 			int y = fieldToClick[1];
@@ -238,13 +238,13 @@ public class Controller implements Initializable {
 			checkZero(x, y);
 			updateButton(x, y);
 			if (gameModel.checkWin()) {
-				getFinalBoard();
+				showFinalBoard();
 				buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 				buttons[x][y].getStyleClass().add("button-won");
 				// playAudio(winSound);
 
-				Score score = new Score(gameModel.getScoreModel().getScore(), gameModel.getXSize(),
-						gameModel.getYSize(), gameModel.getMines());
+				Score score = new Score(gameModel.getScoreModel().getScore(), gameModel.getWidth(),
+						gameModel.getHeight(), gameModel.getMines());
 				scores.add(score);
 				tableView.setItems(scores);
 			}
