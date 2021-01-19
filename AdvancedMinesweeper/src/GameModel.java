@@ -1,7 +1,7 @@
 import java.util.Random;
 
 public class GameModel {
-	private int width, height, mineCount;
+	private int width, height, mineCount, maxHints;
 	private int lastX, lastY, displayedFields;
 	private boolean[][] mines;
 	private boolean gameOver;
@@ -25,6 +25,8 @@ public class GameModel {
 		this.displayedFields = 0;
 
 		this.scoreModel = new ScoreModel(finalBoard, mineCount);
+		
+		this.maxHints = (ScoreModel.get3BV() / 10) + 1;
 	}
 
 	public int getWidth() {
@@ -65,6 +67,7 @@ public class GameModel {
 	public void removeFlag(int x, int y) {
 		currentBoard[x][y] = null;
 	}
+	
 	public boolean checkFlag(int x, int y) {
 		if (currentBoard[x][y] instanceof Flag) {
 			return true;
@@ -72,6 +75,16 @@ public class GameModel {
 			return false;
 		}
 	}
+	
+	public int getMaxHints() {
+		return maxHints;
+	}
+	
+	public void decreaseMaxHints() {
+		maxHints--;
+		getMaxHints();
+	}
+	
 
 	// Generating the given number of mines in random positions.
 	private boolean[][] genMines(int x, int y, int mineCount) {
