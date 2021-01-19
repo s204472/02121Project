@@ -31,6 +31,13 @@ public class Controller implements Initializable {
 	@FXML
 	private TableColumn<Score, String> mapColumn;
 
+	private GameModel gameModel;
+
+	private ObservableList<Score> scores;
+
+	private Timer clock;
+	private boolean isTimerRunning;
+	
 	public File bombSound = new File("src//audio//bombSound.wav");
 	public File clickSound = new File("src//audio//clickSound.wav");
 	public File illegalInputSound = new File("src//audio//IllegalInput.wav");
@@ -38,13 +45,6 @@ public class Controller implements Initializable {
 	public File flagSound = new File("src//audio//flagSound.wav");
 	public File winSound = new File("src//audio//winSound.wav");
 	public Clip backGroundClip;
-
-	private GameModel gameModel;
-
-	private ObservableList<Score> scores;
-
-	private Timer clock;
-	private boolean isTimerRunning;
 
 	private int screenHeight, fontSize;
 	
@@ -66,7 +66,7 @@ public class Controller implements Initializable {
 	public void startGame() {
 		if (gameModel != null) {
 			cleanBoard();
-			stopAudioloop(backGroundClip);
+			GameSound.stopAudioloop(backGroundClip);
 		}
 		if (isTimerRunning) {
 			clock.cancel();
@@ -88,7 +88,7 @@ public class Controller implements Initializable {
 			createButtons(width, height, biggestSide);
 			difficulty.setText(gameModel.getScoreModel().calculateDifficulty());
 		} else {
-			playAudio(illegalInputSound);
+			GameSound.playAudio(illegalInputSound);
 			inputWidth.setText("");
 			inputHeight.setText("");
 			inputMines.setText("");
@@ -165,18 +165,18 @@ public class Controller implements Initializable {
 	public void handleLeftClick(int x, int y) {
 		if (gameModel.getDisplayedFields() == 0) {
 			startTimer();
-			backGroundClip = playAudioloop(backgroundMusic);
+			backGroundClip = GameSound.playAudioloop(backgroundMusic);
 		}
 
 		if (!gameModel.getGameOver()) {
 			gameModel.clickField(x, y);
-			playAudio(clickSound);
+			GameSound.playAudio(clickSound);
 			updateButton(x, y);
 			checkZero(x, y);
 
 			if (gameModel.checkWin()) {
-				stopAudioloop(backGroundClip);
-				playAudio(winSound);
+				GameSound.stopAudioloop(backGroundClip);
+				GameSound.playAudio(winSound);
 				showFinalBoard();
 				buttons[x][y].styleWin();	
 				
@@ -185,8 +185,8 @@ public class Controller implements Initializable {
 				tableView.setItems(scores);
 				
 			} else if (gameModel.checkGameover(x, y)) {
-				stopAudioloop(backGroundClip);
-				playAudio(bombSound);
+				GameSound.stopAudioloop(backGroundClip);
+				GameSound.playAudio(bombSound);
 				showFinalBoard();
 				buttons[x][y].styleGameover();
 			}
@@ -196,7 +196,7 @@ public class Controller implements Initializable {
 	public void handleRightClick(int x, int y) {
 		GameObjects[][] currentBoard = gameModel.getCurrentBoard();
 		if (!gameModel.getGameOver()) {
-			playAudio(flagSound);
+			GameSound.playAudio(flagSound);
 			if (gameModel.checkFlag(x, y)) {
 				gameModel.removeFlag(x, y);
 				updateButton(x, y);
@@ -281,36 +281,5 @@ public class Controller implements Initializable {
 			}
 		}, 0, 1000);
 	}
-	
-	public static void playAudio(File Sound) {
 
-		try {
-			Clip clip = AudioSystem.getClip();
-			clip.open(AudioSystem.getAudioInputStream(Sound));
-			clip.start();
-
-		} catch (Exception e) {
-		}
-
-	}
-
-	public static Clip playAudioloop(File Sound) {
-
-		try {
-			Clip clip = AudioSystem.getClip();
-			clip.open(AudioSystem.getAudioInputStream(Sound));
-			clip.loop(Clip.LOOP_CONTINUOUSLY);
-			return clip;
-		} catch (Exception e) {
-		}
-		return null;
-	}
-
-	public void stopAudioloop(Clip clip) {
-
-		try {
-			backGroundClip.stop();
-		} catch (Exception e) {
-		}
-	}
 }
