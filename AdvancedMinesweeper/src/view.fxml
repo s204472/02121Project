@@ -18,7 +18,7 @@
 	   			</VBox>
 	   			<VBox>
 					<Label styleClass="inputLabel" text="Mines"/>
-	   				<TextField fx:id="inputMines" styleClass="inputField" promptText="Mines"/>
+	   				<TextField fx:id="inputMines" styleClass="inputField" promptText="4-90%"/>
 	   			</VBox>
 	   			<Button fx:id="startButton" text="Start" onAction="#startGame"/>
 	   			<Button fx:id="hintButton" text="Hint" onAction="#hint"/>

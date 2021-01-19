@@ -1,3 +1,4 @@
+
 public class GameObjects {	
 	private boolean visited = false;
 	

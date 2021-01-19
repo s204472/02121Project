@@ -1,4 +1,3 @@
-
 public class ScoreModel {
 	private int value3BV;
 	private int secondsPassed;
@@ -35,6 +34,10 @@ public class ScoreModel {
 	// Timing part of score
 	public void incSeconds() {
 		secondsPassed++;
+	}
+	
+	public void decreaseHintScore() {
+		endScore-= 15;
 	}
 
 	// Checks whether the numbered square has any blank squares next to it
