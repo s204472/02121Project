@@ -223,11 +223,7 @@ public class Controller implements Initializable {
 			int[] fieldToClick = gameModel.findHint();
 			maxHint--;
 			int x = fieldToClick[0];
-			int y = fieldToClick[1];
-//			maxHint--;
-//			System.out.println(maxHint);
-//			System.out.println(fieldToClick[0] + " : " + fieldToClick[1]);
-			
+			int y = fieldToClick[1];		
 			gameModel.clickField(x, y);
 			checkZero(x, y);
 			updateButton(x, y);
