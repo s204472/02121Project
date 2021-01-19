@@ -1,7 +1,7 @@
 import java.util.Random;
 
 public class GameModel {
-	private int width, height, mineCount;
+	private int width, height, mineCount, maxHints;
 	private int lastX, lastY, displayedFields;
 	private boolean[][] mines;
 	private boolean gameOver;
@@ -24,7 +24,9 @@ public class GameModel {
 		this.gameOver = false;
 		this.displayedFields = 0;
 
-		this.scoreModel = new ScoreModel(finalBoard);
+		this.scoreModel = new ScoreModel(finalBoard, mineCount);
+		
+		this.maxHints = (scoreModel.get3BV() / 10) + 1;
 	}
 
 	public int getWidth() {
@@ -65,6 +67,7 @@ public class GameModel {
 	public void removeFlag(int x, int y) {
 		currentBoard[x][y] = null;
 	}
+	
 	public boolean checkFlag(int x, int y) {
 		if (currentBoard[x][y] instanceof Flag) {
 			return true;
@@ -72,6 +75,16 @@ public class GameModel {
 			return false;
 		}
 	}
+	
+	public int getMaxHints() {
+		return maxHints;
+	}
+	
+	public void decreaseMaxHints() {
+		maxHints--;
+		getMaxHints();
+	}
+	
 
 	// Generating the given number of mines in random positions.
 	private boolean[][] genMines(int x, int y, int mineCount) {
@@ -150,7 +163,7 @@ public class GameModel {
 		finalBoard = fillFinalBoard(width, height, mines);
 		gameOver = false;
 		displayedFields = 0;
-		scoreModel = new ScoreModel(finalBoard);
+		scoreModel = new ScoreModel(finalBoard, mineCount);
 		
 		clickField(x, y);
 	}
@@ -178,19 +191,22 @@ public class GameModel {
 		for (int i = lastX - 1; i <= lastX + 1; i++) {
 			for (int j = lastY - 1; j <= lastY + 1; j++) {
 				if ((i != lastX || j != lastY) && i >= 0 
-						&& i < currentBoard.length && j >= 0 && currentBoard[i][j] == null
-						&& j < currentBoard[i].length && (finalBoard[i][j] instanceof Number || finalBoard[i][j] instanceof Zero)) {
-					fieldToClick[0] = i;
-					fieldToClick[1] = j;
+						&& i < currentBoard.length && j >= 0 && j < currentBoard[i].length) {
+				
+					if(currentBoard[i][j] == null && (finalBoard[i][j] instanceof Number || finalBoard[i][j] instanceof Zero)) {
+						fieldToClick[0] = i;
+						fieldToClick[1] = j;
+					}
 				}
 			}
 		}
 		if (fieldToClick[0] == 0 && fieldToClick[1] == 0) {
 			for (int i = 0; i < currentBoard.length; i++) {
 				for (int j = 0; j < currentBoard[i].length; j++) {
-					if ((finalBoard[i][j] instanceof Number	|| (finalBoard[i][j] instanceof Zero) && currentBoard[i][j] == null) ) {
+					if ((finalBoard[i][j] instanceof Number	|| finalBoard[i][j] instanceof Zero) && currentBoard[i][j] == null) {
 						fieldToClick[0] = i;
 						fieldToClick[1] = j;
+						return fieldToClick;
 					}
 				}
 			}
