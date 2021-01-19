@@ -7,11 +7,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Screen;
 import java.net.URL;
 import java.util.*;
 import java.io.*;
-import javax.sound.sampled.*;
 
 //Initializable makes the class able to interact with FXML file.
 public class Controller implements Initializable {
@@ -38,7 +38,7 @@ public class Controller implements Initializable {
 	private Timer clock;
 	private boolean isTimerRunning;
 	
-	public Clip backGroundClip;
+	public AudioClip backGroundClip;
 
 	private int screenHeight, fontSize;
 	
@@ -164,9 +164,9 @@ public class Controller implements Initializable {
 
 		if (!gameModel.getGameOver()) {
 			gameModel.clickField(x, y);
-			GameSound.playClickSound();
 			updateButton(x, y);
 			checkZero(x, y);
+			
 
 			if (gameModel.checkWin()) {
 				GameSound.stopAudioloop(backGroundClip);
@@ -183,6 +183,8 @@ public class Controller implements Initializable {
 				GameSound.playMineSound();
 				showFinalBoard();
 				buttons[x][y].styleGameover();
+			} else {
+				GameSound.playClickSound();
 			}
 		}
 	}

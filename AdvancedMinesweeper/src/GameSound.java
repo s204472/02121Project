@@ -1,15 +1,12 @@
-import java.io.File;
-
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import javafx.scene.media.AudioClip;
 
 public class GameSound {
-	private static File bombSound = new File("src//audio//bombSound.wav");
-	private static File clickSound = new File("src//audio//clickSound.wav");
-	private static File illegalInputSound = new File("src//audio//IllegalInput.wav");
-	private static File backgroundMusic = new File("src//audio//backgroundMusic.wav");
-	private static File flagSound = new File("src//audio//flagSound.wav");
-	private static File winSound = new File("src//audio//winSound.wav");
+	private static AudioClip bombSound = new AudioClip(ClassLoader.getSystemResource("audio/bombSound.wav").toString());
+	private static AudioClip clickSound = new AudioClip(ClassLoader.getSystemResource("audio/clickSound.wav").toString());
+	private static AudioClip illegalInputSound = new AudioClip(ClassLoader.getSystemResource("audio/illegalInput.wav").toString());
+	private static AudioClip backgroundMusic = new AudioClip(ClassLoader.getSystemResource("audio/backgroundMusic.wav").toString());
+	private static AudioClip flagSound = new AudioClip(ClassLoader.getSystemResource("audio/flagSound.wav").toString());
+	private static AudioClip winSound = new AudioClip(ClassLoader.getSystemResource("audio/winSound.wav").toString());
 	
 	
 	public static void playFlagSound() {
@@ -32,39 +29,33 @@ public class GameSound {
 		playAudio(clickSound);
 	}
 	
-	public static File getBackgroundMusic() {
+	public static AudioClip getBackgroundMusic() {
 		return backgroundMusic;
 	}
-	public static void playAudio(File Sound) {
+	public static void playAudio(AudioClip Sound) {
 
 		try {
-			Clip clip = AudioSystem.getClip();
-			clip.open(AudioSystem.getAudioInputStream(Sound));
-			clip.start();
+			Sound.play();
 
 		} catch (Exception e) {}
 	}
 
-	public static Clip playAudioloop(File Sound) {
+	public static AudioClip playAudioloop(AudioClip Sound) {
 
 		try {
-			Clip clip = AudioSystem.getClip();
-			clip.open(AudioSystem.getAudioInputStream(Sound));
-			clip.loop(Clip.LOOP_CONTINUOUSLY);
-			return clip;
+			Sound.setCycleCount(AudioClip.INDEFINITE);
+			Sound.play();
+			return Sound;
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
-	public static void stopAudioloop(Clip clip) {
-
+	public static void stopAudioloop(AudioClip clip) {
 		try {
 			clip.stop();
 		} catch (Exception e) {}
 	}
-	
-	
 }
 
 
