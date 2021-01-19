@@ -10,22 +10,27 @@ public class GameSound {
 	
 	
 	public static void playFlagSound() {
+		flagSound.setVolume(0.15);
 		playAudio(flagSound);
 	}
 	
 	public static void playMineSound() {
+		bombSound.setVolume(0.3);
 		playAudio(bombSound);
 	}
 	
 	public static void playIllegalInputSound() {
+		illegalInputSound.setVolume(0.3);
 		playAudio(illegalInputSound);
 	}
 	
 	public static void playWinSound() {
+		winSound.setVolume(0.2);
 		playAudio(winSound);
 	}
 	
 	public static void playClickSound() {
+		clickSound.setVolume(0.3);
 		playAudio(clickSound);
 	}
 	
@@ -43,6 +48,7 @@ public class GameSound {
 	public static AudioClip playAudioloop(AudioClip Sound) {
 
 		try {
+			Sound.setVolume(0.25);
 			Sound.setCycleCount(AudioClip.INDEFINITE);
 			Sound.play();
 			return Sound;
