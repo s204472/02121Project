@@ -138,7 +138,7 @@ public class GameModel {
 			finalBoard[x][y].setVisited();
 			displayedFields++;
 		}
-		System.out.println(displayedFields);
+//		System.out.println(displayedFields);
 		lastX = x;
 		lastY = y;
 	}

@@ -38,12 +38,6 @@ public class Controller implements Initializable {
 	private Timer clock;
 	private boolean isTimerRunning;
 	
-	public File bombSound = new File("src//audio//bombSound.wav");
-	public File clickSound = new File("src//audio//clickSound.wav");
-	public File illegalInputSound = new File("src//audio//IllegalInput.wav");
-	public File backgroundMusic = new File("src//audio//backgroundMusic.wav");
-	public File flagSound = new File("src//audio//flagSound.wav");
-	public File winSound = new File("src//audio//winSound.wav");
 	public Clip backGroundClip;
 
 	private int screenHeight, fontSize;
@@ -88,7 +82,7 @@ public class Controller implements Initializable {
 			createButtons(width, height, biggestSide);
 			difficulty.setText(gameModel.getScoreModel().calculateDifficulty());
 		} else {
-			GameSound.playAudio(illegalInputSound);
+			GameSound.playIllegalInputSound();
 			inputWidth.setText("");
 			inputHeight.setText("");
 			inputMines.setText("");
@@ -165,18 +159,18 @@ public class Controller implements Initializable {
 	public void handleLeftClick(int x, int y) {
 		if (gameModel.getDisplayedFields() == 0) {
 			startTimer();
-			backGroundClip = GameSound.playAudioloop(backgroundMusic);
+			backGroundClip = GameSound.playAudioloop(GameSound.getBackgroundMusic());
 		}
 
 		if (!gameModel.getGameOver()) {
 			gameModel.clickField(x, y);
-			GameSound.playAudio(clickSound);
+			GameSound.playClickSound();
 			updateButton(x, y);
 			checkZero(x, y);
 
 			if (gameModel.checkWin()) {
 				GameSound.stopAudioloop(backGroundClip);
-				GameSound.playAudio(winSound);
+				GameSound.playWinSound();
 				showFinalBoard();
 				buttons[x][y].styleWin();	
 				
@@ -186,7 +180,7 @@ public class Controller implements Initializable {
 				
 			} else if (gameModel.checkGameover(x, y)) {
 				GameSound.stopAudioloop(backGroundClip);
-				GameSound.playAudio(bombSound);
+				GameSound.playMineSound();
 				showFinalBoard();
 				buttons[x][y].styleGameover();
 			}
@@ -196,7 +190,7 @@ public class Controller implements Initializable {
 	public void handleRightClick(int x, int y) {
 		GameObjects[][] currentBoard = gameModel.getCurrentBoard();
 		if (!gameModel.getGameOver()) {
-			GameSound.playAudio(flagSound);
+			GameSound.playFlagSound();
 			if (gameModel.checkFlag(x, y)) {
 				gameModel.removeFlag(x, y);
 				updateButton(x, y);
