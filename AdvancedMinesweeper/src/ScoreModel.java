@@ -7,10 +7,12 @@ public class ScoreModel {
 
 	public ScoreModel(GameObjects[][] finalBoard, int mineCount) {
 		this.secondsPassed = 0;
+		this.finalBoard = finalBoard;
 		
 		checked = new boolean[finalBoard.length][finalBoard[0].length];
 		value3BV = getTotalFields() - mineCount - getZeroNeighbours() + getZeroBlocks();
 		endScore = value3BV * 10;
+		System.out.println(value3BV);
 	}
 	
 	public int getZeroBlocks() {
@@ -43,19 +45,18 @@ public class ScoreModel {
 	
 	public int getZeroNeighbours() {
 		int counter = 0;
-		boolean neighboursCounted = false;
 		for(int i = 0; i < finalBoard.length; i ++) {
 			for (int j = 0; j < finalBoard[i].length; j++) {
 				if (finalBoard[i][j] instanceof Number || finalBoard[i][j] instanceof Zero) {
-					neighboursCounted = false;
 					
 					// Checks every neighbouring tile if they are of the type Zero
+					neighbourCheckingLoop:
 					for (int k = i - 1; k <= i + 1; k++) {
 						for (int l = j - 1; l <= j + 1; l++) {
 							if (k >= 0 && k < finalBoard.length && l >= 0 && l < finalBoard[k].length) {
-								if (finalBoard[k][l] instanceof Zero && !neighboursCounted) {
+								if (finalBoard[k][l] instanceof Zero) {
 									counter++;
-									neighboursCounted = true;
+									break neighbourCheckingLoop;
 								}
 							}
 						}
