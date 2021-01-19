@@ -1,6 +1,5 @@
-
 public class ScoreModel {
-	private int value3BV;
+	private static int value3BV;
 	private int secondsPassed;
 	private boolean[][] checkedZeros, zerosToCheck;
 	private GameObjects[][] finalBoard;
@@ -28,12 +27,19 @@ public class ScoreModel {
 				}
 			}
 		}
-		this.endScore = value3BV * 10;
+
+		endScore = value3BV * 10;
+		System.out.println(value3BV);
+
 	}
 	
 	// Timing part of score
 	public void incSeconds() {
 		secondsPassed++;
+	}
+	
+	public void decreaseHintScore() {
+		endScore-= 15;
 	}
 
 	// Checks whether the numbered square has any blank squares next to it
@@ -118,6 +124,10 @@ public class ScoreModel {
 		}
 
 		return difficulty;
+	}
+	
+	public static int get3BV() {
+		return value3BV;
 	}
 
 }
