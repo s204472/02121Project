@@ -7,7 +7,7 @@ public class ScoreModel {
 
 	public ScoreModel(GameObjects[][] finalBoard, int mineCount) {
 		this.secondsPassed = 0;
-		
+		this.finalBoard = finalBoard;
 		checked = new boolean[finalBoard.length][finalBoard[0].length];
 		value3BV = getTotalFields() - mineCount - getZeroNeighbours() + getZeroBlocks();
 		endScore = value3BV * 10;
