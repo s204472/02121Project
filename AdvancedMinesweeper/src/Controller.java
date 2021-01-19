@@ -11,7 +11,7 @@ import javafx.stage.Screen;
 
 import java.net.URL;
 import java.util.*;
-import java.io.*;
+
 import javax.sound.sampled.*;
 
 //Initializable makes the class able to interact with FXML file.
@@ -225,15 +225,13 @@ public class Controller implements Initializable {
 			maxHint--;
 			int x = fieldToClick[0];
 			int y = fieldToClick[1];
-//			maxHint--;
-//			System.out.println(maxHint);
-//			System.out.println(fieldToClick[0] + " : " + fieldToClick[1]);
 			
 			gameModel.clickField(x, y);
 			checkZero(x, y);
 			updateButton(x, y);
 			checkWin(x, y);
-//			ScoreModel.decreaseScore();
+			
+			gameModel.getScoreModel().decreaseHintScore();
 		}
 	}
 
@@ -273,8 +271,7 @@ public class Controller implements Initializable {
 			showFinalBoard();
 			buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 			buttons[x][y].getStyleClass().add("button-won");
-			// playAudio(winSound);
-
+			
 			Score score = new Score(gameModel.getScoreModel().getScore(), gameModel.getWidth(), gameModel.getHeight(),
 					gameModel.getMines());
 			scores.add(score);

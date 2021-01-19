@@ -27,7 +27,7 @@ public class ScoreModel {
 				}
 			}
 		}
-		this.endScore = value3BV * 10;
+		endScore = value3BV * 10;
 		System.out.println(value3BV);
 	}
 	
