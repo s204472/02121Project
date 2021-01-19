@@ -220,18 +220,16 @@ public class Controller implements Initializable {
 	}
 	
 	public void hint() {
-		if (!gameModel.getGameOver() && maxHint != 0) {
+		if (!gameModel.getGameOver() && maxHint != 0 && gameModel.getDisplayedFields() != 0) {
 			int[] fieldToClick = gameModel.findHint();
 			maxHint--;
 			int x = fieldToClick[0];
-			int y = fieldToClick[1];
-			
+			int y = fieldToClick[1];		
 			gameModel.clickField(x, y);
 			checkZero(x, y);
 			updateButton(x, y);
-			checkWin(x, y);
-			
 			gameModel.getScoreModel().decreaseHintScore();
+			checkWin(x, y);
 		}
 	}
 
