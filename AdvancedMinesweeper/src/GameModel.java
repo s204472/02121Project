@@ -24,7 +24,7 @@ public class GameModel {
 		this.gameOver = false;
 		this.displayedFields = 0;
 
-		this.scoreModel = new ScoreModel(finalBoard);
+		this.scoreModel = new ScoreModel(finalBoard, mineCount);
 	}
 
 	public int getWidth() {
@@ -150,7 +150,7 @@ public class GameModel {
 		finalBoard = fillFinalBoard(width, height, mines);
 		gameOver = false;
 		displayedFields = 0;
-		scoreModel = new ScoreModel(finalBoard);
+		scoreModel = new ScoreModel(finalBoard, mineCount);
 		
 		clickField(x, y);
 	}

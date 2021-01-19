@@ -1,37 +1,75 @@
 public class ScoreModel {
 	private static int value3BV;
 	private int secondsPassed;
-	private boolean[][] checkedZeros, zerosToCheck;
 	private GameObjects[][] finalBoard;
 	private int endScore;
+	private boolean[][] checked;
 
-	public ScoreModel(GameObjects[][] finalBoard) {
+	public ScoreModel(GameObjects[][] finalBoard, int mineCount) {
 		this.secondsPassed = 0;
 		this.finalBoard = finalBoard;
-
-		// Calculates the most optimal solution using 3BV
-		checkedZeros = new boolean[this.finalBoard.length][this.finalBoard[0].length];
-		zerosToCheck = new boolean[this.finalBoard.length][this.finalBoard[0].length];
-
-		for (int i = 0; i < this.finalBoard.length; i++) {
-			for (int j = 0; j < this.finalBoard[i].length; j++) {
-
-				if (this.finalBoard[i][j] instanceof Zero && !checkedZeros[i][j]) { // Checks how many zeros needs to be
-																					// pressed
-					checkZeroSequence(i, j);
-					value3BV++;
-				} else if (this.finalBoard[i][j] instanceof Number) { // Checks how many numbers needs to be pressed
-					if (!canBeDiscoveredByBlank(i, j)) {
-						value3BV++;
+		
+		checked = new boolean[finalBoard.length][finalBoard[0].length];
+		value3BV = getFields(finalBoard) - mineCount - getZeroNeighbours(finalBoard) + getZeroBlocks(finalBoard);
+		endScore = value3BV * 10;
+		System.out.println(value3BV);
+	}
+	
+	public int getZeroBlocks(GameObjects[][] finalBoard) {
+		int counter = 0;
+		for(int i = 0; i < finalBoard.length; i ++) {
+			for (int j = 0; j < finalBoard[i].length; j++) {					
+				if (finalBoard[i][j] instanceof Zero && !checked[i][j]) {
+					counter++;
+					checked[i][j] = true;
+					
+					checkNeighbours(i, j);
+				}
+			}
+		}
+		return counter;
+	}
+	
+	public void checkNeighbours(int x, int y) {
+		for (int i = x - 1; i <= x + 1; i++) {
+			for (int j = y - 1; j <= y + 1; j++) {
+				if (i >= 0 && i < finalBoard.length && j >= 0 && j < finalBoard[i].length) {
+					if (finalBoard[i][j] instanceof Zero && !checked[i][j]) {
+						checked[i][j] = true;
+						checkNeighbours(i, j);
+					}
+				}
+			}
+		}	
+	}
+	
+	public int getZeroNeighbours(GameObjects[][] finalBoard) {
+		int counter = 0;
+		boolean counted = false;
+		for(int i = 0; i < finalBoard.length; i ++) {
+			for (int j = 0; j < finalBoard[i].length; j++) {
+				if (finalBoard[i][j] instanceof Number || finalBoard[i][j] instanceof Zero) {
+					counted = false;
+					for (int k = i - 1; k <= i + 1; k++) {
+						for (int l = j - 1; l <= j + 1; l++) {
+							if (k >= 0 && k < finalBoard.length && l >= 0 && l < finalBoard[k].length) {
+								if (finalBoard[k][l] instanceof Zero && !counted) {
+									counter++;
+									counted = true;
+								}
+							}
+						}
 					}
 				}
 			}
 		}
-
-		endScore = value3BV * 10;
-		System.out.println(value3BV);
-
+		return counter;
 	}
+
+	public int getFields(GameObjects[][] finalBoard) {
+		return finalBoard.length * finalBoard[0].length;
+	}
+	
 	
 	// Timing part of score
 	public void incSeconds() {
@@ -41,48 +79,6 @@ public class ScoreModel {
 	public void decreaseHintScore() {
 		endScore-= 15;
 	}
-
-	// Checks whether the numbered square has any blank squares next to it
-	public boolean canBeDiscoveredByBlank(int x, int y) {
-		for (int i = x - 1; i <= x + 1; i++) {
-			for (int j = y - 1; j <= y + 1; j++) {
-
-				if ((i != x || j != y) && i >= 0 && i < finalBoard.length && j >= 0 && j < finalBoard[i].length
-						&& finalBoard[i][j] instanceof Zero) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	public void checkZeroSequence(int x, int y) {		
-		for (int i = x - 1; i <= x + 1; i++) {
-			for (int j = y - 1; j <= y + 1; j++) {
-				
-				// Makes sure always to be in bound of Array
-				if ((i != x || j != y) && i >= 0 && i < finalBoard.length && j >= 0
-						&& j < finalBoard[i].length) {
-
-					if (finalBoard[i][j] instanceof Zero && !checkedZeros[i][j]) {
-						zerosToCheck[i][j] = true;
-					}
-				}
-			}
-		}
-		checkedZeros[x][y] = true;
-		zerosToCheck[x][y] = false;
-		
-		// Makes sure that all the zero squares in the same sequence won't be counted again
-				// By checking them all without adding to the 3BV score
-				for (int i = 0; i < zerosToCheck.length; i++) {
-					for (int j = 0; j < zerosToCheck[i].length; j++) {
-						if (zerosToCheck[i][j]) {
-							checkZeroSequence(i, j);
-						}
-					}
-				}
-			}
 
 
 	public String getTimeElapsed() {
