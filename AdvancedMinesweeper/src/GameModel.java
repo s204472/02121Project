@@ -26,7 +26,7 @@ public class GameModel {
 
 		this.scoreModel = new ScoreModel(finalBoard, mineCount);
 		
-		this.maxHints = (ScoreModel.get3BV() / 10) + 1;
+		this.maxHints = (scoreModel.get3BV() / 10) + 1;
 	}
 
 	public int getWidth() {
