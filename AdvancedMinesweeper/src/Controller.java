@@ -254,8 +254,8 @@ public class Controller implements Initializable {
 
 	public void updateUI() {
 		Platform.runLater(() -> {
-			gameModel.getScoreModel().incSeconds();
 			timer.setText(gameModel.getScoreModel().getTimeElapsed());
+			gameModel.getScoreModel().incSeconds();
 			points.setText("" + gameModel.getScoreModel().getScore());
 		});
 	}
@@ -278,8 +278,7 @@ public class Controller implements Initializable {
 	public void checkWin(int x, int y) {
 		if (gameModel.checkWin()) {
 			showFinalBoard();
-			buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
-			buttons[x][y].getStyleClass().add("button-won");
+			buttons[x][y].styleWin();
 		
 			GameSound.stopAudioloop(backGroundClip);
 			GameSound.playWinSound();

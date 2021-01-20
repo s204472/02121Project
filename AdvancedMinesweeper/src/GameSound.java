@@ -71,12 +71,12 @@ public class GameSound {
 		} catch (Exception e) {}
 	}
 	
-	public static void muteAndUnmute(AudioClip clip, boolean gameover, int DisplayedFields) {
+	public static void muteAndUnmute(AudioClip clip, boolean gameover, int displayedFields) {
 		if(!mute && backGroundPlaying) {
 			backGroundPlaying=false;
 			clip.stop();
 		}
-		if(mute && !backGroundPlaying && !gameover && DisplayedFields!=0) {
+		if(mute && !backGroundPlaying && !gameover && displayedFields!=0) {
 			clip.setVolume(0.25);
 			clip.setCycleCount(AudioClip.INDEFINITE);
 			clip.play();
