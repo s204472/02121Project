@@ -42,6 +42,8 @@ public class Controller implements Initializable {
 	private Timer clock;
 	private boolean isTimerRunning;
 	
+	private boolean isGameStarted;
+	
 	public AudioClip backGroundClip;
 
 	private int screenHeight, fontSize;
@@ -86,6 +88,7 @@ public class Controller implements Initializable {
 			createButtons(width, height, biggestSide);
 			difficulty.setText(gameModel.getScoreModel().calculateDifficulty());
 			hintButton.setText("Hints: " + gameModel.getMaxHints());
+			this.isGameStarted = true;
 		} else {
 			GameSound.playIllegalInputSound();
 			inputWidth.setText("");
@@ -174,8 +177,6 @@ public class Controller implements Initializable {
 			gameModel.clickField(x, y);
 			updateButton(x, y);
 			checkZero(x, y);
-			
-
 			checkWin(x, y);
 				
 			if (gameModel.checkGameover(x, y)) {
@@ -226,11 +227,13 @@ public class Controller implements Initializable {
 	}
 	
 	public void hint() {
-		if (!gameModel.getGameOver() && gameModel.getMaxHints() != 0 && gameModel.getDisplayedFields() != 0) {
+		if (isGameStarted && !gameModel.getGameOver() && gameModel.getMaxHints() != 0
+				&& gameModel.getDisplayedFields() != 0) {
 			int[] fieldToClick = gameModel.findHint();
-			gameModel.decreaseMaxHints();;
+			gameModel.decreaseMaxHints();
+			;
 			int x = fieldToClick[0];
-			int y = fieldToClick[1];		
+			int y = fieldToClick[1];
 			gameModel.clickField(x, y);
 			checkZero(x, y);
 			updateButton(x, y);
@@ -238,6 +241,7 @@ public class Controller implements Initializable {
 			checkWin(x, y);
 			hintButton.setText("Hints: " + gameModel.getMaxHints());
 		}
+
 	}
 
 	public void cleanBoard() {
@@ -276,7 +280,9 @@ public class Controller implements Initializable {
 			showFinalBoard();
 			buttons[x][y].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 			buttons[x][y].getStyleClass().add("button-won");
-			
+		
+			GameSound.stopAudioloop(backGroundClip);
+			GameSound.playWinSound();
 			Score score = new Score(gameModel.getScoreModel().getScore(), gameModel.getWidth(), gameModel.getHeight(),
 					gameModel.getMines());
 			scores.add(score);
