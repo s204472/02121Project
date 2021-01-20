@@ -34,8 +34,7 @@
 			</HBox>
 			<HBox Alignment="CENTER_RIGHT" spacing="30" HBox.hgrow="ALWAYS">
 				<VBox Alignment="CENTER_RIGHT">
-					<Label fx:id="difficultyHeader" styleClass="difficultyHeader" text="Difficulty" />
-					<Label fx:id="difficulty" styleClass="difficulty" />
+					<Label fx:id="difficultyHeader" styleClass="difficultyHeader" />
 				</VBox>
 				<VBox Alignment="CENTER_RIGHT">
 					<Label fx:id="timer" styleClass="timer" text="00:00" />

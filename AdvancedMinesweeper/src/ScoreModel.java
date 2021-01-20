@@ -12,7 +12,6 @@ public class ScoreModel {
 		checked = new boolean[finalBoard.length][finalBoard[0].length];
 		value3BV = getTotalFields() - mineCount - getZeroNeighbours() + getZeroBlocks();
 		endScore = value3BV * 10;
-		System.out.println(value3BV);
 	}
 	
 	public int getZeroBlocks() {
@@ -102,18 +101,21 @@ public class ScoreModel {
 
 	public String calculateDifficulty() {
 		String difficulty = "";
-		double difficultyRating = ((double) value3BV / this.getTotalFields()) * 100;
 
-		if (difficultyRating < 5) {
-			difficulty += "Very Easy";
-		} else if (difficultyRating < 12) {
+		if (value3BV < 5) {
+			difficulty += "Beginner";
+		} else if (value3BV < 12) {
 			difficulty += "Easy";
-		} else if (difficultyRating < 20) {
+		} else if (value3BV < 30) {
 			difficulty += "Medium";
-		} else if (difficultyRating < 30) {
+		} else if (value3BV < 50) {
 			difficulty += "Hard";
-		} else if (difficultyRating < 50) {
+		} else if (value3BV < 60) {
 			difficulty += "Very Hard";
+		} else if (value3BV < 100) {
+			difficulty += "Intermediate";
+		} else if (value3BV < 150) {
+			difficulty += "Expert";
 		} else {
 			difficulty += "Insane";
 		}

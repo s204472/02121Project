@@ -25,7 +25,7 @@ public class Controller implements Initializable {
 	@FXML
 	private TextField inputWidth, inputHeight, inputMines;
 	@FXML
-	private Label timer, points, difficulty;
+	private Label timer, points, difficultyHeader;
 	@FXML
 	private TableView<Score> tableView;
 	@FXML
@@ -86,7 +86,7 @@ public class Controller implements Initializable {
 			this.fontSize = (int) (fontMultiplier * screenHeight / biggestSide);
 
 			createButtons(width, height, biggestSide);
-			difficulty.setText(gameModel.getScoreModel().calculateDifficulty());
+			difficultyHeader.setText(gameModel.getScoreModel().calculateDifficulty() + " Difficulty");
 			hintButton.setText("Hints: " + gameModel.getMaxHints());
 			this.isGameStarted = true;
 		} else {
@@ -175,6 +175,9 @@ public class Controller implements Initializable {
 
 		if (!gameModel.getGameOver()) {
 			gameModel.clickField(x, y);
+			if (gameModel.getDisplayedFields() == 1) {
+				difficultyHeader.setText(gameModel.getScoreModel().calculateDifficulty() + " Difficulty");
+			}
 			updateButton(x, y);
 			checkZero(x, y);
 			checkWin(x, y);
