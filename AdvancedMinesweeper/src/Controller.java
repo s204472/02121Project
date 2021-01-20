@@ -33,7 +33,7 @@ public class Controller implements Initializable {
 	@FXML
 	private TableColumn<Score, String> mapColumn;
 	@FXML
-	private Button hintButton;
+	private Button hintButton, muteAndUnmute;
 
 	private GameModel gameModel;
 
@@ -68,7 +68,7 @@ public class Controller implements Initializable {
 		if (isTimerRunning) {
 			clock.cancel();
 		}
-
+		
 		int width = getInteger(inputWidth.getText());
 		int height = getInteger(inputHeight.getText());
 		int mines = getInteger(inputMines.getText());
@@ -165,7 +165,9 @@ public class Controller implements Initializable {
 	public void handleLeftClick(int x, int y) {
 		if (gameModel.getDisplayedFields() == 0) {
 			startTimer();
+			if(!GameSound.getmuted()) {
 			backGroundClip = GameSound.playAudioloop(GameSound.getBackgroundMusic());
+			}
 		}
 
 		if (!gameModel.getGameOver()) {
@@ -281,5 +283,15 @@ public class Controller implements Initializable {
 			tableView.setItems(scores);
 		}
 	}
-
+	public void muteAndUnmute() {
+		boolean tempGameModel = gameModel == null ? false : gameModel.getGameOver();
+		int tempDisplayedFields = gameModel == null ? 0 : gameModel.getDisplayedFields();
+		GameSound.muteAndUnmute(backGroundClip, tempGameModel, tempDisplayedFields);
+		if (!GameSound.getmuted()) {
+			muteAndUnmute.setText("Unmute");
+		} else {
+			muteAndUnmute.setText("Mute");
+		}
+		GameSound.togglemute();
+	}
 }

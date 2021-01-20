@@ -1,37 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="layout" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller"
-	stylesheets="@styles.css">
+<BorderPane fx:id="layout" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
 	<top>
 		<HBox styleClass="menuContainer">
-			<HBox spacing="10" Alignment="CENTER">
+			<HBox Alignment="CENTER" spacing="10">
 				<VBox>
-					<Label styleClass="inputLabel" text="Width"/>
-	   				<TextField fx:id="inputWidth" styleClass="inputField" promptText="4-100"/>
+					<Label styleClass="inputLabel" text="Width" />
+	   				<TextField fx:id="inputWidth" promptText="4-100" styleClass="inputField" />
 	   			</VBox>
 	   			<VBox>
-					<Label styleClass="inputLabel" text="Height"/>
-	   				<TextField fx:id="inputHeight" styleClass="inputField" promptText="4-100"/>
+					<Label styleClass="inputLabel" text="Height" />
+	   				<TextField fx:id="inputHeight" promptText="4-100" styleClass="inputField" />
 	   			</VBox>
 	   			<VBox>
-					<Label styleClass="inputLabel" text="Mines"/>
-	   				<TextField fx:id="inputMines" styleClass="inputField" promptText="4-90%"/>
+					<Label styleClass="inputLabel" text="Mines" />
+	   				<TextField fx:id="inputMines" promptText="4-90%" styleClass="inputField" />
 	   			</VBox>
-	   			<Button fx:id="startButton" text="Start" onAction="#startGame"/>
-	   			<Button fx:id="hintButton" text="Hint" onAction="#hint"/>
+	   			<Button fx:id="startButton" styleClass="menuButton" onAction="#startGame" text="Start" />
+	   			<Button fx:id="hintButton" styleClass="menuButton" onAction="#hint" text="Hint" />
+	   			<Button fx:id="muteAndUnmute" styleClass="menuButton" onAction="#muteAndUnmute" text="Mute" />
 	   			
 			</HBox>
 			<HBox Alignment="CENTER_RIGHT" spacing="30" HBox.hgrow="ALWAYS">
 				<VBox Alignment="CENTER_RIGHT">
 					<Label fx:id="difficultyHeader" styleClass="difficultyHeader" text="Difficulty" />
-					<Label fx:id="difficulty" styleClass="difficulty"/>
+					<Label fx:id="difficulty" styleClass="difficulty" />
 				</VBox>
 				<VBox Alignment="CENTER_RIGHT">
 					<Label fx:id="timer" styleClass="timer" text="00:00" />
-					<Label fx:id="points"/>
+					<Label fx:id="points" />
 				</VBox>
 			</HBox>
 		</HBox>
@@ -47,9 +55,9 @@
 	<right>
 		<TableView fx:id="tableView"> 
 	        <columns>
-               	<TableColumn fx:id="scoreColumn" style="-fx-alignment: CENTER;" text="Score"/>
-               	<TableColumn fx:id="mapColumn" style="-fx-alignment: CENTER;" text="Map Size"/>
-               	<TableColumn fx:id="minesColumn" style="-fx-alignment: CENTER;" text="Mines"/>
+               	<TableColumn fx:id="scoreColumn" style="-fx-alignment: CENTER;" text="Score" />
+               	<TableColumn fx:id="mapColumn" style="-fx-alignment: CENTER;" text="Map Size" />
+               	<TableColumn fx:id="minesColumn" style="-fx-alignment: CENTER;" text="Mines" />
             </columns>
 	    </TableView>
 	</right>

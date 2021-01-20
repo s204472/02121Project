@@ -37,7 +37,7 @@
 	-fx-margin:0px;
 	-fx-padding:5px 0px 0px 0px;
 }
-#startButton {
+.menuButton {
 	-fx-background-color: #e0e0e0;
 	-fx-border-style: none;
 	-fx-background-radius: 0;
@@ -47,16 +47,7 @@
 	-fx-font-size:11px;
 	-fx-text-fill: #696969;
 }
-#hintButton {
-	-fx-background-color: #e0e0e0;
-	-fx-border-style: none;
-	-fx-background-radius: 0;
-	-fx-padding: 7px 20px;
-	-fx-font-family: "Arial";
-	-fx-font-weight: bold;
-	-fx-font-size:11px;
-	-fx-text-fill: #696969;
-}
+
 .timer{
 	-fx-font-family: "Arial";
 	-fx-font-weight: bold;
