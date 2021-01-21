@@ -8,6 +8,9 @@
 	-fx-min-width:20px;
 	-fx-min-height:20px;
 }
+.blank{
+	-fx-background-color: #cfcfcf;
+}
 
 .button-won {
 	-fx-background-color: #75ff42;
@@ -92,9 +95,6 @@
 }
 .number8 {
 	-fx-text-fill: #a686a6;
-}
-.blank{
-	-fx-background-color: #cfcfcf;
 }
 
 .track{

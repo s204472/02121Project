@@ -181,11 +181,11 @@ public class Controller implements Initializable {
 			updateButton(x, y);
 			checkZero(x, y);
 			checkWin(x, y);
-				
 			if (gameModel.checkGameover(x, y)) {
 				GameSound.stopAudioloop(backGroundClip);
 				GameSound.playMineSound();
 				showFinalBoard();
+				
 				buttons[x][y].styleGameover();
 			} else {
 				GameSound.playClickSound();

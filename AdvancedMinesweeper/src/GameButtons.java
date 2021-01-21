@@ -31,7 +31,7 @@ public class GameButtons extends Button {
 	public void setEmpty() {
 		super.setGraphic(null);
 	}
-	public void styleWin() {
+	public void styleWin() { 
 		super.setStyle(String.format("-fx-font-size: %dpx;", fontSize));
 		super.getStyleClass().add("button-won");
 	}
