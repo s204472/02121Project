@@ -87,7 +87,7 @@ public class Controller implements Initializable {
 
 			createButtons(width, height, biggestSide);
 			difficultyHeader.setText(gameModel.getScoreModel().calculateDifficulty() + " Difficulty");
-			hintButton.setText("Hints: " + gameModel.getMaxHints());
+			hintButton.setText("Hints: " + gameModel.getRemainingHints());
 			this.isGameStarted = true;
 		} else {
 			GameSound.playIllegalInputSound();
@@ -230,10 +230,10 @@ public class Controller implements Initializable {
 	}
 	
 	public void hint() {
-		if (isGameStarted && !gameModel.getGameOver() && gameModel.getMaxHints() != 0
+		if (isGameStarted && !gameModel.getGameOver() && gameModel.getRemainingHints() != 0
 				&& gameModel.getDisplayedFields() != 0) {
 			int[] fieldToClick = gameModel.findHint();
-			gameModel.decreaseMaxHints();
+			gameModel.decreaseHints();
 			;
 			int x = fieldToClick[0];
 			int y = fieldToClick[1];
@@ -242,7 +242,7 @@ public class Controller implements Initializable {
 			updateButton(x, y);
 			gameModel.getScoreModel().decreaseHintScore();
 			checkWin(x, y);
-			hintButton.setText("Hints: " + gameModel.getMaxHints());
+			hintButton.setText("Hints: " + gameModel.getRemainingHints());
 		}
 
 	}

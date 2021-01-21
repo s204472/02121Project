@@ -1,7 +1,7 @@
 import java.util.Random;
 
 public class GameModel {
-	private int width, height, mineCount, maxHints;
+	private int width, height, mineCount, hints;
 	private int lastX, lastY, displayedFields;
 	private boolean[][] mines;
 	private boolean gameOver;
@@ -26,7 +26,7 @@ public class GameModel {
 
 		this.scoreModel = new ScoreModel(finalBoard, mineCount);
 		
-		this.maxHints = (scoreModel.get3BV() / 10) + 1;
+		this.hints = (scoreModel.get3BV() / 10) + 1;
 	}
 
 	public int getWidth() {
@@ -76,13 +76,12 @@ public class GameModel {
 		}
 	}
 	
-	public int getMaxHints() {
-		return maxHints;
+	public int getRemainingHints() {
+		return hints;
 	}
 	
-	public void decreaseMaxHints() {
-		maxHints--;
-		getMaxHints();
+	public void decreaseHints() {
+		hints--;
 	}
 	
 
@@ -138,10 +137,8 @@ public class GameModel {
 	// to a new state.
 	public void clickField(int x, int y) {
 		// Makes you unable to lose on first move
-		if (displayedFields == 0) {
-			if (mines[x][y]) { 
-				remakeBoard(x, y);
-			}
+		if (displayedFields == 0 && mines[x][y]) {
+			remakeBoard(x, y);	
 		}
 		currentBoard[x][y] = finalBoard[x][y];
 		lastX = x;
