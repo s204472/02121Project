@@ -8,9 +8,9 @@ import javafx.scene.text.Font;
 import javafx.stage.Screen;
 
 	
-//Initializable makes the class able to interact with FXML file.
+// Initializable makes the class able to interact with FXML file.
 public class Controller implements Initializable {
-	@FXML //loading GridPane from the FXML file
+	@FXML
 	public GridPane gameGrid;
 	@FXML
 	public Button[][] buttons;
@@ -22,7 +22,7 @@ public class Controller implements Initializable {
 	private int fontSize;
 	private int biggestSide;
 	
-	//construct the Controller objekt, with a given GameModel
+	// Construct the Controller object, with a given GameModel
 	public Controller(GameModel gameModel) {
 		this.gameModel = gameModel;
 	}
@@ -46,33 +46,31 @@ public class Controller implements Initializable {
     	createButtons();
     	
     }
-   //creates all the Buttons and makes clickable.
+    
+   // Creates all the Buttons and adds eventhandlers
     public void createButtons() {
     	
 		for(int i = 0; i < xSize; i++) {
 			for(int j = 0; j < ySize; j++) {
 				buttons[i][j] = new Button();
-				
-				// Setting button layout to fit screen
 				buttons[i][j].setPrefSize(screenHeight / ySize + 1, screenHeight / biggestSide + 1);
-				
 				buttons[i][j].setStyle(String.format("-fx-font-size: %dpx;", fontSize));
-
 				gameGrid.add(buttons[i][j], i, j);
 				
 				int x = i;
 				int y = j;
-				buttons[i][j].setOnAction(event -> handleClick(x, y)); //makes each button able to handle a click. 
+				buttons[i][j].setOnAction(event -> handleClick(x, y)); // Makes each button able to handle a click. 
 			}
 		}
 	}
-    //changing the appearance of a button 
+    
+    // Changing the appearance of a button 
     public void updateButton(int x, int y) {
     	GameObjects[][] board = gameModel.getCurrentBoard();
     	buttons[x][y].setText(board[x][y].toString());
     }
     
-    //handling user click-input
+    // Called on userclick. Checking for gameover, updates data and buttons.
 	public void handleClick(int x, int y) {
 		if (!gameModel.getGameOver()) {
 			gameModel.clickField(x, y);
@@ -91,6 +89,7 @@ public class Controller implements Initializable {
 		}
 	}
     
+	// Reveals all buttons to user
     public void showAll() {
     	GameObjects[][] finalBoard = gameModel.showAll();
     	for (int i = 0; i < xSize; i++) {

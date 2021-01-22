@@ -1,11 +1,12 @@
 import javafx.scene.media.AudioClip;
 
 /*
- * Lavet af:
- * 		Gad
+ * Made by:
+ * 		Anders Gad, s204496
  * 
  */
 
+// This class handles all sound in the game. It is used to start, stop and loop audio.
 
 public class GameSound {
 	private static AudioClip bombSound = new AudioClip(ClassLoader.getSystemResource("audio/bombSound.wav").toString());
@@ -17,6 +18,8 @@ public class GameSound {
 	private static boolean mute=false;
 	private static boolean backGroundPlaying=false;
 	
+	
+	// The following methods play different sounds
 	public static void playFlagSound() {
 		flagSound.setVolume(0.15);
 		playAudio(flagSound);
@@ -55,7 +58,7 @@ public class GameSound {
 
 		} catch (Exception e) {}
 	}
-
+	// The following methods is used to play and loop background music.
 	public static AudioClip playAudioloop(AudioClip Sound) {
 
 		try {
@@ -78,6 +81,7 @@ public class GameSound {
 		} catch (Exception e) {}
 	}
 	
+	// The following methods handles muting and unmuting.
 	public static void muteAndUnmute(AudioClip clip, boolean gameover, int displayedFields) {
 		if(!mute && backGroundPlaying) {
 			backGroundPlaying=false;

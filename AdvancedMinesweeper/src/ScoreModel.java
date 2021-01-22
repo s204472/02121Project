@@ -1,6 +1,6 @@
 /*
- * Lavet af
- * 		Kevin
+ * Made by:
+ * 		Kevin Moore, s204462
  *
  */
 
