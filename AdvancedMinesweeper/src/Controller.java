@@ -14,6 +14,21 @@ import java.net.URL;
 import java.util.*;
 
 
+/*
+ * Lavet af:
+ * 		Generering af knapper: Kevin og Gad
+ * 		Input validering: Kevin
+ * 		Autofill: Gad
+ * 		Flag og ikoner: Reher
+ * 		Hint: Reher
+ * 		Mute/Unmute: Gad
+ * 		Scoreboard: Magnus
+ * 		Styling og opsætning af menu: Magnus
+ * 		Timer: Magnus
+ *
+ * */
+
+
 
 //Initializable makes the class able to interact with FXML file.
 public class Controller implements Initializable {

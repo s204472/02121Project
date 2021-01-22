@@ -11,6 +11,15 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+
+<!-- 
+	Lavet af:
+		Opsætning af ramme og knapper: Gad og Kevin
+		Layout: Magnus
+
+
+   -->
+
 <BorderPane fx:id="layout" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
 	<top>
 		<HBox styleClass="menuContainer">

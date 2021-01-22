@@ -1,6 +1,12 @@
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+/*
+ * Lavet af:
+ * 		Magnus
+ * 
+ * */
+
 public class Score {
 	private SimpleIntegerProperty score;
 	private SimpleStringProperty map;

@@ -1,3 +1,10 @@
+/*
+ * Lavet af
+ * 		Kevin
+ *
+ */
+
+
 public class ScoreModel {
 	private int value3BV;
 	private int secondsPassed;

@@ -1,5 +1,12 @@
 import javafx.scene.media.AudioClip;
 
+/*
+ * Lavet af:
+ * 		Gad
+ * 
+ */
+
+
 public class GameSound {
 	private static AudioClip bombSound = new AudioClip(ClassLoader.getSystemResource("audio/bombSound.wav").toString());
 	private static AudioClip clickSound = new AudioClip(ClassLoader.getSystemResource("audio/clickSound.wav").toString());

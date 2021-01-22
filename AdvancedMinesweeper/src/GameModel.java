@@ -1,5 +1,13 @@
 import java.util.Random;
 
+/*
+ * Lavet af:
+ * 		Generel logik: Magnus og Reher
+ * 		Hint: Reher
+ * 		remakeBoard: Gad		
+ * */
+
+
 public class GameModel {
 	private int width, height, mineCount, hints;
 	private int lastX, lastY, displayedFields;
@@ -10,7 +18,7 @@ public class GameModel {
 	private ScoreModel scoreModel;
 	
 
-	// Constructing a GameModel object, with two boards of the given size and mines.
+	// Constructor. All values are initialized and set.
 	public GameModel(int width, int height, int mineCount) {
 		this.width = width;
 		this.height = height;
@@ -28,6 +36,7 @@ public class GameModel {
 		
 		this.hints = (scoreModel.get3BV() / 10) + 1;
 	}
+	
 
 	public int getWidth() {
 		return width;

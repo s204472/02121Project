@@ -1,5 +1,10 @@
 import javafx.scene.control.Button;
 
+/*
+ * Lavet af: 
+ * 		Reher
+ * 
+ * */
 
 
 public class GameButtons extends Button {
