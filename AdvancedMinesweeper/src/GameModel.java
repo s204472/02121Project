@@ -1,10 +1,10 @@
 import java.util.Random;
 
 /*
- * Lavet af:
- * 		Generel logik: Magnus og Reher
- * 		Hint: Reher
- * 		remakeBoard: Gad		
+ * Made by:
+ * 		General logic: Magnus Siegumfeldt, s204472 and Anders Reher, s194587
+ * 		Hint: Anders Reher, s194587
+ * 		remakeBoard: Anders Gad, s204496		
  * */
 
 

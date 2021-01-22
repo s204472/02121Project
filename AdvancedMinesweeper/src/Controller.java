@@ -15,16 +15,16 @@ import java.util.*;
 
 
 /*
- * Lavet af:
- * 		Generering af knapper: Kevin og Gad
- * 		Input validering: Kevin
- * 		Autofill: Gad
- * 		Flag og ikoner: Reher
- * 		Hint: Reher
- * 		Mute/Unmute: Gad
- * 		Scoreboard: Magnus
- * 		Styling og opsætning af menu: Magnus
- * 		Timer: Magnus
+ * Made by:
+ * 		Generating buttons: Kevin Moore, s204462 and Anders Gad, s204496
+ * 		Input validation: Kevin Moore, s204462
+ * 		Autofill: Anders Gad, s204496
+ * 		Flag and icons: Anders Reher, s194587
+ * 		Hint: Anders Reher, s194587
+ * 		Mute/Unmute: Anders Gad, s204496
+ * 		Scoreboard: Magnus Siegumfeldt, s204472
+ * 		Styling and layout: Magnus Siegumfeldt, s204472
+ * 		Timer: Magnus Siegumfeldt, s204472
  *
  * */
 

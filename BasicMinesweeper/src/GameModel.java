@@ -10,14 +10,14 @@ public class GameModel {
     private GameObjects[][] finalBoard;
     private int clickCount;
      
-    //Constructing a GameModel object, with two boards of the given size and mines. 
+    //Constructing a GameModel object. Mines and boards are generated and values are initialized
     public GameModel(int n, int m, int mineCount) {
     	this.xSize = n;
     	this.ySize = m;
     	this.mineCount = mineCount;
     	
-    	this.currentBoard = new GameObjects[n][m]; //representing the board displayed to the player
-    	this.finalBoard = new GameObjects[n][m]; // representing the solution
+    	this.currentBoard = new GameObjects[n][m];     // Representing the board displayed to the player
+    	this.finalBoard = new GameObjects[n][m];       // Representing the solution
     	this.mines = new boolean[n][m];
     	
     	this.mines = genMines(mineCount);
@@ -26,7 +26,7 @@ public class GameModel {
     	this.clickCount = 0;
     }
     
-	//Generating the given number of mines in random positions. 
+	// Generating a given number of mines in random positions. 
 	private boolean[][] genMines(int mineCount) {
 		Random rand = new Random();
 		int mineIndex = 0;
@@ -38,11 +38,10 @@ public class GameModel {
 				mineIndex++;
 			}	
 		}
-		
 		return mines;
 	}
 	
-    //Fills the final board with mines and numbers representing the number of neighbouring mines. 
+    // Fills the final board with mines and numbers representing the number of neighbouring mines. 
 	private GameObjects[][] fillFinalBoard(){
 		GameObjects[][] tempBoard = new GameObjects[xSize][ySize];
 		for (int i = 0; i < mines.length; i++) {
@@ -57,7 +56,7 @@ public class GameModel {
 		return tempBoard;
 	}
 	
-	//Returns the number of neighbouring mines to a given field.
+	// Returns the number of neighbouring mines to a given field.
 	public int getNeighbours(int x, int y) {
     	int neighbourBombs = 0;
     	for(int i = -1; i < 2; i++) {
@@ -75,7 +74,8 @@ public class GameModel {
 	public GameObjects[][] getCurrentBoard(){
 		return currentBoard;
 	}
-	//Reaction to the user clicking a specific field and updating the current-board to a new state.  
+	
+	// Called when a field at (x, y) is clicked. Values in currentBoard is updated.  
 	public void clickField(int x, int y) {
 		currentBoard[x][y] = finalBoard[x][y];
 		clickCount++;
