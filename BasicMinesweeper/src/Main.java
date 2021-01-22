@@ -27,16 +27,18 @@ public class Main extends Application {
 					throw new IllegalArgumentException("Illegal size arguments given");
 				}
 			}
-			launch(args); //lauches the method start
+			// Launches the program
+			launch(args);
 		} catch(NumberFormatException e) {
 			throw new IllegalArgumentException("Please enter 3 integers.");
 		}
     }
 
+	
+	// Basic window settings and initializing.
 	public void start(Stage primaryStage) throws Exception {
 
 		GameModel gameModel = new GameModel(xSize, ySize, mines);
-
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getResource("view.fxml"));
 		loader.setControllerFactory(new Callback<Class<?>, Object>() {

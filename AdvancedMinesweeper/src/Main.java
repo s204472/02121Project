@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 	public static void main(String[] args) {
-		launch(args); //launches the method start
+		launch(args); // Launches the method start
     }
 
 	public void start(Stage primaryStage) throws Exception {

@@ -2,10 +2,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 /*
- * Lavet af:
- * 		Magnus
+ * Made by:
+ * 		Magnus Siegumfeldt, s204472
  * 
  * */
+
+// This class represents a score object. A score object can be easily placed in the scoreboard.
 
 public class Score {
 	private SimpleIntegerProperty score;

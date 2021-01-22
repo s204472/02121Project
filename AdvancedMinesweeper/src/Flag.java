@@ -2,6 +2,8 @@
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+
+// This class extends GameObjects, and can be placed in the GameObject arrays in the GameModel.
 public class Flag extends GameObjects {
 
 	public ImageView getFlagImage(int fontSize) {

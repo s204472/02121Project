@@ -1,6 +1,6 @@
 /*
- * Lavet af
- * 		Kevin Moore s204462
+ * Made by:
+ * 		Kevin Moore, s204462
  *
  */
 public class ScoreModel {
