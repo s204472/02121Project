@@ -1,47 +1,49 @@
 /*
  * Lavet af
- * 		Kevin
+ * 		Kevin Moore s204462
  *
  */
-
-
 public class ScoreModel {
-	private int value3BV;
-	private int secondsPassed;
 	private GameObjects[][] finalBoard;
-	private int endScore;
-	private boolean[][] checked;
-
+	private boolean[][] checkedTiles;
+	private int value3BV;
+	
+	private int secondsPassed, endScore;
+	
 	public ScoreModel(GameObjects[][] finalBoard, int mineCount) {
 		this.secondsPassed = 0;
 		this.finalBoard = finalBoard;
+		int totalFields = finalBoard.length * finalBoard[0].length;
 		
-		checked = new boolean[finalBoard.length][finalBoard[0].length];
-		value3BV = getTotalFields() - mineCount - getZeroNeighbours() + getZeroBlocks();
+		checkedTiles = new boolean[finalBoard.length][finalBoard[0].length];
+		value3BV = totalFields - mineCount - getZeroNeighbours() + getZeroBlocks();
+		
 		endScore = value3BV * 10;
 	}
 	
-	public int getZeroBlocks() {
+	// Calculates the amount of zeros sequenced next to each other
+	public int getZeroBlocks() { 
 		int counter = 0;
 		for(int i = 0; i < finalBoard.length; i ++) {
 			for (int j = 0; j < finalBoard[i].length; j++) {					
-				if (finalBoard[i][j] instanceof Zero && !checked[i][j]) {
+				if (finalBoard[i][j] instanceof Zero && !checkedTiles[i][j]) {
 					counter++;
-					checked[i][j] = true;
+					checkedTiles[i][j] = true;
 					
-					checkNeighbours(i, j);
+					checkNeighbours(i, j); // Checks so the same block is not counted twice
 				}
 			}
 		}
 		return counter;
 	}
 	
+	// Adds all neighbouring blocks of type zero to checkedTiles array
 	public void checkNeighbours(int x, int y) {
 		for (int i = x - 1; i <= x + 1; i++) {
 			for (int j = y - 1; j <= y + 1; j++) {
 				if (i >= 0 && i < finalBoard.length && j >= 0 && j < finalBoard[i].length) {
-					if (finalBoard[i][j] instanceof Zero && !checked[i][j]) {
-						checked[i][j] = true;
+					if (finalBoard[i][j] instanceof Zero && !checkedTiles[i][j]) {
+						checkedTiles[i][j] = true;
 						checkNeighbours(i, j);
 					}
 				}
@@ -49,19 +51,20 @@ public class ScoreModel {
 		}	
 	}
 	
+	// Returns the amount of tiles that have a Zero neighbour
 	public int getZeroNeighbours() {
-		int counter = 0;
+		int zeroNeighbourCounter = 0;
 		for(int i = 0; i < finalBoard.length; i ++) {
 			for (int j = 0; j < finalBoard[i].length; j++) {
 				if (finalBoard[i][j] instanceof Number || finalBoard[i][j] instanceof Zero) {
 					
-					// Checks every neighbouring tile if they are of the type Zero
+					// Checks every neighbouring tile of target tile if they are of the type Zero
 					neighbourCheckingLoop:
 					for (int k = i - 1; k <= i + 1; k++) {
 						for (int l = j - 1; l <= j + 1; l++) {
 							if (k >= 0 && k < finalBoard.length && l >= 0 && l < finalBoard[k].length) {
 								if (finalBoard[k][l] instanceof Zero) {
-									counter++;
+									zeroNeighbourCounter++;
 									break neighbourCheckingLoop;
 								}
 							}
@@ -70,23 +73,17 @@ public class ScoreModel {
 				}
 			}
 		}
-		return counter;
+		return zeroNeighbourCounter;
 	}
-
-	public int getTotalFields() {
-		return finalBoard.length * finalBoard[0].length;
+	
+	public int get3BV() {
+		return value3BV;
 	}
 	
 	// Timing part of score
 	public void incSeconds() {
 		secondsPassed++;
 	}
-	
-	public void decreaseHintScore() {
-		endScore-= 15;
-	}
-
-
 	public String getTimeElapsed() {
 		String minutes = secondsPassed / 60 < 10 ? "0" + (secondsPassed / 60) : "" + (secondsPassed / 60);
 		String seconds = secondsPassed % 60 < 10 ? "0" + (secondsPassed % 60) : "" + (secondsPassed % 60);
@@ -94,6 +91,10 @@ public class ScoreModel {
 		String timeString = minutes + ":" + seconds;
 
 		return timeString;
+	}
+	
+	public void decreaseHintScore() { // decreases score in case user presses hint button
+		endScore-= 15;
 	}
 
 	public int getScore() {
@@ -128,10 +129,6 @@ public class ScoreModel {
 		}
 
 		return difficulty;
-	}
-	
-	public int get3BV() {
-		return value3BV;
 	}
 
 }
