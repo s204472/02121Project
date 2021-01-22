@@ -1,5 +1,0 @@
-#Ekstern JavaFX
-java --module-path "STI\TIL\JAVAFX\LIB" --add-modules javafx.controls,javafx.fxml,javafx.media -Xss32768k -jar Main.jar 
-
-#Indbygget JavaFX
-java -Xss32768k -jar Main.jar

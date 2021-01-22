@@ -4,8 +4,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
 import javafx.stage.Screen;
+
+
+/*
+ * Made by:
+ * 		Generating buttons: Kevin Moore, s204462 and Anders Gad, s204496
+ * 		Updating and handling clicks: Anders Gad, s204496
+ */
 
 	
 // Initializable makes the class able to interact with FXML file.

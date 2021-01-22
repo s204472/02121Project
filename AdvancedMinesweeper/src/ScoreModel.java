@@ -3,6 +3,8 @@
  * 		Kevin Moore, s204462
  *
  */
+
+// This class handles score calculations and difficulties.
 public class ScoreModel {
 	private GameObjects[][] finalBoard;
 	private boolean[][] checkedTiles;

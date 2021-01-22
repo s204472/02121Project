@@ -8,6 +8,8 @@ import java.util.Random;
  * */
 
 
+// This class stores information about ongoing games and does calculations and manipulations of data.
+
 public class GameModel {
 	private int width, height, mineCount, hints;
 	private int lastX, lastY, displayedFields;
@@ -162,7 +164,7 @@ public class GameModel {
 	}
 
 
-	// Remakes the game
+	// Remakes the game if a mine is hit on first click.
 	public void remakeBoard(int x, int y) {
 		mines = genMines(width, height, mineCount);
 		finalBoard = fillFinalBoard(width, height, mines);

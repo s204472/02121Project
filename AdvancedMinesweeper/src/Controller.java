@@ -28,6 +28,7 @@ import java.util.*;
  */
 
 
+// This class is the connection between the GameModel and the View. 
 
 //Initializable makes the class able to interact with FXML file.
 public class Controller implements Initializable {
@@ -55,7 +56,6 @@ public class Controller implements Initializable {
 
 	private Timer clock;
 	private boolean isTimerRunning;
-	
 	private boolean isGameStarted;
 	
 	public AudioClip backGroundClip;
@@ -120,7 +120,7 @@ public class Controller implements Initializable {
 				? true : false;
 	}
 	
-	// Takes intger values from the input fields in the menu bar.
+	// Takes integer values from the input fields in the menu bar.
 	private static Integer getInteger(String text) {
 		if (text != null) {
 			try {
@@ -278,7 +278,7 @@ public class Controller implements Initializable {
 		}
 	}
 	
-	// Updates the times and score every second
+	// Updates the timer and score every second
 	public void updateUI() {
 		Platform.runLater(() -> {
 			timer.setText(gameModel.getScoreModel().getTimeElapsed());
@@ -303,7 +303,7 @@ public class Controller implements Initializable {
 		}, 0, 1000);
 	}
 	
-	// What to do when the player has won the game
+	// Handling player win
 	public void checkWin(int x, int y) {
 		if (gameModel.checkWin()) {
 			showFinalBoard();

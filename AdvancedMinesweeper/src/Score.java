@@ -8,7 +8,6 @@ import javafx.beans.property.SimpleStringProperty;
  * */
 
 // This class represents a score object. A score object can be easily placed in the scoreboard.
-
 public class Score {
 	private SimpleIntegerProperty score;
 	private SimpleStringProperty map;

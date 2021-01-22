@@ -1,5 +1,10 @@
 import java.util.Random;
 
+/*
+ * Made by:
+ * 		General logic: Magnus Siegumfeldt, s204472 and Anders Reher, s194587		
+ * */
+
 public class GameModel {
 	public boolean gameover =false;
 	private int xSize;

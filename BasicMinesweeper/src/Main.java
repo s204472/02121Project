@@ -1,12 +1,16 @@
-import java.util.IllegalFormatException;
-import java.util.InputMismatchException;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+/*
+ * Made by:
+ * 		Basic window settings: By all
+ * 		Input validation: Kevin Moore, s204462
+ * */
+
+
 
 public class Main extends Application {
 	private static int xSize;
