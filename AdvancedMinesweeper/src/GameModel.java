@@ -157,13 +157,12 @@ public class GameModel {
 			finalBoard[x][y].setVisited();
 			displayedFields++;
 		}
-//		System.out.println(displayedFields);
 		lastX = x;
 		lastY = y;
 	}
 
 
-
+	// Remakes the game
 	public void remakeBoard(int x, int y) {
 		mines = genMines(width, height, mineCount);
 		finalBoard = fillFinalBoard(width, height, mines);
@@ -173,7 +172,8 @@ public class GameModel {
 		
 		clickField(x, y);
 	}
-
+	
+	// Checks if the playere has won
 	public boolean checkWin() {
 		if ((width * height) - mineCount == displayedFields) {
 			gameOver = true;
@@ -183,6 +183,7 @@ public class GameModel {
 		}
 	}
 
+	// Checks if the player has touched a mine
 	public boolean checkGameover(int x, int y) {
 		if (mines[x][y]) {
 			gameOver = true;
@@ -191,7 +192,8 @@ public class GameModel {
 			return false;
 		}
 	}
-		
+	
+	// Finds tries to find the nearest field that is not a mine
 	public int[] findHint() {
 		int[] fieldToClick = new int[2];
 		for (int i = lastX - 1; i <= lastX + 1; i++) {
@@ -206,6 +208,7 @@ public class GameModel {
 				}
 			}
 		}
+		// If unable to find field near the last click then finds the first field that is not a mine on the board
 		if (fieldToClick[0] == 0 && fieldToClick[1] == 0) {
 			for (int i = 0; i < currentBoard.length; i++) {
 				for (int j = 0; j < currentBoard[i].length; j++) {

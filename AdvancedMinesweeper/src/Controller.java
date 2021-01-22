@@ -25,8 +25,7 @@ import java.util.*;
  * 		Scoreboard: Magnus Siegumfeldt, s204472
  * 		Styling and layout: Magnus Siegumfeldt, s204472
  * 		Timer: Magnus Siegumfeldt, s204472
- *
- * */
+ */
 
 
 
@@ -112,14 +111,16 @@ public class Controller implements Initializable {
 		}
 
 	}
-
+	
+	// Checks if the user input is valid for board size and miens
 	private boolean isInputValid(int width, int height, int mines) {
 		return (width >= 4 && width <= 100 &&
 				height >= 4 && height <= 100 &&
 				mines >= 4 && mines <= (int) width * height * 0.9) 
 				? true : false;
 	}
-
+	
+	// Takes intger values from the input fields in the menu bar.
 	private static Integer getInteger(String text) {
 		if (text != null) {
 			try {
@@ -131,7 +132,7 @@ public class Controller implements Initializable {
 		return 0;
 	}
 
-	// creates all the Buttons and makes clickable.
+	// Creates all the Buttons and makes clickable.
 	private void createButtons(int width, int height, int biggestSide) {
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
@@ -149,7 +150,7 @@ public class Controller implements Initializable {
 		}
 	}
 
-	// changing the appearance of a button
+	// Changing the appearance of a button
 	private void updateButton(int x, int y) {
 		GameObjects[][] currentBoard = gameModel.getCurrentBoard();
 		if (currentBoard[x][y] instanceof Flag) {
@@ -162,7 +163,9 @@ public class Controller implements Initializable {
 			buttons[x][y].setEmpty();
 		}
 	}
-
+	
+	// Recursive function that checks if the clicked field is a zero and then checks the surrounding fields for zero
+	// and displays it for the player
 	private void checkZero(int x, int y) {
 		GameObjects[][] finalBoard = gameModel.getFinalBoard();
 		GameObjects[][] currentBoard = gameModel.getCurrentBoard();
@@ -179,7 +182,8 @@ public class Controller implements Initializable {
 			}
 		}
 	}
-
+	
+	// Handles the left click on a field and what to do
 	public void handleLeftClick(int x, int y) {
 		if (gameModel.getDisplayedFields() == 0) {
 			startTimer();
@@ -208,6 +212,7 @@ public class Controller implements Initializable {
 		}
 	}
 
+	// Handles the right click on a field and places and removes a flag
 	public void handleRightClick(int x, int y) {
 		GameObjects[][] currentBoard = gameModel.getCurrentBoard();
 		if (!gameModel.getGameOver()) {
@@ -222,7 +227,8 @@ public class Controller implements Initializable {
 		}
 
 	}
-
+	
+	// Shows the finalboard when the game is over
 	public void showFinalBoard() {
 		GameObjects[][] finalBoard = gameModel.getFinalBoard();
 		GameObjects[][] currentBoard = gameModel.getCurrentBoard();
@@ -244,6 +250,7 @@ public class Controller implements Initializable {
 		}
 	}
 	
+	// Checks if the hint button has been pressed shows it to the player
 	public void hint() {
 		if (isGameStarted && !gameModel.getGameOver() && gameModel.getRemainingHints() != 0
 				&& gameModel.getDisplayedFields() != 0) {
@@ -262,6 +269,7 @@ public class Controller implements Initializable {
 
 	}
 
+	// Cleans the board for the buttons
 	public void cleanBoard() {
 		for (int i = 0; i < gameModel.getWidth(); i++) {
 			for (int j = 0; j < gameModel.getHeight(); j++) {
@@ -269,7 +277,8 @@ public class Controller implements Initializable {
 			}
 		}
 	}
-
+	
+	// Updates the times and score every second
 	public void updateUI() {
 		Platform.runLater(() -> {
 			timer.setText(gameModel.getScoreModel().getTimeElapsed());
@@ -277,7 +286,8 @@ public class Controller implements Initializable {
 			points.setText("" + gameModel.getScoreModel().getScore());
 		});
 	}
-
+	
+	// Starts the timer when a new game has begun
 	public void startTimer() {
 		clock = new Timer();
 		isTimerRunning = true;
@@ -293,6 +303,7 @@ public class Controller implements Initializable {
 		}, 0, 1000);
 	}
 	
+	// What to do when the player has won the game
 	public void checkWin(int x, int y) {
 		if (gameModel.checkWin()) {
 			showFinalBoard();
@@ -306,6 +317,8 @@ public class Controller implements Initializable {
 			tableView.setItems(scores);
 		}
 	}
+	
+	// Mutes and unmutes the sound in the game
 	public void muteAndUnmute() {
 		boolean tempGameModel = gameModel == null ? false : gameModel.getGameOver();
 		int tempDisplayedFields = gameModel == null ? 0 : gameModel.getDisplayedFields();
